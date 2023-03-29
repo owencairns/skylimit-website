@@ -4,14 +4,14 @@ import { ref, Ref } from 'vue';
 </script>
 
 <template>
-    <img class="bg" src="../assets/slv-1.jpg"/>
 </template>
 
 <style>
-
-.bg {
-    height: 100vh;
-    width: 100vw;
+html { 
+  background: url(../assets/slv-1.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
 }
-
 </style>

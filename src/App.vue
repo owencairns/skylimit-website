@@ -20,7 +20,7 @@ const router = useRouter()
 
 #nav {
   overflow: hidden;
-  background-color: #333;
+  background-color: #1d3051;
   position: fixed; /* Set the navbar to fixed position */
   top: 0;
   width: 100%;

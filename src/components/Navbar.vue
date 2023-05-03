@@ -23,10 +23,9 @@ window.addEventListener('scroll', function() {
         </div>
         <ul v-show="!mobile" class="navigation">
             <li><router-link to="/" class="link">Home</router-link></li>
-            <li><router-link to="/" class="link">Portfolio</router-link></li>
+            <li><router-link to="/portfolio" class="link">Portfolio</router-link></li>
             <li><router-link to="/about" class="link">About</router-link></li>
-            <li><router-link to="/" class="link">Contact</router-link></li>
-            <li><router-link to="/login" class="link" >Login</router-link></li>
+            <li class="contact-button"><router-link to="/contact" class="link">Contact</router-link></li>
         </ul>
     </nav>
   </header>
@@ -64,15 +63,19 @@ nav {
 header.sticky {
     background-color: #1d3051;
 }
-header.sticky .link {
+.sticky .link {
     color: #fff;
     font-weight: 400;
     font-size: 13px;
     padding-bottom: 4px;
 }
 
-header.sticky .branding .logo img {
+.sticky .branding .logo img {
     height: 50px;
+}
+.sticky .link:hover {
+    color: #F6D7B6;
+    border-color: #F6D7B6;
 }
 
 ul,
@@ -86,6 +89,16 @@ ul,
     padding-bottom: 4px;
     border-bottom: 2px solid transparent;
     
+}
+
+.router-link-active {
+   color: #F6D7B6;
+   cursor: default;
+   border-bottom: none;
+}
+
+.sticky .router-link-active {
+   color: #F6D7B6;
 }
 
 li {

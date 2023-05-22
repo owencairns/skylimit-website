@@ -55,9 +55,6 @@ nav {
     transition: 0.5s ease all;
     width: 90%;
     margin: 0 auto;
-    @media(min-width: 1140px) {
-        max-width: 1140px;
-    }
 }
 
 header.sticky {
@@ -75,7 +72,6 @@ header.sticky {
 }
 .sticky .link:hover {
     color: #F6D7B6;
-    border-color: #F6D7B6;
 }
 
 ul,
@@ -87,14 +83,11 @@ ul,
     font-size: 14px;
     transition: 0.5s ease all;
     padding-bottom: 4px;
-    border-bottom: 2px solid transparent;
-    
 }
 
 .router-link-active {
    color: #F6D7B6;
    cursor: default;
-   border-bottom: none;
 }
 
 .sticky .router-link-active {

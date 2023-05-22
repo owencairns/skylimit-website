@@ -50,11 +50,11 @@ function onVideoEnd() {
   <section class="video-section">
     <h3>Our Work</h3>
     <div class="video-grid">
-      <div v-for="(video, index) in homepageVideos" :key="index" class="video-item" v-motion-slide-visible-once-bottom>
+      <div v-for="(video, index) in homepageVideos" :key="index" class="video-item"
+        v-motion :initial="{opacity: 0, y: 100}" :visibleOnce="{opacity: 1, y: 0}">
         <img :src="video.thumbnail" @click="playVideo(video.src)" />
         <video ref="videoPlayer" :src="video.src" @ended="onVideoEnd"></video>
       </div>
-
       <VideoPlayer v-if="isVideoPlayerVisible" :videoSrc="selectedVideoSrc" @close="closeVideoPlayer" />
     </div>
   </section>
@@ -81,14 +81,21 @@ body {
 .hero {
   width: 90%;
   height: 100vh;
-  background-image: linear-gradient(#1d305130, #1d305130);
-  position: fixed;
+  position: relative;
+  overflow: hidden;
   padding: 0 5%;
   display: flex;
   align-items: center;
   justify-content: center;
-  left: 0;
+}
+
+.hero video {
+  position: fixed;
   top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
 }
 
 .content .book {
@@ -99,7 +106,7 @@ body {
   border: 2px solid #fff;
   padding: 14px 70px;
   border-radius: 50px;
-  margin-top: 100px;
+  margin-top: 100%;
 }
 
 .content .book:hover {
@@ -122,6 +129,7 @@ body {
 }
 
 .video-section {
+  background-color: #fff;
   color: #1d3051;
   margin: 0 auto;
   padding-left: 5%;

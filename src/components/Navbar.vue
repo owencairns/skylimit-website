@@ -19,7 +19,7 @@ window.addEventListener('scroll', function() {
   <header :class="{ sticky: scroll }">
     <nav>
         <div class="branding">
-            <router-link to="/" class="logo"><img src="../assets/slv-logo-icon .png" /></router-link>
+            <router-link to="/" class="logo"><img src="../assets/slv-logo-icon.png" /></router-link>
         </div>
         <ul v-show="!mobile" class="navigation">
             <li><router-link to="/" class="link">Home</router-link></li>
@@ -45,6 +45,7 @@ header {
     transition: 0.5s ease all;
     top: 0;
     left: 0;
+    background-color: #1d3051;
 }
 
 nav {
@@ -57,9 +58,6 @@ nav {
     margin: 0 auto;
 }
 
-header.sticky {
-    background-color: #1d3051;
-}
 .sticky .link {
     color: #fff;
     font-weight: 400;
@@ -77,7 +75,7 @@ header.sticky {
 ul,
 .link {
     font-weight: 600;
-    color: #1d3051;
+    color: #fff;
     list-style: none;
     text-decoration: none;
     font-size: 14px;

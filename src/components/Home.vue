@@ -4,44 +4,24 @@ import { ref } from 'vue';
 const homepageVideos = [
   {
     id: 1,
-    src: 'src/assets/homepageVideos/video1.mp4',
-    thumbnail: 'src/assets/homepageVideos/video1thumbnail.jpg',
+    thumbnail: 'src/assets/homepageVideos/Alyssa & Bailey.png',
   },
   {
     id: 2,
-    src: 'src/assets/homepageVideos/video2.mp4',
-    thumbnail: 'src/assets/homepageVideos/video2thumbnail.jpg',
+    thumbnail: 'src/assets/homepageVideos/Candance & Austin.png',
   },
   {
     id: 3,
-    src: 'src/assets/homepageVideos/video3.mp4',
-    thumbnail: 'src/assets/homepageVideos/video3thumbnail.jpg',
-  },
-  {
-    id: 4,
-    src: 'src/assets/homepageVideos/video4.mp4',
-    thumbnail: 'src/assets/homepageVideos/video4thumbnail.jpg',
+    thumbnail: 'src/assets/homepageVideos/Nik & Emily.png',
   },
 ]
-
-const videoPlayer = ref(null);
-
-function playVideo(videoSrc) {
-  videoPlayer.$refs.videoPlayer.src = videoSrc;
-  videoPlayer.$refs.videoPlayer.play();
-  videoPlayer.$refs.videoPlayer.requestFullscreen();
-}
-
-function onVideoEnd() {
-  document.exitFullscreen();
-}
 
 </script>
 
 <template>
   <div class="hero">
     <video autoplay loop muted plays-inline class="back-vid">
-      <source src="../assets/test-video.webm" type="video/webm" />
+      <source src="../assets/HomepageVid.mp4" type="video/webm" />
     </video>
     <div class="content">
       <router-link to="/" class="book">Book Now</router-link>
@@ -52,10 +32,8 @@ function onVideoEnd() {
     <div class="video-grid">
       <div v-for="(video, index) in homepageVideos" :key="index" class="video-item"
         v-motion :initial="{opacity: 0, y: 100}" :visibleOnce="{opacity: 1, y: 0}">
-        <img :src="video.thumbnail" @click="playVideo(video.src)" />
-        <video ref="videoPlayer" :src="video.src" @ended="onVideoEnd"></video>
+        <img :src="video.thumbnail"/>
       </div>
-      <VideoPlayer v-if="isVideoPlayerVisible" :videoSrc="selectedVideoSrc" @close="closeVideoPlayer" />
     </div>
   </section>
   <footer class="footer">
@@ -138,16 +116,18 @@ body {
 }
 
 .video-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
-  grid-gap: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 -15px;
 }
 
-
 .video-item {
-  height: 300px;
+  width: 25%;
+  margin: 10px;
+  height: 400px;
   background-color: gray;
-  border-radius: 5px;
+  border-radius: 3px;
   overflow: hidden;
 }
 
@@ -156,16 +136,12 @@ body {
   width: 100%;
   height: 100%;
   transition: 0.4s ease all;
+  filter: grayscale(1);
+
 }
 
-video:-webkit-full-screen {
-  width: 100vw;
-  height: 100vh;
-}
-
-video:fullscreen {
-  width: 100vw;
-  height: 100vh;
+.video-item:hover img {
+  filter: none;
 }
 
 .footer {

@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const homepageVideos = [
+const weddingVIdeos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/Alyssa & Bailey.png',
+    thumbnail: 'src/assets/homepageVideos/homevidthumb2.png',
   },
   {
     id: 2,
-    thumbnail: 'src/assets/homepageVideos/Candance & Austin.png',
+    thumbnail: 'src/assets/homepageVideos/homevidthumb3.png',
   },
   {
     id: 3,
-    thumbnail: 'src/assets/homepageVideos/Nik & Emily.png',
-  },
+    thumbnail: 'src/assets/homepageVideos/homevidthumb4.png',
+  }
 ]
 
 </script>
@@ -27,10 +27,10 @@ const homepageVideos = [
       <router-link to="/" class="book">Book Now</router-link>
     </div>
   </div>
-  <section class="video-section">
+  <section class="work">
     <h3>Our Work</h3>
     <div class="video-grid">
-      <div v-for="(video, index) in homepageVideos" :key="index" class="video-item"
+      <div v-for="(video, index) in weddingVIdeos" :key="index" class="video-item"
         v-motion :initial="{opacity: 0, y: 100}" :visibleOnce="{opacity: 1, y: 0}">
         <img :src="video.thumbnail"/>
       </div>
@@ -48,20 +48,18 @@ const homepageVideos = [
 </template>
 
 <style scoped>
-body {
-  display: flex;
+html, body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-  background-color: #fff;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 .hero {
-  width: 90%;
+  width: 100%;
   height: 100vh;
   position: relative;
   overflow: hidden;
-  padding: 0 5%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,6 +74,10 @@ body {
   object-fit: cover;
 }
 
+.content {
+  text-align: center;
+}
+
 .content .book {
   text-decoration: none;
   display: inline-block;
@@ -84,7 +86,7 @@ body {
   border: 2px solid #fff;
   padding: 14px 70px;
   border-radius: 50px;
-  margin-top: 100%;
+  margin-top: 150px;
 }
 
 .content .book:hover {
@@ -93,7 +95,7 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-.video-section h3 {
+.work h3 {
   text-align: center;
   font-size: 2rem;
   font-weight: 400;
@@ -106,7 +108,7 @@ body {
   z-index: -1;
 }
 
-.video-section {
+.work {
   background-color: #fff;
   color: #1d3051;
   margin: 0 auto;
@@ -178,4 +180,50 @@ body {
   color: #1d3051;
   font-size: 24px;
 }
+
+/* Bouncing arrows styles */
+.scroll-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 50px;
+}
+
+.arrow {
+  width: 40px;
+  height: 40px;
+  border: solid #fff;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  transform: rotate(45deg);
+  animation: bounce 2s infinite;
+}
+
+.arrow2 {
+  margin-top: 10px;
+}
+
+@keyframes bounce {
+  0% {
+    transform: rotate(45deg) translateY(0);
+  }
+  20% {
+    transform: rotate(45deg) translateY(10px);
+  }
+  40% {
+    transform: rotate(45deg) translateY(0);
+  }
+  60% {
+    transform: rotate(45deg) translateY(10px);
+  }
+  80% {
+    transform: rotate(45deg) translateY(0);
+  }
+  100% {
+    transform: rotate(45deg) translateY(10px);
+  }
+}
+
 </style>

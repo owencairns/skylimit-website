@@ -16,5 +16,11 @@ const slvGold = '#F6D7B6'
 </template>
 
 <style scoped>
-
+html, body {
+  margin: 0;
+  padding: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+}
 </style>

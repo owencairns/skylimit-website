@@ -24,7 +24,6 @@ window.addEventListener('scroll', function() {
         <ul v-show="!mobile" class="navigation">
             <li><router-link to="/" class="link">Home</router-link></li>
             <li><router-link to="/portfolio" class="link">Portfolio</router-link></li>
-            <li><router-link to="/about" class="link">About</router-link></li>
             <li class="contact-button"><router-link to="/contact" class="link">Contact</router-link></li>
         </ul>
     </nav>

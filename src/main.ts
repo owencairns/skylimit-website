@@ -1,4 +1,4 @@
-import { createApp } from "vue";
+import { createApp, Directive } from "vue";
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { MotionPlugin } from '@vueuse/motion'
 import "./style.css";
@@ -20,6 +20,7 @@ import Login from './components/Login.vue'
 import SignUp from './components/SignUp.vue'
 import About from './components/About.vue'
 import Contact from './components/Contact.vue'
+import scrollanimation from "./directives/scrollanimation";
 
 const myComponentRoutes = [
     { path: '/', component: Home },
@@ -30,4 +31,4 @@ const myComponentRoutes = [
    ];
 const router = createRouter({ routes: myComponentRoutes, history: createWebHashHistory() });
 
-createApp(App).use(MotionPlugin).component("font-awesome-icon", FontAwesomeIcon).use(router).mount("#app");
+createApp(App).directive('scrollanimation', scrollanimation).component("font-awesome-icon", FontAwesomeIcon).use(router).mount("#app");

@@ -60,7 +60,7 @@ const personalPhotos = [
 
     <section class="work wedding-section">
       <div class="work-content">
-        <div class="work-description">
+        <div class="work-description"  v-scrollanimation>
           <h3 class="section-heading"><b>Weddings</b></h3>
           <p class="section-description">Capture the essence of your wedding day.
             We specialize in creating breathtaking videos that preserve the memories of your special moments.
@@ -75,7 +75,7 @@ const personalPhotos = [
           </p>
         </div>
         <div class="video-grid">
-          <div v-for="(video, index) in weddingVideos" :key="index" class="video-item">
+          <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
             <div class="play"><img src="../assets/icons/playIcon.png"/></div>
           </div>
@@ -87,12 +87,12 @@ const personalPhotos = [
     <section class="work commercial-section">
       <div class="work-content">
         <div class="video-grid">
-          <div v-for="(video, index) in commercialVideos" :key="index" class="video-item">
+          <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse" :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
             <div class="play"><img src="../assets/icons/playIcon.png"/></div>
           </div>
         </div>
-        <div class="work-description commercial-description">
+        <div class="work-description commercial-description" v-scrollanimation>
           <h3 class="section-heading"><b>Commercial</b></h3>
           <p class="section-description"> 
             We are dedicated to crafting short form videos that effectively showcase your products, 
@@ -111,7 +111,7 @@ const personalPhotos = [
 
     <section class="work personal-section">
       <div class="work-content">
-        <div class="work-description">
+        <div class="work-description" v-scrollanimation>
           <h3 class="section-heading"><b>Personal</b></h3>
           <p class="section-description">Capture the essence of your wedding day.
             We specialize in creating breathtaking videos that preserve the memories of your special moments.
@@ -126,7 +126,7 @@ const personalPhotos = [
           </p>
         </div>
         <div class="video-grid">
-          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item">
+          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
             <div class="play notPlayable"><img src="../assets/icons/playIcon.png"/></div>
           </div>
@@ -152,12 +152,28 @@ const personalPhotos = [
           <img class="pic-person" src="../assets/noah.jpg" alt="Picture of Noah Ike"/>
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
-            <p class="description">This is the about section for noah ike</p>
+            <h5 class="role">Co-Owner</h5>
+            <p class="description">Hey there! I'm Noah, a passionate filmmaker and photographer
+              in my final year at Grand Valley State University, pursuing a bachelor's degree
+              in Film and Video. With over 5 years of professional experience,
+              I thrive on capturing captivating visuals that tell compelling stories. From
+              initial planning to final post-production, I absolutely love bringing ideas and
+              visions to life by putting all the pieces together.</p>
           </div>
         </div>
-        <div class="about-person reagan"></div>
-          <div class="description-person reagan">This is the about for reagan berce</div>
-          <img class="pic-person" src="../assets/reagan.jpg" alt="Picture of Reagan Berce"/>
+        <div class="about-person reagan">
+          <div class="description-person noah">
+            <h4 class="name">Reagan Berce</h4>
+            <h5 class="role">Co-Owner</h5>
+            <p class="description">Hey there! I'm Noah, a passionate filmmaker and photographer
+              in my final year at Grand Valley State University, pursuing a bachelor's degree
+              in Film and Video. With over 5 years of professional experience,
+              I thrive on capturing captivating visuals that tell compelling stories. From
+              initial planning to final post-production, I absolutely love bringing ideas and
+              visions to life by putting all the pieces together.</p>
+            </div>
+            <img class="pic-person" src="../assets/reagan.jpg" alt="Picture of Reagan Berce"/>
+          </div>
       </div>
     </section>
 
@@ -372,19 +388,75 @@ html, body {
 }
 .company-about h2 {
   font-weight: bold;
-  font-size: 2.5rem;
+  font-size: 3.5vw;
   margin-bottom: 5px;
 }
 
 .company-about .description {
-  font-size: 1.3rem;
+  font-size: 1.7vw;
   font-weight: 500;
 }
 
 .personal-about {
   height: 100%;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
+.personal-heading {
+  font-weight: bold;
+  font-size: 3.5vw;
+  margin-bottom: 0px;
+  color: #1d3051;
+}
+
+.about-person {
+  display: flex;
+  align-items: center;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+
+.pic-person {
+  width: 30%;
+  height: auto;
+  border-radius: 30%;
+}
+
+.name {
+  color: #1d3051;
+  font-size: 2.7vw;
+  font-weight: bold;
+  margin-bottom: 5px; /* Added margin-bottom */
+}
+
+.role {
+  color: #007AFF; /* Changed color to light blue */
+  font-size: 1.8vw;
+  font-weight: 300;
+  margin-top: 0; /* Removed margin-top */
+  margin-bottom: 5px; /* Added margin-bottom */
+}
+
+.description-person {
+  flex: 1;
+  color: #777;
+  font-weight: 400;
+  padding-left: 2%;
+  padding-right: 2%;
+  font-size: 1.3vw;
+  font-weight: 400;
+  line-height: 1.6;
+  margin-top: 5px; /* Added margin-top */
+}
+
+
+.description-person .description {
+  text-align: left;
+}
+
 
 .footer {
   background-color: #F6D7B6;
@@ -420,6 +492,87 @@ html, body {
   text-align: center;
   color: #1d3051;
   font-size: 24px;
+}
+
+.work-description.before-enter {
+  opacity: 0;
+  transform: translateY(100px);
+  transition: all 0.5s ease-out;
+}
+
+.work-description.enter {
+  opacity: 1;
+  transform: translateY(0px);
+}
+
+.video-item-0.before-enter {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.5s ease-out;
+}
+
+.video-item-0.enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.video-item-0.inverse.before-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.5s ease-out;
+}
+
+.video-item-0.inverse.enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.video-item-1.before-enter {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.5s ease-out;
+  transition-delay: 0.1s;
+}
+
+.video-item-1.enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.video-item-1.inverse.before-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.5s ease-out;
+  transition-delay: 0.1s;
+}
+
+.video-item-1.inverse.enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.video-item-2.before-enter {
+  opacity: 0;
+  transform: translateX(100px);
+  transition: all 0.5s ease-out;
+  transition-delay: 0.2s;
+}
+
+.video-item-2.enter {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.video-item-2.inverse.before-enter {
+  opacity: 0;
+  transform: translateX(-100px);
+  transition: all 0.5s ease-out;
+  transition-delay: 0.2s;
+}
+
+.video-item-2.inverse.enter {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 </style>

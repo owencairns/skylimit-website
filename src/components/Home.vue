@@ -4,22 +4,22 @@ import { ref } from 'vue';
 const weddingVideos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb2.png',
+    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb2.jpg',
   },
   {
     id: 2,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb3.png',
+    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb3.jpg',
   },
   {
     id: 3,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb4.png',
+    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb4.jpg',
   }
 ]
 
 const commercialVideos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/commercial/commercialThumb1.png',
+    thumbnail: 'src/assets/homepageVideos/commercial/commercialThumb1.jpg',
   },
   {
     id: 2,

@@ -11,6 +11,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
+
 /* add icons to the library */
 library.add(faTimes, faInstagram, faFacebook)
 
@@ -21,6 +22,16 @@ import SignUp from './components/SignUp.vue'
 import About from './components/About.vue'
 import Contact from './components/Contact.vue'
 import scrollanimation from "./directives/scrollanimation";
+import { firebaseConfig } from './firebaseConfig'
+
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 const myComponentRoutes = [
     { path: '/', component: Home },
@@ -29,6 +40,11 @@ const myComponentRoutes = [
     { path: '/about', component: About },
     { path: '/contact', component: Contact },
    ];
+
 const router = createRouter({ routes: myComponentRoutes, history: createWebHashHistory() });
 
-createApp(App).directive('scrollanimation', scrollanimation).component("font-awesome-icon", FontAwesomeIcon).use(router).mount("#app");
+createApp(App)
+    .directive('scrollanimation', scrollanimation)
+    .component("font-awesome-icon", FontAwesomeIcon)
+    .use(router)
+    .mount("#app");

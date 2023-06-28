@@ -4,44 +4,44 @@ import { ref } from 'vue';
 const weddingVideos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb2.jpg',
+    thumbnail: '../assets/homepageVideos/weddings/homevidthumb2.jpg',
   },
   {
     id: 2,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb3.jpg',
+    thumbnail: '../assets/homepageVideos/weddings/homevidthumb3.jpg',
   },
   {
     id: 3,
-    thumbnail: 'src/assets/homepageVideos/weddings/homevidthumb4.jpg',
+    thumbnail: '../assets/homepageVideos/weddings/homevidthumb4.jpg',
   }
 ]
 
 const commercialVideos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/commercial/commercialThumb1.jpg',
+    thumbnail: '../assets/homepageVideos/commercial/commercialThumb1.jpg',
   },
   {
     id: 2,
-    thumbnail: 'src/assets/homepageVideos/commercial/commercialThumb2.jpg',
+    thumbnail: '../assets/homepageVideos/commercial/commercialThumb2.jpg',
   },
   {
     id: 3,
-    thumbnail: 'src/assets/homepageVideos/commercial/commercialThumb3.jpg',
+    thumbnail: '../assets/homepageVideos/commercial/commercialThumb3.jpg',
   }
 ];
 const personalPhotos = [
   {
     id: 1,
-    thumbnail: 'src/assets/homepageVideos/personal/personalthumbnail1.jpg',
+    thumbnail: '../assets/homepageVideos/personal/personalthumbnail1.jpg',
   },
   {
     id: 2,
-    thumbnail: 'src/assets/homepageVideos/personal/personalthumbnail2.jpg',
+    thumbnail: '../assets/homepageVideos/personal/personalthumbnail2.jpg',
   },
   {
     id: 3,
-    thumbnail: 'src/assets/homepageVideos/personal/personalthumbnail3.jpg',
+    thumbnail: '../assets/homepageVideos/personal/personalthumbnail3.jpg',
   }
 ];
 
@@ -54,6 +54,7 @@ const personalPhotos = [
         <source src="../assets/HomepageVid.mp4" type="video/webm" />
       </video>
       <div class="content">
+        <img src="../assets/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo"/>
         <router-link to="/" class="book-btn">Book Now</router-link>
       </div>
     </div>
@@ -219,6 +220,16 @@ html, body {
 
 .content {
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skylimit-logo {
+  height: 30vh;
+  width: auto;
+  padding-bottom: 10%
 }
 
 .book-btn {
@@ -229,7 +240,6 @@ html, body {
   border: 2px solid #fff;
   padding: 14px 70px;
   border-radius: 50px;
-  margin-top: 150px;
 }
 
 .book-btn:hover {

@@ -5,14 +5,41 @@ const name = ref('');
 const email = ref('');
 const message = ref('');
 
+const nameFocus = ref(false);
+const emailFocus = ref(false);
+const msgFocus = ref(false);
+
+const handleNameFocus = () => {
+  nameFocus.value = true
+}
+const handleEmailFocus = () => {
+  emailFocus.value = true
+}
+const handleMsgFocus = () => {
+  msgFocus.value = true
+}
+const handleNameBlur = () => {
+  nameFocus.value = false
+}
+const handleEmailBlur = () => {
+  emailFocus.value = false
+}
+const handleMsgBlur = () => {
+  msgFocus.value = false
+}
+
+const adjustTextareaHeight = () => {
+  const textarea = document.querySelector('textarea');
+  textarea.style.height = 'auto';
+  textarea.style.height = textarea.scrollHeight + 'px';
+}
+
 const submitForm = () => {
   // Add your form submission logic here
   // You can access the form data using the name, email, and message variables
-
-  // Reset form fields
-  name.value = '';
-  email.value = '';
-  message.value = '';
+  console.log(name.value);
+  console.log(email.value);
+  console.log(message.value);
 };
 
 </script>
@@ -53,16 +80,16 @@ const submitForm = () => {
         <form @submit.prevent="submitForm">
           <div class="form-heading">Send Message</div>
           <div class="form-group">
-            <label for="name">Name</label>
-            <input v-model="name" type="text" id="name" required />
+            <label for="name" :class="{ 'active': (name || nameFocus) }" >Name</label>
+            <input v-model="name" type="text" id="name" @focus="handleNameFocus" @blur="handleNameBlur" required />
           </div>
           <div class="form-group">
-            <label for="email">Email Address</label>
-            <input v-model="email" type="email" id="email" required />
+            <label for="email"  :class="{ 'active': email || emailFocus }" >Email Address</label>
+            <input v-model="email" type="email" id="email" @focus="handleEmailFocus" @blur="handleEmailBlur" required />
           </div>
           <div class="form-group">
-            <label for="message">Message</label>
-            <input v-model="message" type="text" id="message" maxlength="1000" required />
+            <label for="message" :class="{ 'active': message || msgFocus }" >Message</label>
+            <textarea v-model="message" type="text" id="message" maxlength="1000" @input="adjustTextareaHeight" @focus="handleMsgFocus" @blur="handleMsgBlur" required></textarea>
           </div>
           <button type="submit">Submit</button>
         </form>
@@ -214,13 +241,33 @@ label {
   color: #1d3051;
   font-size: 1rem;
   margin-bottom: 5px;
+  margin-left: 2px;
+  transform: translateY(35px);
+  transition: all 0.2s ease-out;
+  cursor: pointer;
+}
+
+label.active {
+  transform: translateY(5px);
 }
 
 input,
 textarea {
-  padding: 10px;
+  padding-bottom: 10px;
+  padding-top: 10px;
   border: none;
-  border-radius: 5px;
+  font-size: 1rem;
+  outline: none;
+  border-bottom: 2px solid #777;
+  cursor: pointer;
+  resize: none;
+  overflow: hidden;
+}
+
+textarea {
+  padding-top: 0px;
+  padding-bottom: 2px;
+  font-size: 1.05rem;
 }
 
 button {

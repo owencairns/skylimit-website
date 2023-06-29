@@ -4,44 +4,44 @@ import { ref } from 'vue';
 const weddingVideos = [
   {
     id: 1,
-    thumbnail: '/src/assets/homepageVideos/weddings/homevidthumb2.jpg',
+    thumbnail: '../src/assets/homepageVideos/weddings/homevidthumb2.jpg',
   },
   {
     id: 2,
-    thumbnail: '/src/assets/homepageVideos/weddings/homevidthumb3.jpg',
+    thumbnail: '../src/assets/homepageVideos/weddings/homevidthumb3.jpg',
   },
   {
     id: 3,
-    thumbnail: '/src/assets/homepageVideos/weddings/homevidthumb4.jpg',
+    thumbnail: '../src/assets/homepageVideos/weddings/homevidthumb4.jpg',
   }
 ]
 
 const commercialVideos = [
   {
     id: 1,
-    thumbnail: '/src/assets/homepageVideos/commercial/commercialThumb1.jpg',
+    thumbnail: '../src/assets/homepageVideos/commercial/commercialThumb1.jpg',
   },
   {
     id: 2,
-    thumbnail: '/src/assets/homepageVideos/commercial/commercialThumb2.jpg',
+    thumbnail: '../src/assets/homepageVideos/commercial/commercialThumb2.jpg',
   },
   {
     id: 3,
-    thumbnail: '/src/assets/homepageVideos/commercial/commercialThumb3.jpg',
+    thumbnail: '../src/assets/homepageVideos/commercial/commercialThumb3.jpg',
   }
 ];
 const personalPhotos = [
   {
     id: 1,
-    thumbnail: '/src/assets/homepageVideos/personal/personalthumbnail1.jpg',
+    thumbnail: '../src/assets/homepageVideos/personal/personalthumbnail1.jpg',
   },
   {
     id: 2,
-    thumbnail: '/src/assets/homepageVideos/personal/personalthumbnail2.jpg',
+    thumbnail: '../src/assets/homepageVideos/personal/personalthumbnail2.jpg',
   },
   {
     id: 3,
-    thumbnail: '/src/assets/homepageVideos/personal/personalthumbnail3.jpg',
+    thumbnail: '../src/assets/homepageVideos/personal/personalthumbnail3.jpg',
   }
 ];
 

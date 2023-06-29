@@ -4,7 +4,7 @@ import { ref } from 'vue';
 const weddingVideos = [
   {
     id: 1,
-    thumbnail: '../assets/homepageVideos/weddings/homevidthumb2.jpg',
+    thumbnail: '../src/assets/homepageVideos/weddings/homevidthumb2.jpg',
   },
   {
     id: 2,

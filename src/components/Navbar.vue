@@ -4,7 +4,7 @@ import { onMounted, ref, Ref } from 'vue';
 let mobile = false
 let scroll = ref(false)
 
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
     if (this.window.scrollY > 0) {
         scroll.value = true
     }
@@ -16,22 +16,30 @@ window.addEventListener('scroll', function() {
 </script>
 
 <template>
-  <header :class="{ sticky: scroll }">
-    <nav>
-        <div class="branding">
-            <router-link to="/" class="logo"><img src="../assets/slv-logo-icon.png" /></router-link>
-        </div>
-        <ul v-show="!mobile" class="navigation">
-            <li><router-link to="/" class="link">Home</router-link></li>
-            <li><router-link to="/portfolio" class="link">Portfolio</router-link></li>
-            <li class="contact-button"><router-link to="/contact" class="link">Contact</router-link></li>
-        </ul>
-    </nav>
-  </header>
+    <header :class="{ sticky: scroll }">
+        <nav>
+            <div class="branding">
+                <router-link to="/" class="logo"><img src="../assets/slv-logo-icon.png" /></router-link>
+                <img src="../assets/skylimit-oneline.svg" class="logo-name">
+            </div>
+            <ul v-show="!mobile" class="navigation">
+                <li><router-link to="/" class="link">Home</router-link></li>
+                <li class="dropdown">
+                    <a href="#" class="dropbtn">Services</a> <!-- Add the indicator arrow -->
+                    <div class="dropdown-content">
+                        <router-link to="/packages/weddings" class="dropdown-link">Weddings</router-link>
+                        <router-link to="/packages/commercial" class="dropdown-link">Commercial</router-link>
+                        <router-link to="/packages/personal" class="dropdown-link">Personal</router-link>
+                    </div>
+                </li>
+                <li><router-link to="/portfolio" class="link">Our Work</router-link></li>
+                <li class="contact-button"><router-link to="/contact" class="button">Contact</router-link></li>
+            </ul>
+        </nav>
+    </header>
 </template>
  
 <style scoped>
-
 body {
     font-weight: 500;
 }
@@ -67,6 +75,7 @@ nav {
 .sticky .branding .logo img {
     height: 50px;
 }
+
 .sticky .link:hover {
     color: #F6D7B6;
 }
@@ -83,12 +92,12 @@ ul,
 }
 
 .router-link-active {
-   color: #F6D7B6;
-   cursor: default;
+    color: #F6D7B6;
+    cursor: default;
 }
 
 .sticky .router-link-active {
-   color: #F6D7B6;
+    color: #F6D7B6;
 }
 
 li {
@@ -102,6 +111,24 @@ li {
     border-color: #F6D7B6;
 }
 
+.button {
+  background-color: white;
+  border-radius: 5px;
+  color: #1d3051;
+  padding: 10px 20px;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.button:hover {
+  background-color: #f6d7b6;
+}
+
+.button.router-link-active {
+  background-color: #f6d7b6;
+}
+
 .branding {
     display: flex;
     align-items: center;
@@ -112,6 +139,13 @@ li {
     padding-top: 5px;
     width: auto;
     transition: 0.5s ease all;
+    margin-right: 10px;
+}
+
+.branding .logo-name {
+    height: 20px;
+    width: auto;
+    padding-bottom: 10px;
 }
 
 .navigation {
@@ -121,4 +155,70 @@ li {
     justify-content: flex-end;
 }
 
+.dropbtn {
+    color: #fff;
+    font-weight: 600;
+    font-size: 14px;
+    padding-bottom: 4px;
+    text-decoration: none;
+    position: relative;
+}
+
+.dropbtn:hover {
+    color: #F6D7B6;
+}
+
+.dropbtn:after {
+  content: "";
+  display: inline-block;
+  margin-left: 5px;
+  width: 0;
+  height: 0;
+  vertical-align: middle;
+  border-top: 4px solid #fff;
+  border-right: 4px solid transparent;
+  border-bottom: 0;
+  border-left: 4px solid transparent;
+  transition: transform 0.3s ease;
+}
+
+.dropdown:hover .dropbtn:after {
+  transform: rotate(180deg);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    opacity: 0;
+    font-weight: 400;
+    font-size: 0.8rem;
+    display: block;
+    position: absolute;
+    background-color: #1d3051;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
+    z-index: 1;
+    left: 0;
+    top: 100%;
+    transition: 0.4s ease all;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+}
+
+.dropdown-link {
+    display: block;
+    padding: 8px;
+    color: #fff;
+    text-decoration: none;
+    transition: 0.5s ease all;
+}
+
+.dropdown-link:hover {
+    background-color: #F6D7B6;
+}
 </style>

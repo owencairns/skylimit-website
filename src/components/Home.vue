@@ -30,6 +30,7 @@ const commercialVideos = [
     thumbnail: '/img/commercial/commercialThumb3.jpg',
   }
 ];
+
 const personalPhotos = [
   {
     id: 1,
@@ -54,14 +55,14 @@ const personalPhotos = [
         <source src="../assets/HomepageVid.mp4" type="video/webm" />
       </video>
       <div class="content">
-        <img src="../assets/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo"/>
-        <router-link to="/" class="book-btn">Book Now</router-link>
+        <img src="../assets/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
+        <router-link to="/contact" class="book-btn">Book Now</router-link>
       </div>
     </div>
 
     <section class="work wedding-section">
       <div class="work-content">
-        <div class="work-description"  v-scrollanimation>
+        <div class="work-description" v-scrollanimation>
           <h3 class="section-heading"><b>Weddings</b></h3>
           <p class="section-description">Capture the essence of your wedding day.
             We specialize in creating breathtaking videos that preserve the memories of your special moments.
@@ -76,9 +77,10 @@ const personalPhotos = [
           </p>
         </div>
         <div class="video-grid">
-          <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index" v-scrollanimation>
+          <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index"
+            v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="../assets/icons/playIcon.png"/></div>
+            <div class="play"><img src="../assets/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -88,24 +90,25 @@ const personalPhotos = [
     <section class="work commercial-section">
       <div class="work-content">
         <div class="video-grid">
-          <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse" :class="'video-item-' + index" v-scrollanimation>
+          <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
+            :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="../assets/icons/playIcon.png"/></div>
+            <div class="play"><img src="../assets/icons/playIcon.png" /></div>
           </div>
         </div>
         <div class="work-description commercial-description" v-scrollanimation>
           <h3 class="section-heading"><b>Commercial</b></h3>
-          <p class="section-description"> 
-            We are dedicated to crafting short form videos that effectively showcase your products, 
-            whether it's mouthwatering snacks or refreshing beverages, leaving a lasting impact on your 
-            target audience. With an unwavering commitment to excellence, we provide unparalleled creative 
-            freedom and flexibility, ensuring that your vision is brought to life. Our experienced team 
-            collaborates closely with you to create content that perfectly aligns with your brand's unique 
-            identity. Discover the power of our expertise, passion, and commitment to delivering exceptional 
+          <p class="section-description">
+            We are dedicated to crafting short form videos that effectively showcase your products,
+            whether it's mouthwatering snacks or refreshing beverages, leaving a lasting impact on your
+            target audience. With an unwavering commitment to excellence, we provide unparalleled creative
+            freedom and flexibility, ensuring that your vision is brought to life. Our experienced team
+            collaborates closely with you to create content that perfectly aligns with your brand's unique
+            identity. Discover the power of our expertise, passion, and commitment to delivering exceptional
             results, and elevate your brand to new heights.</p>
-            <p class="section-link">
-              <router-link to="/commercial" class="link-btn">Explore More</router-link>
-            </p>
+          <p class="section-link">
+            <router-link to="/commercial" class="link-btn">Explore More</router-link>
+          </p>
         </div>
       </div>
     </section>
@@ -127,9 +130,10 @@ const personalPhotos = [
           </p>
         </div>
         <div class="video-grid">
-          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index" v-scrollanimation>
+          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index"
+            v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play notPlayable"><img src="../assets/icons/playIcon.png"/></div>
+            <div class="play notPlayable"><img src="../assets/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -149,8 +153,8 @@ const personalPhotos = [
       </div>
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
-        <div class="about-person noah">
-          <img class="pic-person" src="../assets/noah.jpg" alt="Picture of Noah Ike"/>
+        <div class="about-person noah" v-scrollanimation>
+          <img class="pic-person" src="../assets/noah.jpg" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -162,7 +166,7 @@ const personalPhotos = [
               visions to life by putting all the pieces together.</p>
           </div>
         </div>
-        <div class="about-person reagan">
+        <div class="about-person reagan" v-scrollanimation>
           <div class="description-person noah">
             <h4 class="name">Reagan Berce</h4>
             <h5 class="role">Co-Owner</h5>
@@ -172,9 +176,9 @@ const personalPhotos = [
               I thrive on capturing captivating visuals that tell compelling stories. From
               initial planning to final post-production, I absolutely love bringing ideas and
               visions to life by putting all the pieces together.</p>
-            </div>
-            <img class="pic-person" src="../assets/reagan.jpg" alt="Picture of Reagan Berce"/>
           </div>
+          <img class="pic-person" src="../assets/reagan.jpg" alt="Picture of Reagan Berce" />
+        </div>
       </div>
     </section>
 
@@ -191,7 +195,8 @@ const personalPhotos = [
 </template>
 
 <style scoped>
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   max-width: 100%;
@@ -200,7 +205,7 @@ html, body {
 
 .hero {
   width: 100%;
-  height: 100vh;
+  height: 100vw;
   position: relative;
   overflow: hidden;
   display: flex;
@@ -227,7 +232,7 @@ html, body {
 }
 
 .skylimit-logo {
-  height: 30vh;
+  height: 35vw;
   width: auto;
   padding-bottom: 10%
 }
@@ -312,7 +317,7 @@ html, body {
 .video-item {
   position: relative;
   height: 100%;
-  width: 100vh;
+  width: 100vw;
 }
 
 .video-item img {
@@ -367,7 +372,7 @@ html, body {
 }
 
 .commercial-description {
-  text-align: right;
+  text-align: left;
 }
 
 .about {
@@ -383,9 +388,11 @@ html, body {
   padding-left: 4%;
   padding-right: 4%;
   background-image: url(../assets/bannerPhoto.png);
-  background-position: center top; /* Center the background image */
+  background-position: center top;
+  /* Center the background image */
   background-repeat: no-repeat;
-  background-size: cover; /* Scale the background image to fit the container */
+  background-size: cover;
+  /* Scale the background image to fit the container */
   text-align: center;
 }
 
@@ -396,6 +403,7 @@ html, body {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
 }
+
 .company-about h2 {
   font-weight: bold;
   font-size: 3.5vw;
@@ -427,7 +435,17 @@ html, body {
   align-items: center;
   padding-left: 5%;
   padding-right: 5%;
+  transition: 1.5s ease all;
 }
+
+.about-person.before-enter {
+  opacity: 0;
+}
+
+.about-person.enter {
+  opacity: 1;
+}
+
 
 .pic-person {
   width: 30%;
@@ -439,15 +457,19 @@ html, body {
   color: #1d3051;
   font-size: 2.7vw;
   font-weight: bold;
-  margin-bottom: 5px; /* Added margin-bottom */
+  margin-bottom: 5px;
+  /* Added margin-bottom */
 }
 
 .role {
-  color: #007AFF; /* Changed color to light blue */
+  color: #007AFF;
+  /* Changed color to light blue */
   font-size: 1.8vw;
   font-weight: 300;
-  margin-top: 0; /* Removed margin-top */
-  margin-bottom: 5px; /* Added margin-bottom */
+  margin-top: 0;
+  /* Removed margin-top */
+  margin-bottom: 5px;
+  /* Added margin-bottom */
 }
 
 .description-person {
@@ -459,7 +481,8 @@ html, body {
   font-size: 1.3vw;
   font-weight: 400;
   line-height: 1.6;
-  margin-top: 5px; /* Added margin-top */
+  margin-top: 5px;
+  /* Added margin-top */
 }
 
 
@@ -583,6 +606,4 @@ html, body {
 .video-item-2.inverse.enter {
   opacity: 1;
   transform: translateX(0);
-}
-
-</style>
+}</style>

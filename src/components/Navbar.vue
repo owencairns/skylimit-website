@@ -24,15 +24,15 @@ window.addEventListener('scroll', function () {
             </div>
             <ul v-show="!mobile" class="navigation">
                 <li><router-link to="/" class="link">Home</router-link></li>
-                <li class="dropdown">
-                    <a href="#" class="dropbtn">Services</a> <!-- Add the indicator arrow -->
+                <li class="dropdown link">
+                    <router-link to="/packages" class="link dropbtn">Services</router-link>
                     <div class="dropdown-content">
                         <router-link to="/packages/weddings" class="dropdown-link">Weddings</router-link>
                         <router-link to="/packages/commercial" class="dropdown-link">Commercial</router-link>
                         <router-link to="/packages/personal" class="dropdown-link">Personal</router-link>
                     </div>
                 </li>
-                <li><router-link to="/portfolio" class="link">Our Work</router-link></li>
+                <li><router-link to="/portfolio" class="link">Portfolio</router-link></li>
                 <li class="contact-button"><router-link to="/contact" class="button">Contact</router-link></li>
             </ul>
         </nav>
@@ -102,7 +102,7 @@ ul,
 
 li {
     text-transform: uppercase;
-    padding: 8px;
+    padding: 4px;
     margin-left: 16px;
 }
 
@@ -116,6 +116,7 @@ li {
   border-radius: 5px;
   color: #1d3051;
   padding: 10px 20px;
+  margin-left: 20px;
   border: none;
   cursor: pointer;
   text-decoration: none;
@@ -157,11 +158,7 @@ li {
 
 .dropbtn {
     color: #fff;
-    font-weight: 600;
-    font-size: 14px;
-    padding-bottom: 4px;
     text-decoration: none;
-    position: relative;
 }
 
 .dropbtn:hover {

@@ -37,8 +37,7 @@ const adjustTextareaHeight = () => {
 }
 
 const submitForm = () => {
-  // Add your form submission logic here
-  // You can access the form data using the name, email, and message variables
+
   console.log(name.value);
   console.log(email.value);
   console.log(message.value);
@@ -109,6 +108,16 @@ onMounted(() => {
           <div class="form-group">
             <label for="name" :class="{ 'active': (name || nameFocus) }">Name</label>
             <input v-model="name" type="text" id="name" @focus="handleNameFocus" @blur="handleNameBlur" required />
+          </div>
+          <div class="form-group">
+            <label for="service" class="dropdown">Service That Interests You</label>
+            <select v-model="selected" class="package-select">
+              <option disabled value="">Please Select</option>
+              <option>Wedding</option>
+              <option>Commercial</option>
+              <option>Personal</option>
+              <option>Other</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="email" :class="{ 'active': email || emailFocus }">Email Address</label>
@@ -287,6 +296,14 @@ label {
   cursor: pointer;
 }
 
+.dropdown {
+  color: #1d3051;
+  font-size: 1rem;
+  margin-bottom: 0px;
+  margin-left: 2px;
+  cursor: pointer;
+}
+
 label.active {
   transform: translateY(5px);
 }
@@ -304,6 +321,22 @@ textarea {
   overflow: hidden;
 }
 
+.package-select {
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border: none;
+  font-size: 1rem;
+  outline: none;
+  cursor: pointer;
+  resize: none;
+  overflow: hidden;
+  appearance: none;
+  background: url("../assets/dropdown-arrow.svg") no-repeat right center / 10px;
+}
+
+.package-select option {
+  color: #1d3051;
+}
 textarea {
   padding-top: 0px;
   padding-bottom: 2px;
@@ -351,7 +384,6 @@ button {
 
 .page-container.popup-active {
   filter: blur(4px);
-  background-color: rgba(0, 0, 0, 0.5); /* Adjust the opacity as desired */
+  background-color: rgba(0, 0, 0, 0.5);
 }
-
 </style>

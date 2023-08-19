@@ -17,29 +17,60 @@ library.add(faTimes, faInstagram, faFacebook)
 
 import App from "./App.vue";
 import Home from './components/Home.vue'
-import Login from './components/Login.vue'
-import SignUp from './components/SignUp.vue'
-import About from './components/About.vue'
 import Contact from './components/Contact.vue'
+import Packages from './components/packages.vue'
+import WeddingPackages from './components/packages-weddings.vue'
+import PersonalPackages from './components/packages-personal.vue'
+import CommercialPackages from './components/packages-commercial.vue'
+import Portfolio from './components/portfolio.vue'
+import PortfolioLanding from './components/portfolioLanding.vue'
+import WeddingPortfolio from './components/WeddingPortfolio.vue'
+
 import scrollanimation from "./directives/scrollanimation";
 import { firebaseConfig } from './firebaseConfig'
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Initialize Firebase
-initializeApp(firebaseConfig);
-
 const myComponentRoutes = [
-    { path: '/', component: Home },
-    { path: '/login', component: Login },
-    { path: '/signup', component: SignUp },
-    { path: '/about', component: About },
-    { path: '/contact', component: Contact },
-   ];
+    {
+        path: '/',
+        component: Home
+    },
+    {
+        path: '/packages',
+        component: Packages,
+        children: [
+            {
+                path: 'weddings',
+                component: WeddingPackages,
+            },
+            {
+                path: 'personal',
+                component: PersonalPackages,
+            },
+            {
+                path: 'commercial',
+                component: CommercialPackages
+            }
+        ],
+    },
+    {
+        path: '/portfolio',
+        component: Portfolio,
+        children: [
+            {
+                path: '',
+                component: PortfolioLanding,
+            },
+            {
+                path: 'weddings',
+                component: WeddingPortfolio,
+            },
+        ],
+    },
+    {
+        path: '/contact',
+        component: Contact
+    },
+];
 
 const router = createRouter({ routes: myComponentRoutes, history: createWebHashHistory() });
 

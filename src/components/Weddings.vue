@@ -4,6 +4,7 @@ import { ref, Ref } from 'vue';
 </script>
 
 <template>
+  <h1>Test</h1>
   <div>
     <table>
       <thead>
@@ -86,7 +87,8 @@ import { ref, Ref } from 'vue';
 
 <style scoped>
 
-body {
+h1 {
+  margin-top: 100px;
   color: black;
 }
 </style>

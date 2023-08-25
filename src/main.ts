@@ -1,6 +1,5 @@
 import { createApp, Directive } from "vue";
 import { createRouter, createWebHashHistory } from 'vue-router';
-import { MotionPlugin } from '@vueuse/motion'
 import "./style.css";
 
 /* import the fontawesome core */
@@ -19,9 +18,8 @@ import App from "./App.vue";
 import Home from './components/Home.vue'
 import Contact from './components/Contact.vue'
 import Packages from './components/packages.vue'
-import WeddingPackages from './components/packages-weddings.vue'
-import PersonalPackages from './components/packages-personal.vue'
-import CommercialPackages from './components/packages-commercial.vue'
+import PackagesLanding from './components/packagesLanding.vue'
+import WeddingPackages from './components/WeddingPackages.vue'
 import Portfolio from './components/portfolio.vue'
 import PortfolioLanding from './components/portfolioLanding.vue'
 import WeddingPortfolio from './components/WeddingPortfolio.vue'
@@ -39,17 +37,13 @@ const myComponentRoutes = [
         component: Packages,
         children: [
             {
+                path: '',
+                component: PackagesLanding,
+            },
+            {
                 path: 'weddings',
                 component: WeddingPackages,
             },
-            {
-                path: 'personal',
-                component: PersonalPackages,
-            },
-            {
-                path: 'commercial',
-                component: CommercialPackages
-            }
         ],
     },
     {

@@ -19,8 +19,8 @@ window.addEventListener('scroll', function () {
     <header :class="{ sticky: scroll }">
         <nav>
             <div class="branding">
-                <router-link to="/" class="logo"><img src="../assets/slv-logo-icon.png" /></router-link>
-                <img src="../assets/skylimit-oneline.svg" class="logo-name">
+                <router-link to="/" class="logo"><img src="/img/logo-home/slv-logo-icon.png" /></router-link>
+                <img src="/img/logo-home/skylimit-oneline.svg" class="logo-name">
             </div>
             <ul v-show="!mobile" class="navigation">
                 <li><router-link to="/" class="link">Home</router-link></li>

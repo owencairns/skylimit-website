@@ -17,14 +17,14 @@ const images = [
     source: '/img/personal/personalport1.jpg',
     link: '/portfolio/personal'
   }
-]
+];
 </script>
 
 <template>
   <div class="container">
     <div class="landing-page">
-      <div v-for="(image, index) in images" :key="index">
-        <router-link :to="image.link" class="card">
+      <div v-for="(image, index) in images" :key="index" class="card">
+        <router-link :to="image.link" class="card-link">
           <img :src="image.source" :alt="image.category" class="image" />
           <div class="overlay">{{ image.category }}</div>
         </router-link>
@@ -35,18 +35,17 @@ const images = [
 
 <style scoped>
 .landing-page {
+  padding-top: 50px;
   display: flex;
   justify-content: center;
-  /* Adjusted to center cards */
   align-items: center;
   height: calc(100vh - 30px);
-  /* Adjust the height to account for top padding */
 }
 
 .card {
   position: relative;
   width: 350px;
-  height: 50vh;
+  height: 75vh;
   margin: 10px;
   overflow: hidden;
   cursor: pointer;
@@ -54,7 +53,23 @@ const images = [
   transition: transform 0.3s ease;
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+.card:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.card-link {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.image-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
 .image {
@@ -65,17 +80,24 @@ const images = [
 
 .overlay {
   position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
-  padding: 2%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
-  font-size: 3.5vw;
+  font-size: 3.5vh;
   text-align: center;
   text-transform: uppercase;
   font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
-.card:hover {
-  transform: scale(1.05);
+.card:hover .overlay {
+  opacity: 1;
 }
 </style>

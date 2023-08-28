@@ -20,6 +20,7 @@ import Contact from './components/Contact.vue'
 import Packages from './components/packages.vue'
 import PackagesLanding from './components/packagesLanding.vue'
 import WeddingPackages from './components/WeddingPackages.vue'
+import CommercialPackages from './components/CommercialPackages.vue'
 import Portfolio from './components/portfolio.vue'
 import PortfolioLanding from './components/portfolioLanding.vue'
 import WeddingPortfolio from './components/WeddingPortfolio.vue'
@@ -43,6 +44,10 @@ const myComponentRoutes = [
             {
                 path: 'weddings',
                 component: WeddingPackages,
+            },
+            {
+                path: 'commercial',
+                component: CommercialPackages,
             },
         ],
     },

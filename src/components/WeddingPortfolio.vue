@@ -100,7 +100,7 @@ const gallery = [
     </div>
 
     <div class="bottom-logo">
-        <img src="../assets/Blue letters logo.svg" alt="" class="slv-white-logo">
+        <img src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
   

@@ -65,7 +65,7 @@ onMounted(() => {
 <template>
   <div class="background-container">
     <div class="gradient-overlay"></div>
-    <img src="../assets/contactBG.jpg" alt="background image" class="background">
+    <img src="/img/logo-home/contactBG.jpg" alt="background image" class="background">
   </div>
   <div class="page-container" :class="{ 'popup-active': showPopup }">
     <div class="heading">
@@ -110,15 +110,26 @@ onMounted(() => {
             <input v-model="name" type="text" id="name" @focus="handleNameFocus" @blur="handleNameBlur" required />
           </div>
           <div class="form-group">
-            <label for="service" class="dropdown">Service That Interests You</label>
-            <select v-model="selected" class="package-select">
-              <option disabled value="">Please Select</option>
-              <option>Wedding</option>
-              <option>Commercial</option>
-              <option>Personal</option>
-              <option>Other</option>
-            </select>
-          </div>
+          <label for="service" class="dropdown-label">Service That Interests You</label>
+          <select v-model="selected" class="package-select">
+            <option disabled value="">Please Select</option>
+            <option>Wedding</option>
+            <option>Commercial</option>
+            <option>Personal</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div v-if="selected === 'Wedding'" class="form-group">
+      <label for="package">Package</label>
+      <select v-model="selectedPackage" class="package-select">
+        <option disabled value="">Please Select</option>
+        <option>Ceremony</option>
+        <option>Bronze</option>
+        <option>Silver</option>
+        <option>Gold</option>
+        <option>Diamond</option>
+      </select>
+    </div>
           <div class="form-group">
             <label for="email" :class="{ 'active': email || emailFocus }">Email Address</label>
             <input v-model="email" type="email" id="email" @focus="handleEmailFocus" @blur="handleEmailBlur" required />
@@ -296,12 +307,14 @@ label {
   cursor: pointer;
 }
 
-.dropdown {
+.dropdown-label {
   color: #1d3051;
   font-size: 1rem;
-  margin-bottom: 0px;
+  margin-bottom: 5px;
   margin-left: 2px;
   cursor: pointer;
+  transform: translateY(5px);
+  transition: all 0.2s ease-out;
 }
 
 label.active {
@@ -324,19 +337,15 @@ textarea {
 .package-select {
   padding-bottom: 10px;
   padding-top: 10px;
-  border: none;
+  border: 1px solid #00bcd4;
   font-size: 1rem;
   outline: none;
   cursor: pointer;
   resize: none;
   overflow: hidden;
   appearance: none;
-  background: url("../assets/dropdown-arrow.svg") no-repeat right center / 10px;
 }
 
-.package-select option {
-  color: #1d3051;
-}
 textarea {
   padding-top: 0px;
   padding-bottom: 2px;

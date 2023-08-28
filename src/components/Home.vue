@@ -52,10 +52,10 @@ const personalPhotos = [
   <div>
     <div class="hero">
       <video autoplay loop muted plays-inline class="back-vid">
-        <source src="../assets/HomepageVid.mp4" type="video/webm" />
+        <source src="/img/logo-home/HomepageVid.mp4" type="video/webm" />
       </video>
       <div class="content">
-        <img src="../assets/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
+        <img src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
         <router-link to="/contact" class="book-btn">Book Now</router-link>
       </div>
     </div>
@@ -80,7 +80,7 @@ const personalPhotos = [
           <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="../assets/icons/playIcon.png" /></div>
+            <div class="play"><img src="/img/logo-home/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -93,7 +93,7 @@ const personalPhotos = [
           <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
             :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="../assets/icons/playIcon.png" /></div>
+            <div class="play"><img src="/img/logo-home/icons/playIcon.png" /></div>
           </div>
         </div>
         <div class="work-description commercial-description" v-scrollanimation>
@@ -133,7 +133,7 @@ const personalPhotos = [
           <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play notPlayable"><img src="../assets/icons/playIcon.png" /></div>
+            <div class="play notPlayable"><img src="/img/logo-home/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -154,7 +154,7 @@ const personalPhotos = [
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
         <div class="about-person noah" v-scrollanimation>
-          <img class="pic-person" src="../assets/noah.jpg" alt="Picture of Noah Ike" />
+          <img class="pic-person" src="/img/logo-home/noah.jpg" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -177,7 +177,7 @@ const personalPhotos = [
               initial planning to final post-production, I absolutely love bringing ideas and
               visions to life by putting all the pieces together.</p>
           </div>
-          <img class="pic-person" src="../assets/reagan.jpg" alt="Picture of Reagan Berce" />
+          <img class="pic-person" src="/img/logo-home/reagan.jpg" alt="Picture of Reagan Berce" />
         </div>
       </div>
     </section>
@@ -387,7 +387,7 @@ body {
   padding-bottom: 2%;
   padding-left: 4%;
   padding-right: 4%;
-  background-image: url(../assets/bannerPhoto.png);
+  background-image: url(/img/logo-home/bannerPhoto.png);
   background-position: center top;
   /* Center the background image */
   background-repeat: no-repeat;

@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const vidPackages = [
   {
     name: 'Ceremony',
-    price: '$1000',
+    price: '$1400',
     image: '/img/weddings/vid-ceremony.png',
     description: {
       p1: 'Entire ceremony video',
@@ -12,27 +13,18 @@ const vidPackages = [
     }
   },
   {
-    name: 'Bronze',
-    price: '$1400',
-    image: '/img/weddings/vid-bronze.png',
-    description: {
-      p1: '3-5 min highlight video',
-      p2: '6 hrs coverage',
-    }
-  },
-  {
     name: 'Silver',
-    price: '$1800',
+    price: '$2000',
     image: '/img/weddings/vid-silver.png',
     description: {
       p1: '4-6 min highlight video',
       p2: 'Drone Footage',
-      p3: '8 hrs coverage',
+      p3: '6 hrs coverage',
     }
   },
   {
     name: 'Gold',
-    price: '$2200',
+    price: '$2600',
     image: '/img/weddings/vid-gold.png',
     description: {
       p1: '4-6 min highlight video',
@@ -53,7 +45,6 @@ const vidPackages = [
       p4: 'Vows included',
       p5: '5 min raw footage',
       p6: 'Speeches as separate video',
-      p7: 'Live stream available',
     }
   },
 ]
@@ -61,7 +52,7 @@ const vidPackages = [
 const photoPackages = [
   {
     name: 'Engagement',
-    price: '$500',
+    price: '$250',
     image: '/img/weddings/photo-engagement.jpg',
     description: {
       p1: 'Entire ceremony video',
@@ -69,7 +60,7 @@ const photoPackages = [
     }
   },
   {
-    name: 'Bronze',
+    name: 'Silver',
     price: '$1300',
     image: '/img/weddings/photo-bronze.jpg',
     description: {
@@ -78,7 +69,7 @@ const photoPackages = [
     }
   },
   {
-    name: 'Silver',
+    name: 'Gold',
     price: '$1600',
     image: '/img/weddings/photo-silver.jpg',
     description: {
@@ -88,7 +79,7 @@ const photoPackages = [
     }
   },
   {
-    name: 'Gold',
+    name: 'Diamond',
     price: '$2000',
     image: '/img/weddings/photo-gold.jpg',
     description: {
@@ -101,6 +92,20 @@ const photoPackages = [
   },
 ]
 
+const service = ref('');
+const pack = ref('');
+
+const router = useRouter();
+
+const redirectToContact = (serviceSelected, packSelected) => {
+  router.push({
+    name: 'contact',
+    query: {
+      service: serviceSelected,
+      package: packSelected,
+    },
+  });
+};
 </script>
 
 <template>
@@ -108,13 +113,16 @@ const photoPackages = [
     <div class="heading">
       <div class="background"></div>
       <h1 class="title">Our Wedding Offerings</h1>
-      <p class="subtitle">Experience the magic of your wedding day through our cinematic storytelling. Our team blends creativity with professionalism, ensuring every moment is beautifully preserved for you to relive.</p>
+      <p class="subtitle">Experience the magic of your wedding day through our cinematic storytelling. Our team blends
+        creativity with professionalism, ensuring every moment is beautifully preserved for you to relive.</p>
     </div>
 
     <div class="package-section video-packages">
       <h2 class="section-title">Videography Packages</h2>
       <p class="section-description">
-        Discover a range of thoughtfully curated packages that resonate with your desires. Should you find any package not quite hitting the mark, don't hesitate to ask about our extra enhancements. We're here to make your unique requests a reality and create the perfect package just for you!
+        Discover a range of thoughtfully curated packages that resonate with your desires. Should you find any package not
+        quite hitting the mark, don't hesitate to ask about our extra enhancements. We're here to make your unique
+        requests a reality and create the perfect package just for you!
       </p>
       <div class="package-cards">
         <div v-for="(pack, index) in vidPackages" :key="index" class="package-card">
@@ -126,7 +134,8 @@ const photoPackages = [
               <li v-for="(point, idx) in pack.description" :key="idx">{{ point }}</li>
             </ul>
             <div class="card-footer">
-              <button class="book-now-button">Book Now</button>
+              <button class="book-now-button" @click="redirectToContact('Wedding Videography', pack.name)">Book
+                Now</button>
             </div>
           </div>
         </div>
@@ -138,7 +147,10 @@ const photoPackages = [
     <div class="package-section photo-packages">
       <h2 class="section-title">Photography Packages</h2>
       <p class="section-description">
-        Capture the beauty of your special day with our exceptional photography packages. Our skilled photographers will artfully document every moment, ensuring your memories are transformed into timeless works of art. Explore our carefully crafted packages below, and don't hesitate to inquire about customizations to perfectly match your vision.
+        Capture the beauty of your special day with our exceptional photography packages. Our skilled photographers will
+        artfully document every moment, ensuring your memories are transformed into timeless works of art. Explore our
+        carefully crafted packages below, and don't hesitate to inquire about customizations to perfectly match your
+        vision.
       </p>
       <div class="package-cards">
         <div v-for="(pack, index) in photoPackages" :key="index" class="package-card">
@@ -156,14 +168,10 @@ const photoPackages = [
         </div>
       </div>
     </div>
-
-    <div class="gap"></div>
   </div>
-
 </template>
 
 <style scoped>
-
 .page-container {
   padding-top: 50px;
   position: relative;
@@ -227,19 +235,23 @@ const photoPackages = [
   text-align: center;
   padding: 20px;
   flex-grow: 1;
-  min-width: calc(15% - 10px); /* Adjust the width accordingly */
-  max-width: calc(15% - 10px); /* Adjust the width accordingly */
+  min-width: calc(15% - 10px);
+  /* Adjust the width accordingly */
+  max-width: calc(15% - 10px);
+  /* Adjust the width accordingly */
   margin-bottom: 20px;
 }
 
 .package-name {
+  color: #1d3051;
   font-size: 24px;
   margin: 10px 0;
 }
 
 .package-image {
   width: 100%;
-  height: 200px; /* Set a fixed height for consistent dimensions */
+  height: 200px;
+  /* Set a fixed height for consistent dimensions */
   object-fit: cover;
   border-radius: 8px;
   margin-bottom: 15px;
@@ -294,4 +306,32 @@ const photoPackages = [
 .gap {
   height: 30vh;
 }
+
+@media (min-width: 480px) and (max-width: 1200px) {
+  .package-card {
+    min-width: calc(33.33% - 10px);
+    max-width: calc(33.33% - 10px);
+  }
+  .package-cards {
+    margin-bottom: 0;
+  }
+  .gap {
+    height: 0;
+  }
+}
+
+/* New styling for mobile-sized screens */
+@media (max-width: 480px) {
+  .package-card {
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .package-cards {
+    margin-bottom: 0;
+  }
+  .gap {
+    height: 0;
+  }
+}
+
 </style>

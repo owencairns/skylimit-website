@@ -1,14 +1,10 @@
 import { createApp, Directive } from "vue";
-import { createRouter, createWebHashHistory } from 'vue-router';
+import { createRouter, createWebHistory } from 'vue-router';
 import "./style.css";
 
-/* import the fontawesome core */
 import { library } from '@fortawesome/fontawesome-svg-core'
-/* import font awesome icon component */
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-/* import specific icons */
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
-
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
@@ -24,11 +20,14 @@ import CommercialPackages from './components/CommercialPackages.vue'
 import Portfolio from './components/portfolio.vue'
 import PortfolioLanding from './components/portfolioLanding.vue'
 import WeddingPortfolio from './components/WeddingPortfolio.vue'
+import PersonalPortfolio from './components/PersonalPortfolio.vue'
 
 import scrollanimation from "./directives/scrollanimation";
+
+import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './firebaseConfig'
 
-const myComponentRoutes = [
+const routes = [
     {
         path: '/',
         component: Home
@@ -63,15 +62,26 @@ const myComponentRoutes = [
                 path: 'weddings',
                 component: WeddingPortfolio,
             },
+            {
+                path: 'personal',
+                component: PersonalPortfolio,
+            },
         ],
     },
     {
         path: '/contact',
-        component: Contact
-    },
+        name: 'contact',
+        component: Contact,
+    }
 ];
 
-const router = createRouter({ routes: myComponentRoutes, history: createWebHashHistory() });
+const router = createRouter({
+    history: createWebHistory(),
+    routes
+});
+
+// Initialize Firebase
+initializeApp(firebaseConfig);
 
 createApp(App)
     .directive('scrollanimation', scrollanimation)

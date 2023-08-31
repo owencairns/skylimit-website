@@ -1,33 +1,53 @@
 <script setup>
 import { ref, onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { getFirestore, doc, setDoc } from 'firebase/firestore'
+
+const db = getFirestore();
 
 const name = ref('');
 const email = ref('');
 const message = ref('');
+const service = ref('');
+const pack = ref('');
 
 const nameFocus = ref(false);
 const emailFocus = ref(false);
 const msgFocus = ref(false);
+const serviceFocus = ref(false);
+const packageFocus = ref(false);
 
 const showPopup = ref(false);
 
 const handleNameFocus = () => {
-  nameFocus.value = true
+  nameFocus.value = true;
 }
 const handleEmailFocus = () => {
-  emailFocus.value = true
+  emailFocus.value = true;
 }
 const handleMsgFocus = () => {
-  msgFocus.value = true
+  msgFocus.value = true;
+}
+const handleServiceFocus = () => {
+  serviceFocus.value = true;
+}
+const handlePackageFocus = () => {
+  packageFocus.value = true;
 }
 const handleNameBlur = () => {
-  nameFocus.value = false
+  nameFocus.value = false;
 }
 const handleEmailBlur = () => {
-  emailFocus.value = false
+  emailFocus.value = false;
 }
 const handleMsgBlur = () => {
-  msgFocus.value = false
+  msgFocus.value = false;
+}
+const handleServiceBlur = () => {
+  serviceFocus.value = false;
+}
+const handlePackageBlur = () => {
+  packageFocus.value = false;
 }
 
 const adjustTextareaHeight = () => {
@@ -36,20 +56,19 @@ const adjustTextareaHeight = () => {
   textarea.style.height = textarea.scrollHeight + 'px';
 }
 
-const submitForm = () => {
-
-  console.log(name.value);
-  console.log(email.value);
-  console.log(message.value);
-
-  name.value = ''
-  email.value = ''
-  message.value = ''
-
-  showPopup.value = true;
-};
+const router = useRouter();
 
 onMounted(() => {
+  const queryService = router.currentRoute.value.query.service;
+  const queryPackage = router.currentRoute.value.query.package;
+
+  if (queryService) {
+    service.value = queryService.toString();
+  }
+  if (queryPackage) {
+    pack.value = queryPackage.toString();
+  }
+
   const handleClickOutsidePopup = (event) => {
     const popupWindow = document.querySelector('.popup-window');
     if (popupWindow && !popupWindow.contains(event.target)) {
@@ -59,6 +78,74 @@ onMounted(() => {
 
   document.addEventListener('click', handleClickOutsidePopup);
 });
+
+const submitForm = async () => {
+  //connect to firestore database and create a new document in the contact and email collections
+  const docRef = doc(db, 'contact', email.value);
+  await setDoc(docRef, {
+    name: name.value,
+    email: email.value,
+    message: message.value,
+    service: service.value,
+    package: pack.value,
+  });
+
+  const emailRef = doc(db, 'mail', email.value);
+  await setDoc(emailRef, {
+    to: ['skylimitvisuals@gmail.com'],
+    message: {
+      subject: 'CONTACT FORM SUBMISSION',
+      html: `
+      <!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .email-container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f7f7f7;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .info-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="header">
+            <h2>Customer Contact Information</h2>
+        </div>
+        <p><span class="info-label">Customer Name:</span> ${name.value}</p>
+        <p><span class="info-label">Email:</span> ${email.value}</p>
+        <p><span class="info-label">Package & Service of Interest:</span> ${service.value} - ${pack.value}</p>
+        <p><span class="info-label">Message:</span> ${message.value}</p>
+    </div>
+</body>
+</html>
+      `,
+    }
+  });
+
+  // Clear the form fields and show the popup
+  name.value = '';
+  email.value = '';
+  message.value = '';
+  service.value = '';
+  pack.value = '';
+
+  showPopup.value = true;
+};
+
 
 </script>
 
@@ -85,7 +172,7 @@ onMounted(() => {
           </div>
           <div class="method-container">
             <div class="label">Phone</div>
-            <div class="number">123-456-7890</div>
+            <div class="number">(616) 805-9578</div>
           </div>
         </div>
         <div class="email">
@@ -110,29 +197,49 @@ onMounted(() => {
             <input v-model="name" type="text" id="name" @focus="handleNameFocus" @blur="handleNameBlur" required />
           </div>
           <div class="form-group">
-          <label for="service" class="dropdown-label">Service That Interests You</label>
-          <select v-model="selected" class="package-select">
-            <option disabled value="">Please Select</option>
-            <option>Wedding</option>
-            <option>Commercial</option>
-            <option>Personal</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div v-if="selected === 'Wedding'" class="form-group">
-      <label for="package">Package</label>
-      <select v-model="selectedPackage" class="package-select">
-        <option disabled value="">Please Select</option>
-        <option>Ceremony</option>
-        <option>Bronze</option>
-        <option>Silver</option>
-        <option>Gold</option>
-        <option>Diamond</option>
-      </select>
-    </div>
-          <div class="form-group">
             <label for="email" :class="{ 'active': email || emailFocus }">Email Address</label>
             <input v-model="email" type="email" id="email" @focus="handleEmailFocus" @blur="handleEmailBlur" required />
+          </div>
+          <div class="form-group">
+            <label for="service" class="dropdown-label" :class="{ 'active': service || serviceFocus }">
+              Service That Interests You
+              <span class="dropdown-arrow"></span>
+            </label>
+            <select v-model="service" class="package-select" @focus="handleServiceFocus" @blur="handleServiceBlur">
+              <option disabled value=""></option>
+              <option>Wedding Videography</option>
+              <option>Wedding Photography</option>
+              <option>Commercial</option>
+              <option>Personal</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div v-if="service === 'Wedding Videography'" class="form-group">
+            <label for="package" class="dropdown-label" :class="{ 'active': pack || packageFocus }">Package
+              <span class="dropdown-arrow"></span>
+            </label>
+            <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
+              <option disabled value=""></option>
+              <option>Ceremony</option>
+              <option>Bronze</option>
+              <option>Silver</option>
+              <option>Gold</option>
+              <option>Diamond</option>
+              <option>Not Sure</option>
+            </select>
+          </div>
+          <div v-if="service === 'Wedding Photography'" class="form-group">
+            <label for="package" class="dropdown-label" :class="{ 'active': pack || packageFocus }">Package
+              <span class="dropdown-arrow"></span>
+            </label>
+            <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
+              <option disabled value=""></option>
+              <option>Engagement</option>
+              <option>Bronze</option>
+              <option>Silver</option>
+              <option>Gold</option>
+              <option>Not Sure</option>
+            </select>
           </div>
           <div class="form-group">
             <label for="message" :class="{ 'active': message || msgFocus }">Message</label>
@@ -157,27 +264,21 @@ onMounted(() => {
 <style scoped>
 .background-container {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -2;
 }
 
 .background {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   z-index: -2;
 }
 
 .gradient-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   background: #1d3051cc;
@@ -186,19 +287,16 @@ onMounted(() => {
 }
 
 .page-container {
-  padding-top: 100px;
-  position: fixed;
-  top: 0;
-  left: 0;
+  padding-top: 50px;
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 100px;
 }
 
 .heading {
-  width: 90%;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -208,6 +306,7 @@ onMounted(() => {
 h2 {
   color: #fff;
   font-size: 3rem;
+  margin-bottom: 10px;
 }
 
 .contact-msg {
@@ -217,7 +316,6 @@ h2 {
 .contact-container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   width: 80%;
   margin-top: 50px;
 }
@@ -252,11 +350,6 @@ h2 {
   fill: #1d3051;
 }
 
-.contact-info {
-  display: flex;
-  flex-direction: column;
-}
-
 .label {
   color: #00bcd4;
   font-size: 1.4rem;
@@ -270,7 +363,6 @@ h2 {
   margin-left: 0;
 }
 
-
 .contact-form {
   width: 50%;
 }
@@ -278,7 +370,6 @@ h2 {
 form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
@@ -286,7 +377,7 @@ form {
 
 .form-heading {
   color: #1d3051;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 20px;
 }
@@ -304,17 +395,18 @@ label {
   margin-left: 2px;
   transform: translateY(35px);
   transition: all 0.2s ease-out;
-  cursor: pointer;
+  cursor: text;
 }
 
 .dropdown-label {
+  display: flex;
+  align-items: center;
   color: #1d3051;
   font-size: 1rem;
   margin-bottom: 5px;
-  margin-left: 2px;
   cursor: pointer;
-  transform: translateY(5px);
   transition: all 0.2s ease-out;
+  z-index: 1;
 }
 
 label.active {
@@ -329,21 +421,36 @@ textarea {
   font-size: 1rem;
   outline: none;
   border-bottom: 2px solid #777;
-  cursor: pointer;
+  cursor: text;
   resize: none;
   overflow: hidden;
 }
 
 .package-select {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  border: 1px solid #00bcd4;
+  z-index: 2;
+  background-color: transparent;
+  padding: 10px 0;
+  border: none;
+  border-bottom: 2px solid #777;
   font-size: 1rem;
   outline: none;
   cursor: pointer;
-  resize: none;
-  overflow: hidden;
+  color: #1d3051;
   appearance: none;
+}
+
+.dropdown-arrow {
+  width: 0;
+  height: 0;
+  border: 4px solid transparent;
+  border-top-color: #1d3051;
+  margin-left: 5px;
+  transition: transform 0.2s ease-out;
+  /* Add transition for smooth animation */
+}
+
+.dropdown-label.active .dropdown-arrow {
+  transform: rotate(180deg);
 }
 
 textarea {
@@ -395,4 +502,29 @@ button {
   filter: blur(4px);
   background-color: rgba(0, 0, 0, 0.5);
 }
+
+/* For tablet devices (landscape mode), keep page heading the same, stack contact form on top of phone and email, center horizontall, width 100%*/
+@media (max-width: 1024px) {
+  .contact-container {
+    flex-direction: column-reverse;
+    width: 80%;
+    align-items: center;
+  }
+
+  .contact-form {
+    width: 100%;
+    margin-bottom: 50px;
+  }
+
+  .direct-contacts {
+    align-items: left;
+    margin-bottom: 50px;
+  }
+
+  .phone,
+  .email {
+    justify-content: center;
+  }
+}
+
 </style>

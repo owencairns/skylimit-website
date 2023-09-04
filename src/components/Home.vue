@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
 const weddingVideos = [
   {
@@ -142,7 +141,7 @@ const personalPhotos = [
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
         <div class="about-person noah" v-scrollanimation>
-          <img class="pic-person" src="/img/logo-home/noah.jpg" alt="Picture of Noah Ike" />
+          <img class="pic-person" src="/img/logo-home/NoahPic.jpg" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -163,7 +162,7 @@ const personalPhotos = [
               significant moments to life. My goal is to tell stories, capture those important
               moments, and make the process effortless for our clients.</p>
           </div>
-          <img class="pic-person" src="/img/logo-home/reagan.jpg" alt="Picture of Reagan Berce" />
+          <img class="pic-person" src="/img/logo-home/ReaganPic.jpg" alt="Picture of Reagan Berce" />
         </div>
       </div>
     </section>
@@ -438,9 +437,9 @@ const personalPhotos = [
 
 
 .pic-person {
-  width: 30%;
+  width: 40%;
   height: auto;
-  border-radius: 30%;
+  border-radius: 10px;
 }
 
 .name {

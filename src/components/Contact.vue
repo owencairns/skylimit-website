@@ -241,6 +241,19 @@ const submitForm = async () => {
               <option>Not Sure</option>
             </select>
           </div>
+          <div v-if="service === 'Personal'" class="form-group">
+            <label for="package" class="dropdown-label" :class="{ 'active': pack || packageFocus }">Package
+              <span class="dropdown-arrow"></span>
+            </label>
+            <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
+              <option disabled value=""></option>
+              <option>Professional Headshots</option>
+              <option>Senior Photography</option>
+              <option>Personal Photo Shoot</option>
+              <option>Family Photography</option>
+              <option>Not Sure</option>
+            </select>
+          </div>
           <div class="form-group">
             <label for="message" :class="{ 'active': message || msgFocus }">Message</label>
             <textarea v-model="message" type="text" id="message" maxlength="1000" @input="adjustTextareaHeight"
@@ -415,6 +428,7 @@ label.active {
 
 input,
 textarea {
+  font-family: inherit;
   padding-bottom: 10px;
   padding-top: 10px;
   border: none;

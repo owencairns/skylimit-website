@@ -4,17 +4,17 @@ import { ref } from 'vue';
 const images = [
   {
     category: 'Commercial Media',
-    source: '/img/commercial/perrin.jpg',
+    source: '/img/commercial/comport7.jpg',
     link: '/packages/commercial'
   },
   {
     category: 'Weddings',
-    source: '/img/weddings/wedport5.JPG',
+    source: '/img/weddings/wedport2.JPG',
     link: '/packages/weddings'
   },
   {
     category: 'Personal',
-    source: '/img/personal/personalport1.jpg',
+    source: '/img/personal/personalport2.jpg',
     link: '/packages/personal'
   }
 ]

@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
@@ -39,42 +40,41 @@ const slides = [
 
 const videoGallery = [
     {
-        id: 1,
+        id: 0,
         thumbnail: '/img/weddings/wedport1.jpg',
         title: 'The Weilers',
-        path: 'https://www.youtube.com/embed/Ti5LsNt5j5s?si=B0xzC9MKIUqsa786?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
+        path: 'Ti5LsNt5j5s?si=B0xzC9MKIUqsa786'
+    },
+    {
+        id: 1,
+        thumbnail: '/img/weddings/MeganRiley.png',
+        title: 'Megan and Riley',
+        path: 'IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw'
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/MeganRiley.png',
-        title: 'Megan and Riley',
-        path: 'https://www.youtube.com/embed/IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
+        thumbnail: '/img/weddings/NikEmily.png',
+        title: 'Nik and Emily',
+        path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/NikEmily.png',
-        title: 'Nik and Emily',
-        path: 'https://www.youtube.com/embed/hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
-    },
-    {
-        id: 4,
         thumbnail: '/img/weddings/MarissaBrandon.png',
         title: 'Marissa and Brandon'
     },
     {
-        id: 5,
+        id: 4,
         thumbnail: '/img/weddings/EmilyBrandon.png',
         title: 'Emily and Brandon',
-        path: 'https://www.youtube.com/embed/hwgM8605WC4?si=9bezYQ0q4qEaPL83;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
+        path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
     },
     {
-        id: 6,
+        id: 5,
         thumbnail: '/img/weddings/ErinBrad.png',
         title: 'Erin and Brad'
     },
 ];
 
-//photo gallery for 12 photos
 const photoGallery = [
     {
         id: 1,
@@ -126,6 +126,12 @@ const photoGallery = [
     }
 ];
 
+const activeVideo = ref(null);
+
+const loadVideo = (item) => {
+    activeVideo.value = item.id;
+};
+
 </script>
 
 
@@ -151,14 +157,15 @@ const photoGallery = [
         <section class="favorites-section video">
             <h2>Wedding Videography</h2>
             <div class="grid-container">
-                <div class="grid-item" v-for="item in videoGallery" :key="item.id">
-                    <vue-plyr :options="{
+                <div class="grid-item" v-for="item in videoGallery" :key="item.id" @click="loadVideo(item)">
+                    <img class="grid-image" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <vue-plyr v-if="activeVideo === item.id" :options="{
+                        playsinline: true,
                         controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen']
                     }">
-                        <div class="plyr__video-embed">
-                            <iframe :src="item.path" allowfullscreen allowtransparency></iframe>
-                        </div>
+                        <div :poster="item.thumbnail" data-plyr-provider="youtube" :data-plyr-embed-id="item.path"></div>
                     </vue-plyr>
+                    <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
         </section>

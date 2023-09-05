@@ -51,7 +51,7 @@ const personalPhotos = [
   <div class="page-container">
     <div class="hero">
       <video autoplay loop muted playsinline class="back-vid">
-        <source src="/img/logo-home/HomePageVid.mp4" type="video/mp4" />
+        <source src="/img/logo-home/HomeVid.mp4" type="video/mp4" />
       </video>
       <div class="content">
         <img src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />

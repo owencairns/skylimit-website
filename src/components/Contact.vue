@@ -235,9 +235,9 @@ const submitForm = async () => {
             <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
               <option disabled value=""></option>
               <option>Engagement</option>
-              <option>Bronze</option>
               <option>Silver</option>
               <option>Gold</option>
+              <option>Diamond</option>
               <option>Not Sure</option>
             </select>
           </div>

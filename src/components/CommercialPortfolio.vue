@@ -56,7 +56,7 @@ const gallery = [
     {
         id: 3,
         thumbnail: '/img/commercial/comvid1.png',
-        title: 'Jory Strong Event 1'
+        title: 'Praire Bells Barn Event'
     },
     {
         id: 4,

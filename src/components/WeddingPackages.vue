@@ -36,15 +36,16 @@ const vidPackages = [
   },
   {
     name: 'Diamond',
-    price: '$3000',
+    price: '$3400',
     image: '/img/weddings/vid-diamond.png',
     description: {
       p1: '5-8 min highlight video',
       p2: 'Drone Footage',
       p3: '9 hrs coverage',
-      p4: 'Vows included',
-      p5: '5 min raw footage',
-      p6: 'Speeches as separate video',
+      p4: 'Full Ceremony Video',
+      p5: 'Vows included',
+      p6: '5 min raw footage',
+      p7: 'Speeches as separate video',
     }
   },
 ]
@@ -52,42 +53,39 @@ const vidPackages = [
 const photoPackages = [
   {
     name: 'Engagement',
-    price: '$250',
+    price: '$700',
     image: '/img/weddings/photo-engagement.jpg',
     description: {
-      p1: 'Entire ceremony video',
-      p2: '2 camera angles',
+      p1: '30 Engagement Pictures',
+      p2: '2 hrs coverage',
     }
   },
   {
     name: 'Silver',
-    price: '$1300',
-    image: '/img/weddings/photo-bronze.jpg',
+    price: '$1700',
+    image: '/img/weddings/photo-silver.jpg',
     description: {
-      p1: '3-5 min highlight video',
+      p1: '500 picture minimum',
       p2: '6 hrs coverage',
     }
   },
   {
     name: 'Gold',
-    price: '$1600',
-    image: '/img/weddings/photo-silver.jpg',
+    price: '$2000',
+    image: '/img/weddings/photo-gold.jpg',
     description: {
-      p1: '4-6 min highlight video',
-      p2: 'Drone Footage',
-      p3: '8 hrs coverage',
+      p1: '700 picture minimum',
+      p2: '8 hrs coverage',
     }
   },
   {
     name: 'Diamond',
-    price: '$2000',
-    image: '/img/weddings/photo-gold.jpg',
+    price: '$2400',
+    image: '/img/weddings/photo-diamond.jpg',
     description: {
-      p1: '4-6 min highlight video',
-      p2: 'Drone Footage',
+      p1: '800 picture minimum',
+      p2: 'Engagement shoot included',
       p3: '9 hrs coverage',
-      p4: 'Vows included',
-      p5: '5 min raw footage'
     }
   },
 ]
@@ -162,7 +160,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
               <li v-for="(point, idx) in pack.description" :key="idx">{{ point }}</li>
             </ul>
             <div class="card-footer">
-              <button class="book-now-button">Book Now</button>
+              <button class="book-now-button" @click="redirectToContact('Wedding Photography', pack.name)">Book Now</button>
             </div>
           </div>
         </div>

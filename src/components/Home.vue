@@ -51,7 +51,7 @@ const personalPhotos = [
   <div class="page-container">
     <div class="hero">
       <video autoplay loop muted playsinline class="back-vid">
-        <source src="/img/logo-home/HomepageVid.mp4" type="video/mp4" />
+        <source src="/img/logo-home/HomePageVid.mp4" type="video/mp4" />
       </video>
       <div class="content">
         <img src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
@@ -93,8 +93,8 @@ const personalPhotos = [
         </div>
         <div class="work-description commercial-description" v-scrollanimation>
           <h3 class="section-heading"><b>Commercial</b></h3>
-          <p class="section-description">Elevate your brand with our captivating short form videos. We showcase your
-            products, whether snacks or beverages, leaving a lasting impact on your audience. With excellence as our
+          <p class="section-description">Elevate your brand with our captivating video and photo services. We showcase your
+            products to leave a lasting impact on your audience. With excellence as our
             commitment, we provide creative freedom to bring your vision to life. Our experienced team collaborates to
             align content with your brand's identity. Discover the power of our expertise and elevate your brand to new
             heights.</p>

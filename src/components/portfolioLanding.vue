@@ -58,7 +58,7 @@ const images = [
 
 .card {
   position: relative;
-  width: 350px;
+  width: 30vw;
   height: 70vh;
   margin: 10px;
   overflow: hidden;

@@ -37,21 +37,24 @@ const slides = [
     },
 ];
 
-const gallery = [
+const videoGallery = [
     {
         id: 1,
         thumbnail: '/img/weddings/wedport1.jpg',
-        title: 'The Weilers'
+        title: 'The Weilers',
+        path: 'https://www.youtube.com/embed/Ti5LsNt5j5s?si=B0xzC9MKIUqsa786?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
     },
     {
         id: 2,
         thumbnail: '/img/weddings/MeganRiley.png',
-        title: 'Megan and Riley'
+        title: 'Megan and Riley',
+        path: 'https://www.youtube.com/embed/IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
     },
     {
         id: 3,
         thumbnail: '/img/weddings/NikEmily.png',
-        title: 'Nik and Emily'
+        title: 'Nik and Emily',
+        path: 'https://www.youtube.com/embed/hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-?amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
     },
     {
         id: 4,
@@ -61,7 +64,8 @@ const gallery = [
     {
         id: 5,
         thumbnail: '/img/weddings/EmilyBrandon.png',
-        title: 'Emily and Brandon'
+        title: 'Emily and Brandon',
+        path: 'https://www.youtube.com/embed/hwgM8605WC4?si=9bezYQ0q4qEaPL83;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'
     },
     {
         id: 6,
@@ -147,9 +151,14 @@ const photoGallery = [
         <section class="favorites-section video">
             <h2>Wedding Videography</h2>
             <div class="grid-container">
-                <div class="grid-item" v-for="item in gallery" :key="item.id">
-                    <img :src="item.thumbnail" :alt="item.title" class="grid-image" />
-                    <div class="image-description">{{ item.title }}</div>
+                <div class="grid-item" v-for="item in videoGallery" :key="item.id">
+                    <vue-plyr :options="{
+                        controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen']
+                    }">
+                        <div class="plyr__video-embed">
+                            <iframe :src="item.path" allowfullscreen allowtransparency></iframe>
+                        </div>
+                    </vue-plyr>
                 </div>
             </div>
         </section>
@@ -217,6 +226,7 @@ swiper-slide {
 }
 
 .favorites-section {
+    width: 90%;
     text-align: center;
     padding: 50px 5%;
 }
@@ -237,9 +247,6 @@ swiper-slide {
 
 .grid-item {
     position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
@@ -259,18 +266,22 @@ swiper-slide {
     border-radius: 8px;
 }
 
+vue-plyr {
+    z-index: 999;
+}
+
 .video .image-description {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #1d3051;
     font-weight: bold;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    transform: translateY(100%);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transform: translateY(-100%);
     transition: transform 0.3s ease;
 }
 
@@ -308,6 +319,7 @@ swiper-slide {
     /* 2 items per row for smaller screens */
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
+        row-gap: 25px;
     }
 }
 
@@ -319,6 +331,7 @@ swiper-slide {
 
     .grid-container {
         grid-template-columns: repeat(1, 1fr);
+        row-gap: 25px;
     }
 }
 </style>

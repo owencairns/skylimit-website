@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
@@ -45,25 +46,35 @@ const slides = [
 const gallery = [
     {
         id: 1,
-        thumbnail: '/img/commercial/comport5.jpg',
-        title: 'Quickwater Coffee'
+        thumbnail: '/img/commercial/comvid4.png',
+        title: 'Quickwater Coffee',
+        path: '/img/commercial/QuickwaterCoffee.mp4'
     },
     {
         id: 2,
-        thumbnail: '/img/commercial/comport1.jpg',
-        title: 'Pop Daddy Pretzels'
+        thumbnail: '/img/commercial/comvid3.png',
+        title: 'Pop Daddy Pretzels',
+        path: '/img/commercial/PopDaddy.mp4'
     },
     {
         id: 3,
         thumbnail: '/img/commercial/comvid1.png',
-        title: 'Praire Bells Barn Event'
+        title: 'Praire Bells Barn Event',
+        path: '/img/commercial/PraireBellsEvent.mp4'
     },
     {
         id: 4,
         thumbnail: '/img/commercial/comvid2.png',
-        title: 'Jory Strong Event 2'
+        title: 'Jory Strong Event',
+        path: '/img/commercial/JoryStrongEvent.mp4'
     },
 ];
+
+const activeVideo = ref(null);
+
+const loadVideo = (item) => {
+    activeVideo.value = item.id;
+};
 
 </script>
 
@@ -90,8 +101,17 @@ const gallery = [
         <section class="favorites-section">
             <h2>Our Favorites</h2>
             <div class="grid-container">
-                <div class="grid-item" v-for="item in gallery" :key="item.id">
-                    <img :src="item.thumbnail" :alt="item.title" class="grid-image" />
+                <div class="grid-item" v-for="item in gallery" :key="item.id" @click="loadVideo(item)">
+                    <img class="grid-image" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <div v-if="activeVideo === item.id">
+                        <vue-plyr class="grid-image"
+                            :options="{ controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'] }">
+                            <video controls>
+                                <source :src="item.path" type="video/mp4" />
+                                Your browser does not support the video tag.
+                            </video>
+                        </vue-plyr>
+                    </div>
                     <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
@@ -149,6 +169,7 @@ swiper-slide {
 }
 
 .favorites-section {
+    width: 90%;
     text-align: center;
     padding: 50px 5%;
 }
@@ -178,6 +199,8 @@ swiper-slide {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
+/* Add this style to hide the placeholder image when video is active */
+
 .grid-item:hover {
     transform: scale(1.05);
     box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
@@ -187,21 +210,22 @@ swiper-slide {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    overflow: hidden;
     border-radius: 8px;
 }
 
 .image-description {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     width: 100%;
     padding: 10px;
     background-color: rgba(255, 255, 255, 0.9);
     color: #1d3051;
     font-weight: bold;
-    border-bottom-left-radius: 8px;
-    border-bottom-right-radius: 8px;
-    transform: translateY(100%);
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    transform: translateY(-100%);
     transition: transform 0.3s ease;
 }
 
@@ -239,6 +263,7 @@ swiper-slide {
     /* 2 items per row for smaller screens */
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
+        row-gap: 25px;
     }
 }
 
@@ -247,6 +272,7 @@ swiper-slide {
     /* 1 item per row for narrowest screens */
     .grid-container {
         grid-template-columns: repeat(1, 1fr);
+        row-gap: 25px;
     }
 }
 </style>

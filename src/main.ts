@@ -1,4 +1,4 @@
-import { createApp, Directive } from "vue";
+import { createApp } from "vue";
 import { createRouter, createWebHistory } from 'vue-router';
 import "./style.css";
 
@@ -6,6 +6,9 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faTimes } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faFacebook } from '@fortawesome/free-brands-svg-icons'
+
+import VuePlyr from 'vue-plyr'
+import 'vue-plyr/dist/vue-plyr.css'
 
 /* add icons to the library */
 library.add(faTimes, faInstagram, faFacebook)
@@ -97,4 +100,7 @@ createApp(App)
     .directive('scrollanimation', scrollanimation)
     .component("font-awesome-icon", FontAwesomeIcon)
     .use(router)
+    .use(VuePlyr, {
+        plyr: {}
+    })
     .mount("#app");

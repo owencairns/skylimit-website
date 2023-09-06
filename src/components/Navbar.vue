@@ -253,7 +253,6 @@ li {
     .mobile-nav-icon {
         display: block;
         cursor: pointer;
-        padding-right: 20px;
         z-index: 999;
         padding-bottom: 8px;
     }

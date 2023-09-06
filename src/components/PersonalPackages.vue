@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
+
+onBeforeMount(() => {
+  window.scrollTo(0, 0); // Scrolls to the top of the page
+});
 
 const photoPackages = [
   {

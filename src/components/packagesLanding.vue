@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { ref } from 'vue';
 
 const images = [
   {
@@ -128,6 +127,7 @@ const images = [
 
 /* Mobile styles */
 @media (max-width: 480px) {
+
   .landing-page {
     flex-direction: column;
   }

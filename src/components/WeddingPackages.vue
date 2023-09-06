@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
+
+onBeforeMount(() => {
+  window.scrollTo(0, 0); // Scrolls to the top of the page
+});
 
 const vidPackages = [
   {
@@ -53,11 +57,11 @@ const vidPackages = [
 const photoPackages = [
   {
     name: 'Engagement',
-    price: '$700',
+    price: '$250',
     image: '/img/weddings/photo-engagement.jpg',
     description: {
       p1: '30 Engagement Pictures',
-      p2: '2 hrs coverage',
+      p2: '1 hr coverage',
     }
   },
   {
@@ -160,7 +164,8 @@ const redirectToContact = (serviceSelected, packSelected) => {
               <li v-for="(point, idx) in pack.description" :key="idx">{{ point }}</li>
             </ul>
             <div class="card-footer">
-              <button class="book-now-button" @click="redirectToContact('Wedding Photography', pack.name)">Book Now</button>
+              <button class="book-now-button" @click="redirectToContact('Wedding Photography', pack.name)">Book
+                Now</button>
             </div>
           </div>
         </div>
@@ -172,7 +177,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
 <style scoped>
 .page-container {
   padding-top: 50px;
-  position: relative;
+  position: absolute;
   background-color: #1d30514b
 }
 
@@ -310,9 +315,11 @@ const redirectToContact = (serviceSelected, packSelected) => {
     min-width: calc(33.33% - 10px);
     max-width: calc(33.33% - 10px);
   }
+
   .package-cards {
     margin-bottom: 0;
   }
+
   .gap {
     height: 0;
   }
@@ -324,12 +331,12 @@ const redirectToContact = (serviceSelected, packSelected) => {
     min-width: 100%;
     max-width: 100%;
   }
+
   .package-cards {
     margin-bottom: 0;
   }
+
   .gap {
     height: 0;
   }
-}
-
-</style>
+}</style>

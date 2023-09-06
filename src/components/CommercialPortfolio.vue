@@ -1,9 +1,13 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 // import function to register Swiper custom elements
 import { register } from 'swiper/element/bundle';
 // register Swiper custom elements
 register();
+
+onBeforeMount(() => {
+  window.scrollTo(0, 0); // Scrolls to the top of the page
+});
 
 const slides = [
     {

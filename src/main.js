@@ -1,6 +1,7 @@
 import { createApp } from "vue";
 import { createRouter, createWebHistory } from 'vue-router';
 import "./style.css";
+import { inject } from '@vercel/analytics';
 
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -92,6 +93,8 @@ const router = createRouter({
     history: createWebHistory(),
     routes
 });
+
+inject();
 
 // Initialize Firebase
 initializeApp(firebaseConfig);

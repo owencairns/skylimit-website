@@ -74,7 +74,7 @@ const photoPackages = [
     price: '$2000',
     image: '/img/weddings/photo-gold.jpg',
     description: {
-      p1: '700 picture minimum',
+      p1: '600 picture minimum',
       p2: '8 hrs coverage',
     }
   },

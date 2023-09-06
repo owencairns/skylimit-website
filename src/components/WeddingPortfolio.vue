@@ -41,9 +41,9 @@ const slides = [
 const videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/weddings/wedport1.jpg',
-        title: 'The Weilers',
-        path: 'Ti5LsNt5j5s?si=B0xzC9MKIUqsa786'
+        thumbnail: '/img/weddings/AlyssaBailey.png',
+        title: 'Alyssa and Bailey',
+        path: 'Ti5LsNt5j5s?si=B0xzC9MKIUqsa786',
     },
     {
         id: 1,
@@ -60,7 +60,8 @@ const videoGallery = [
     {
         id: 3,
         thumbnail: '/img/weddings/MarissaBrandon.png',
-        title: 'Marissa and Brandon'
+        title: 'Marissa and Brandon',
+        path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
     },
     {
         id: 4,
@@ -71,7 +72,8 @@ const videoGallery = [
     {
         id: 5,
         thumbnail: '/img/weddings/ErinBrad.png',
-        title: 'Erin and Brad'
+        title: 'Erin and Brad',
+        path: 'uZFoiCfyPWs?si=fU5fo5SAORnAHreQ'
     },
 ];
 
@@ -156,16 +158,22 @@ const loadVideo = (item) => {
 
         <section class="favorites-section video">
             <h2>Wedding Videography</h2>
-            <div class="grid-container">
+            <div class="grid-container video">
                 <div class="grid-item" v-for="item in videoGallery" :key="item.id" @click="loadVideo(item)">
-                    <img class="grid-image" v-if="activeVideo !== item.id" :src="item.thumbnail" />
-                    <vue-plyr v-if="activeVideo === item.id" :options="{
-                        playsinline: true,
-                        controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen']
-                    }">
-                        <div :poster="item.thumbnail" data-plyr-provider="youtube" :data-plyr-embed-id="item.path"></div>
-                    </vue-plyr>
-                    <div class="image-description">{{ item.title }}</div>
+                    <img class="grid-image grid-image16x9" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <div v-if="activeVideo === item.id">
+                        <vue-plyr :options="{
+                            controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'],
+                            fullscreen: { enabled: true, fallback: true, iosNative: true },
+                        }">
+                            <div class="plyr__video-embed" id="player">
+                                <iframe
+                                    :src="'https://www.youtube.com/embed/' + item.path + '?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'"
+                                    allowfullscreen allowtransparency allow="autoplay" :poster="item.thumbnail"></iframe>
+                            </div>
+                        </vue-plyr>
+                        <div class="image-description">{{ item.title }}</div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -248,8 +256,13 @@ swiper-slide {
 .grid-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
-    grid-auto-rows: minmax(250px, auto);
     grid-gap: 15px;
+}
+
+.grid-container.video {
+    grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
+    column-gap: 25px;
+    row-gap: 25px;
 }
 
 .grid-item {
@@ -271,10 +284,6 @@ swiper-slide {
     height: 100%;
     object-fit: cover;
     border-radius: 8px;
-}
-
-vue-plyr {
-    z-index: 999;
 }
 
 .video .image-description {
@@ -313,23 +322,6 @@ vue-plyr {
     text-align: center;
 }
 
-@media (min-width: 768px) {
-
-    /* 3 items per row for medium and larger screens */
-    .grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(25vw, 1fr));
-    }
-}
-
-@media (max-width: 767px) {
-
-    /* 2 items per row for smaller screens */
-    .grid-container {
-        grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
-        row-gap: 25px;
-    }
-}
-
 @media (max-width: 480px) {
 
     swiper-container {
@@ -339,6 +331,10 @@ vue-plyr {
     .grid-container {
         grid-template-columns: repeat(1, 1fr);
         row-gap: 25px;
+    }
+
+    .grid-container.video {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 </style>

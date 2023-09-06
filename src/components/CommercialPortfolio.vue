@@ -111,8 +111,8 @@ const loadVideo = (item) => {
                                 Your browser does not support the video tag.
                             </video>
                         </vue-plyr>
+                        <div class="image-description">{{ item.title }}</div>
                     </div>
-                    <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
         </section>

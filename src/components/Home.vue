@@ -122,7 +122,6 @@ const personalPhotos = [
           <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play notPlayable"><img src="/img/logo-home/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -330,24 +329,6 @@ const personalPhotos = [
   justify-content: center;
   opacity: 0;
   transition: 0.4s ease opacity;
-}
-
-.video-item:hover .play {
-  cursor: pointer;
-  opacity: 1;
-}
-
-.video-item:hover .play.notPlayable {
-  cursor: pointer;
-  opacity: 0;
-}
-
-.play img {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  height: 20%;
-  width: auto;
 }
 
 .work-content {

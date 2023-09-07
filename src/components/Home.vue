@@ -87,7 +87,6 @@ const personalPhotos = [
           <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
             :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="/img/logo-home/icons/playIcon.webp" /></div>
           </div>
         </div>
         <div class="work-description commercial-description" v-scrollanimation>

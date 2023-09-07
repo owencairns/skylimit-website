@@ -24,7 +24,7 @@ const hideMobileNav = () => {
         <nav class="nav-container">
             <div class="branding">
                 <router-link to="/" class="logo" @click="hideMobileNav">
-                    <img src="/img/logo-home/slv-logo-icon.png" />
+                    <img src="/img/logo-home/slv-logo-icon.webp" />
                 </router-link>
                 <img src="/img/logo-home/skylimit-oneline.svg" class="logo-name">
             </div>

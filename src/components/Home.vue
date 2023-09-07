@@ -3,45 +3,45 @@
 const weddingVideos = [
   {
     id: 1,
-    thumbnail: '/img/weddings/homevidthumb2.jpg',
+    thumbnail: '/img/weddings/homevidthumb2.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/weddings/homevidthumb3.jpg',
+    thumbnail: '/img/weddings/homevidthumb3.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/weddings/homevidthumb4.jpg',
+    thumbnail: '/img/weddings/homevidthumb4.webp',
   }
 ]
 
 const commercialVideos = [
   {
     id: 1,
-    thumbnail: '/img/commercial/commercialThumb1.jpg',
+    thumbnail: '/img/commercial/commercialThumb1.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/commercial/commercialThumb2.jpg',
+    thumbnail: '/img/commercial/commercialThumb2.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/commercial/commercialThumb3.jpg',
+    thumbnail: '/img/commercial/commercialThumb3.webp',
   }
 ];
 
 const personalPhotos = [
   {
     id: 1,
-    thumbnail: '/img/personal/personalthumbnail1.jpg',
+    thumbnail: '/img/personal/personalthumbnail1.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/personal/personalthumbnail2.jpg',
+    thumbnail: '/img/personal/personalthumbnail2.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/personal/personalthumbnail3.jpg',
+    thumbnail: '/img/personal/personalthumbnail3.webp',
   }
 ];
 
@@ -76,7 +76,6 @@ const personalPhotos = [
           <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="/img/logo-home/icons/playIcon.png" /></div>
           </div>
         </div>
       </div>
@@ -88,12 +87,13 @@ const personalPhotos = [
           <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
             :class="'video-item-' + index" v-scrollanimation>
             <img :src="video.thumbnail" />
-            <div class="play"><img src="/img/logo-home/icons/playIcon.png" /></div>
+            <div class="play"><img src="/img/logo-home/icons/playIcon.webp" /></div>
           </div>
         </div>
         <div class="work-description commercial-description" v-scrollanimation>
           <h3 class="section-heading"><b>Commercial</b></h3>
-          <p class="section-description">Elevate your brand with our captivating video and photo services. We showcase your
+          <p class="section-description">Elevate your brand with our captivating video and photo services. We showcase
+            your
             products to leave a lasting impact on your audience. With excellence as our
             commitment, we provide creative freedom to bring your vision to life. Our experienced team collaborates to
             align content with your brand's identity. Discover the power of our expertise and elevate your brand to new
@@ -140,7 +140,7 @@ const personalPhotos = [
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
         <div class="about-person noah" v-scrollanimation>
-          <img class="pic-person" src="/img/logo-home/Noah.jpg" alt="Picture of Noah Ike" />
+          <img class="pic-person" src="/img/logo-home/Noah.webp" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -161,7 +161,7 @@ const personalPhotos = [
               significant moments to life. My goal is to tell stories, capture those important
               moments, and make the process effortless for our clients.</p>
           </div>
-          <img class="pic-person" src="/img/logo-home/Reagan.jpg" alt="Picture of Reagan Berce" />
+          <img class="pic-person" src="/img/logo-home/Reagan.webp" alt="Picture of Reagan Berce" />
         </div>
       </div>
     </section>
@@ -356,7 +356,7 @@ const personalPhotos = [
   /* Center vertically */
   justify-content: center;
   /* Center horizontally */
-  background-image: url(/img/logo-home/bannerPhoto.png);
+  background-image: url(/img/logo-home/bannerPhoto.webp);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;

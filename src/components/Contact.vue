@@ -152,7 +152,7 @@ const submitForm = async () => {
 <template>
   <div class="background-container">
     <div class="gradient-overlay"></div>
-    <img src="/img/logo-home/contactBG.jpg" alt="background image" class="background">
+    <img src="/img/logo-home/contactBG.webp" alt="background image" class="background">
   </div>
   <div class="page-container" :class="{ 'popup-active': showPopup }">
     <div class="heading">

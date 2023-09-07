@@ -12,32 +12,32 @@ onBeforeMount(() => {
 const slides = [
     {
         id: 1,
-        thumbnail: '/img/personal/personalport8.jpg',
+        thumbnail: '/img/personal/personalport8.webp',
         title: 'Personal 1'
     },
     {
         id: 2,
-        thumbnail: '/img/personal/personalport15.jpg',
+        thumbnail: '/img/personal/personalport15.webp',
         title: 'Personal 2'
     },
     {
         id: 3,
-        thumbnail: '/img/personal/personalport2.jpg',
+        thumbnail: '/img/personal/personalport2.webp',
         title: 'Personal 3'
     },
     {
         id: 4,
-        thumbnail: '/img/personal/personalport5.jpg',
+        thumbnail: '/img/personal/personalport5.webp',
         title: 'Personal 4'
     },
     {
         id: 5,
-        thumbnail: '/img/personal/personalport7.jpg',
+        thumbnail: '/img/personal/personalport7.webp',
         title: 'Personal 5'
     },
     {
         id: 6,
-        thumbnail: '/img/personal/personalport13.jpg',
+        thumbnail: '/img/personal/personalport13.webp',
         title: 'Personal 6'
     },
 ];
@@ -46,63 +46,63 @@ const slides = [
 const photoGallery = [
     {
         id: 1,
-        thumbnail: '/img/personal/personalport1.jpg',
+        thumbnail: '/img/personal/personalport1.webp',
     },
     {
         id: 2,
-        thumbnail: '/img/personal/personalport2.jpg',
+        thumbnail: '/img/personal/personalport2.webp',
     },
     {
         id: 3,
-        thumbnail: '/img/personal/personalport3.jpg',
+        thumbnail: '/img/personal/personalport3.webp',
     },
     {
         id: 4,
-        thumbnail: '/img/personal/personalport4.jpg',
+        thumbnail: '/img/personal/personalport4.webp',
     },
     {
         id: 5,
-        thumbnail: '/img/personal/personalport5.jpg',
+        thumbnail: '/img/personal/personalport5.webp',
     },
     {
         id: 6,
-        thumbnail: '/img/personal/personalport6.jpg',
+        thumbnail: '/img/personal/personalport6.webp',
     },
     {
         id: 7,
-        thumbnail: '/img/personal/personalport7.jpg',
+        thumbnail: '/img/personal/personalport7.webp',
     },
     {
         id: 8,
-        thumbnail: '/img/personal/personalport8.jpg',
+        thumbnail: '/img/personal/personalport8.webp',
     },
     {
         id: 9,
-        thumbnail: '/img/personal/personalport9.jpg',
+        thumbnail: '/img/personal/personalport9.webp',
     },
     {
         id: 10,
-        thumbnail: '/img/personal/personalport10.jpg',
+        thumbnail: '/img/personal/personalport10.webp',
     },
     {
         id: 11,
-        thumbnail: '/img/personal/personalport11.jpg',
+        thumbnail: '/img/personal/personalport11.webp',
     },
     {
         id: 12,
-        thumbnail: '/img/personal/personalport12.jpg',
+        thumbnail: '/img/personal/personalport12.webp',
     },
     {
         id: 13,
-        thumbnail: '/img/personal/personalport13.jpg',
+        thumbnail: '/img/personal/personalport13.webp',
     },
     {
         id: 14,
-        thumbnail: '/img/personal/personalport14.jpg',
+        thumbnail: '/img/personal/personalport14.webp',
     },
     {
         id: 15,
-        thumbnail: '/img/personal/personalport15.jpg',
+        thumbnail: '/img/personal/personalport15.webp',
     },
 ];
 

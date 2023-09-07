@@ -12,32 +12,32 @@ onBeforeMount(() => {
 const slides = [
     {
         id: 1,
-        thumbnail: '/img/weddings/wedport1.jpg',
+        thumbnail: '/img/weddings/wedport1.webp',
         title: 'Wedding 1'
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/wedport2.JPG',
+        thumbnail: '/img/weddings/wedport2.webp',
         title: 'Wedding 2'
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/wedport3.JPG',
+        thumbnail: '/img/weddings/wedport3.webp',
         title: 'Wedding 3'
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/wedport4.JPG',
+        thumbnail: '/img/weddings/wedport4.webp',
         title: 'Wedding 4'
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/wedport5.JPG',
+        thumbnail: '/img/weddings/wedport5.webp',
         title: 'Wedding 5'
     },
     {
         id: 6,
-        thumbnail: '/img/weddings/wedport6.JPG',
+        thumbnail: '/img/weddings/wedport6.webp',
         title: 'Wedding 6'
     },
 ];
@@ -45,37 +45,37 @@ const slides = [
 const videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/weddings/AlyssaBailey.png',
+        thumbnail: '/img/weddings/AlyssaBailey.webp',
         title: 'Alyssa and Bailey',
         path: 'Ti5LsNt5j5s?si=B0xzC9MKIUqsa786',
     },
     {
         id: 1,
-        thumbnail: '/img/weddings/MeganRiley.png',
+        thumbnail: '/img/weddings/MeganRiley.webp',
         title: 'Megan and Riley',
         path: 'IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw'
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/NikEmily.png',
+        thumbnail: '/img/weddings/NikEmily.webp',
         title: 'Nik and Emily',
         path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/MarissaBrandon.png',
+        thumbnail: '/img/weddings/MarissaBrandon.webp',
         title: 'Marissa and Brandon',
         path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/EmilyBrandon.png',
+        thumbnail: '/img/weddings/EmilyBrandon.webp',
         title: 'Emily and Brandon',
         path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/ErinBrad.png',
+        thumbnail: '/img/weddings/ErinBrad.webp',
         title: 'Erin and Brad',
         path: 'uZFoiCfyPWs?si=fU5fo5SAORnAHreQ'
     },
@@ -84,51 +84,51 @@ const videoGallery = [
 const photoGallery = [
     {
         id: 1,
-        thumbnail: '/img/weddings/wedphoto1.jpeg',
+        thumbnail: '/img/weddings/wedphoto1.webp',
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/wedphoto2.jpeg',
+        thumbnail: '/img/weddings/wedphoto2.webp',
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/wedphoto3.jpeg',
+        thumbnail: '/img/weddings/wedphoto3.webp',
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/wedphoto4.jpeg',
+        thumbnail: '/img/weddings/wedphoto4.webp',
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/wedphoto5.jpeg',
+        thumbnail: '/img/weddings/wedphoto5.webp',
     },
     {
         id: 6,
-        thumbnail: '/img/weddings/wedphoto6.jpeg',
+        thumbnail: '/img/weddings/wedphoto6.webp',
     },
     {
         id: 7,
-        thumbnail: '/img/weddings/wedphoto7.jpeg',
+        thumbnail: '/img/weddings/wedphoto7.webp',
     },
     {
         id: 8,
-        thumbnail: '/img/weddings/wedphoto8.jpeg',
+        thumbnail: '/img/weddings/wedphoto8.webp',
     },
     {
         id: 9,
-        thumbnail: '/img/weddings/wedphoto9.jpeg',
+        thumbnail: '/img/weddings/wedphoto9.webp',
     },
     {
         id: 10,
-        thumbnail: '/img/weddings/wedphoto10.jpeg',
+        thumbnail: '/img/weddings/wedphoto10.webp',
     },
     {
         id: 11,
-        thumbnail: '/img/weddings/wedphoto11.jpeg',
+        thumbnail: '/img/weddings/wedphoto11.webp',
     },
     {
         id: 12,
-        thumbnail: '/img/weddings/wedphoto12.jpeg',
+        thumbnail: '/img/weddings/wedphoto12.webp',
     }
 ];
 

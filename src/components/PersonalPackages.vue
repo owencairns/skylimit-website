@@ -10,7 +10,7 @@ const photoPackages = [
   {
     name: 'Professional Headshots',
     price: '$100',
-    image: '/img/personal/personalpack1.jpeg',
+    image: '/img/personal/personalpack1.webp',
     description: {
       p1: 'Nature or City themed backrounds',
       p2: '5 Picture Minimum',
@@ -19,7 +19,7 @@ const photoPackages = [
   {
     name: 'Senior Photography',
     price: '$150',
-    image: '/img/personal/personalpack2.jpeg',
+    image: '/img/personal/personalpack2.webp',
     description: {
       p1: '30 Picture Minimum',
       p2: '2 Locations within 10 mile radius',
@@ -29,7 +29,7 @@ const photoPackages = [
   {
     name: 'Personal Photo Shoot',
     price: '$200',
-    image: '/img/personal/personalpack3.jpeg',
+    image: '/img/personal/personalpack3.webp',
     description: {
       p1: '30 Picture Minimum',
       p2: '1 Hour Maximum',
@@ -38,7 +38,7 @@ const photoPackages = [
   {
     name: 'Family Photography',
     price: '$250',
-    image: '/img/personal/personalpack4.jpeg',
+    image: '/img/personal/personalpack4.webp',
     description: {
       p1: '30 Picture Minimum',
       p2: '1 Location',

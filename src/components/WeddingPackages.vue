@@ -10,7 +10,7 @@ const vidPackages = [
   {
     name: 'Ceremony',
     price: '$1400',
-    image: '/img/weddings/vid-ceremony.png',
+    image: '/img/weddings/vid-ceremony.webp',
     description: {
       p1: 'Entire ceremony video',
       p2: '2 camera angles',
@@ -19,7 +19,7 @@ const vidPackages = [
   {
     name: 'Silver',
     price: '$2000',
-    image: '/img/weddings/vid-silver.png',
+    image: '/img/weddings/vid-silver.webp',
     description: {
       p1: '4-6 min highlight video',
       p2: 'Drone Footage',
@@ -29,7 +29,7 @@ const vidPackages = [
   {
     name: 'Gold',
     price: '$2600',
-    image: '/img/weddings/vid-gold.png',
+    image: '/img/weddings/vid-gold.webp',
     description: {
       p1: '4-6 min highlight video',
       p2: 'Drone Footage',
@@ -41,7 +41,7 @@ const vidPackages = [
   {
     name: 'Diamond',
     price: '$3400',
-    image: '/img/weddings/vid-diamond.png',
+    image: '/img/weddings/vid-diamond.webp',
     description: {
       p1: '5-8 min highlight video',
       p2: 'Drone Footage',
@@ -58,7 +58,7 @@ const photoPackages = [
   {
     name: 'Engagement',
     price: '$250',
-    image: '/img/weddings/photo-engagement.jpg',
+    image: '/img/weddings/photo-engagement.webp',
     description: {
       p1: '30 Engagement Pictures',
       p2: '1 hr coverage',
@@ -67,7 +67,7 @@ const photoPackages = [
   {
     name: 'Silver',
     price: '$1700',
-    image: '/img/weddings/photo-silver.jpg',
+    image: '/img/weddings/photo-silver.webp',
     description: {
       p1: '500 picture minimum',
       p2: '6 hrs coverage',
@@ -76,7 +76,7 @@ const photoPackages = [
   {
     name: 'Gold',
     price: '$2000',
-    image: '/img/weddings/photo-gold.jpg',
+    image: '/img/weddings/photo-gold.webp',
     description: {
       p1: '600 picture minimum',
       p2: '8 hrs coverage',
@@ -85,7 +85,7 @@ const photoPackages = [
   {
     name: 'Diamond',
     price: '$2400',
-    image: '/img/weddings/photo-diamond.jpg',
+    image: '/img/weddings/photo-diamond.webp',
     description: {
       p1: '800 picture minimum',
       p2: 'Engagement shoot included',

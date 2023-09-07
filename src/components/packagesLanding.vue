@@ -3,17 +3,17 @@
 const images = [
   {
     category: 'Commercial Media',
-    source: '/img/commercial/comport7.jpg',
+    source: '/img/commercial/comport7.webp',
     link: '/packages/commercial'
   },
   {
     category: 'Weddings',
-    source: '/img/weddings/wedport2.JPG',
+    source: '/img/weddings/wedport2.webp',
     link: '/packages/weddings'
   },
   {
     category: 'Personal',
-    source: '/img/personal/personalport2.jpg',
+    source: '/img/personal/personalport2.webp',
     link: '/packages/personal'
   }
 ]

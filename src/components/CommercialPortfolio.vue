@@ -12,37 +12,37 @@ onBeforeMount(() => {
 const slides = [
     {
         id: 1,
-        thumbnail: '/img/commercial/comport1.jpg',
+        thumbnail: '/img/commercial/comport1.webp',
         title: 'Commercial Image 1'
     },
     {
         id: 2,
-        thumbnail: '/img/commercial/comport2.jpg',
+        thumbnail: '/img/commercial/comport2.webp',
         title: 'Commercial Image 2'
     },
     {
         id: 3,
-        thumbnail: '/img/commercial/comport3.jpg',
+        thumbnail: '/img/commercial/comport3.webp',
         title: 'Commercial Image 3'
     },
     {
         id: 4,
-        thumbnail: '/img/commercial/comport4.jpg',
+        thumbnail: '/img/commercial/comport4.webp',
         title: 'Commercial Image 4'
     },
     {
         id: 5,
-        thumbnail: '/img/commercial/comport5.jpg',
+        thumbnail: '/img/commercial/comport5.webp',
         title: 'Commercial Image 5'
     },
     {
         id: 6,
-        thumbnail: '/img/commercial/comport6.jpg',
+        thumbnail: '/img/commercial/comport6.webp',
         title: 'Commercial Image 6'
     },
     {
         id: 7,
-        thumbnail: '/img/commercial/comport7.jpg',
+        thumbnail: '/img/commercial/comport7.webp',
         title: 'Commercial Image 7'
     },
 ];
@@ -50,25 +50,25 @@ const slides = [
 const gallery = [
     {
         id: 1,
-        thumbnail: '/img/commercial/comvid4.png',
+        thumbnail: '/img/commercial/comvid4.webp',
         title: 'Quickwater Coffee',
         path: '/img/commercial/QuickwaterCoffee.mp4'
     },
     {
         id: 2,
-        thumbnail: '/img/commercial/comvid3.png',
+        thumbnail: '/img/commercial/comvid3.webp',
         title: 'Pop Daddy Pretzels',
         path: '/img/commercial/PopDaddy.mp4'
     },
     {
         id: 3,
-        thumbnail: '/img/commercial/comvid1.png',
+        thumbnail: '/img/commercial/comvid1.webp',
         title: 'Praire Bells Barn Event',
         path: '/img/commercial/PraireBellsEvent.mp4'
     },
     {
         id: 4,
-        thumbnail: '/img/commercial/comvid2.png',
+        thumbnail: '/img/commercial/comvid2.webp',
         title: 'Jory Strong Event',
         path: '/img/commercial/JoryStrongEvent.mp4'
     },

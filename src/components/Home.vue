@@ -54,7 +54,7 @@ const personalPhotos = [
         <source src="/img/logo-home/HomeVid.mp4" type="video/mp4" />
       </video>
       <div class="content">
-        <img src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
+        <img loading="lazy" src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
         <router-link to="/contact" class="book-btn">Book Now</router-link>
       </div>
     </div>
@@ -75,7 +75,7 @@ const personalPhotos = [
         <div class="video-grid">
           <div v-for="(video, index) in weddingVideos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
-            <img :src="video.thumbnail" />
+            <img loading="lazy" :src="video.thumbnail" />
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@ const personalPhotos = [
         <div class="video-grid">
           <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
             :class="'video-item-' + index" v-scrollanimation>
-            <img :src="video.thumbnail" />
+            <img loading="lazy" :src="video.thumbnail" />
           </div>
         </div>
         <div class="work-description commercial-description" v-scrollanimation>
@@ -120,7 +120,7 @@ const personalPhotos = [
         <div class="video-grid">
           <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index"
             v-scrollanimation>
-            <img :src="video.thumbnail" />
+            <img loading="lazy" :src="video.thumbnail" />
           </div>
         </div>
       </div>
@@ -139,7 +139,7 @@ const personalPhotos = [
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
         <div class="about-person noah" v-scrollanimation>
-          <img class="pic-person" src="/img/logo-home/Noah.webp" alt="Picture of Noah Ike" />
+          <img loading="lazy" class="pic-person" src="/img/logo-home/Noah.webp" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -160,7 +160,7 @@ const personalPhotos = [
               significant moments to life. My goal is to tell stories, capture those important
               moments, and make the process effortless for our clients.</p>
           </div>
-          <img class="pic-person" src="/img/logo-home/Reagan.webp" alt="Picture of Reagan Berce" />
+          <img loading="lazy" class="pic-person" src="/img/logo-home/Reagan.webp" alt="Picture of Reagan Berce" />
         </div>
       </div>
     </section>

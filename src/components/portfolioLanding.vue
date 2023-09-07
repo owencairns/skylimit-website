@@ -27,7 +27,7 @@ const images = [
       <div v-for="(image, index) in images" :key="index" class="card">
         <router-link :to="image.link" class="card-link">
           <div class="image-wrapper">
-            <img :src="image.source" :alt="image.category" class="image" />
+            <img loading="lazy" :src="image.source" :alt="image.category" class="image" />
             <div class="overlay">{{ image.category }}</div>
           </div>
         </router-link>

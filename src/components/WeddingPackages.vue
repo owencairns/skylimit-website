@@ -129,7 +129,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
       <div class="package-cards">
         <div v-for="(pack, index) in vidPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img :src="pack.image" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
@@ -157,7 +157,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
       <div class="package-cards">
         <div v-for="(pack, index) in photoPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img :src="pack.image" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">

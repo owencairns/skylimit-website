@@ -110,6 +110,8 @@ const photoGallery = [
 
 
 <template>
+
+    <link rel="preload" as="image" href="/img/personal/personalport7">
     <div class="content-container">
         <h1 class="weddings-title">Personal Photography Gallery</h1>
 
@@ -123,7 +125,7 @@ const photoGallery = [
 }">
             <swiper-slide v-for="slide in slides" :key="slide.id">
                 <div class="slide-wrapper">
-                    <img :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
+                    <img loading="lazy" :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
                 </div>
             </swiper-slide>
         </swiper-container>
@@ -132,7 +134,7 @@ const photoGallery = [
             <h2>Our Favorites</h2>
             <div class="grid-container">
                 <div class="grid-item" v-for="item in photoGallery" :key="item.id">
-                    <img :src="item.thumbnail" :alt="item.title" class="grid-image" />
+                    <img loading="lazy" :src="item.thumbnail" :alt="item.title" class="grid-image" />
                     <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
@@ -140,7 +142,7 @@ const photoGallery = [
     </div>
 
     <div class="bottom-logo">
-        <img src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
+        <img loading="lazy" src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
   

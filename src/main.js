@@ -31,6 +31,7 @@ import scrollanimation from "./directives/scrollanimation";
 
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from './firebaseConfig'
+import { getAnalytics } from "firebase/analytics";
 
 const routes = [
     {
@@ -103,4 +104,5 @@ createApp(App)
     .use(VuePlyr, {
         plyr: {}
     })
+    .use(getAnalytics)
     .mount("#app");

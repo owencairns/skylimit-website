@@ -155,7 +155,7 @@ const loadVideo = (item) => {
 }">
             <swiper-slide v-for="slide in slides" :key="slide.id">
                 <div class="slide-wrapper">
-                    <img :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
+                    <img loading="lazy" :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
                 </div>
             </swiper-slide>
         </swiper-container>
@@ -164,7 +164,7 @@ const loadVideo = (item) => {
             <h2>Wedding Videography</h2>
             <div class="grid-container video">
                 <div class="grid-item" v-for="item in videoGallery" :key="item.id" @click="loadVideo(item)">
-                    <img class="grid-image grid-image16x9" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <img loading="lazy" class="grid-image grid-image16x9" v-if="activeVideo !== item.id" :src="item.thumbnail" />
                     <div v-if="activeVideo === item.id">
                         <vue-plyr :options="{
                             controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'],
@@ -186,7 +186,7 @@ const loadVideo = (item) => {
             <h2>Wedding Photography</h2>
             <div class="grid-container">
                 <div class="grid-item" v-for="item in photoGallery" :key="item.id">
-                    <img :src="item.thumbnail" :alt="item.title" class="grid-image" />
+                    <img loading="lazy" :src="item.thumbnail" :alt="item.title" class="grid-image" />
                     <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
@@ -194,7 +194,7 @@ const loadVideo = (item) => {
     </div>
 
     <div class="bottom-logo">
-        <img src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
+        <img loading="lazy" src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
   

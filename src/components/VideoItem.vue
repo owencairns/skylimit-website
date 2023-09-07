@@ -1,6 +1,6 @@
 <template>
     <div class="grid-item" @click="playVideo">
-        <img class="grid-image" :src="item.thumbnail" />
+        <img loading="lazy" class="grid-image" :src="item.thumbnail" />
         <vue-plyr v-if="isActive" :options="plyrOptions">
             <div :poster="item.thumbnail" data-plyr-provider="youtube" :data-plyr-embed-id="item.path"></div>
         </vue-plyr>

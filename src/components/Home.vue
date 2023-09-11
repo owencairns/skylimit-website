@@ -355,7 +355,7 @@ const personalPhotos = [
   /* Center vertically */
   justify-content: center;
   /* Center horizontally */
-  background-image: url(/img/logo-home/bannerPhoto.webp);
+  background-image: url(/img/logo-home/aboutBanner.png);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;

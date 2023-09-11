@@ -1,51 +1,36 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 onBeforeMount(() => {
   window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
-const photoPackages = [
-  {
-    name: 'Professional Headshots',
-    price: '$100',
-    image: '/img/personal/personalpack1.webp',
-    description: {
-      p1: 'Nature or City themed backrounds',
-      p2: '5 Picture Minimum',
+let personalPackages = ref([]);
+
+const getPersonalPackages = async () => {
+  try {
+    const db = getFirestore();
+    const personalPackagesCol = doc(db, 'PackageDescriptions', 'Personal');
+    const personalPackagesDoc = await getDoc(personalPackagesCol);
+
+    // Check if the document exists before trying to access its data
+    if (personalPackagesDoc.exists()) {
+      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
+      personalPackages.value.push(personalPackagesDoc.data().ProfessionalHeadshots);
+      personalPackages.value.push(personalPackagesDoc.data().SeniorPhotos);
+      personalPackages.value.push(personalPackagesDoc.data().PersonalPhotoShoot);
+      personalPackages.value.push(personalPackagesDoc.data().FamilyPhotography);
+    } else {
+      console.error('WeddingVideography document does not exist');
     }
-  },
-  {
-    name: 'Senior Photography',
-    price: '$150',
-    image: '/img/personal/personalpack2.webp',
-    description: {
-      p1: '30 Picture Minimum',
-      p2: '2 Locations within 10 mile radius',
-      p3: '1 Hour Maximum',
-    }
-  },
-  {
-    name: 'Personal Photo Shoot',
-    price: '$200',
-    image: '/img/personal/personalpack3.webp',
-    description: {
-      p1: '30 Picture Minimum',
-      p2: '1 Hour Maximum',
-    }
-  },
-  {
-    name: 'Family Photography',
-    price: '$250',
-    image: '/img/personal/personalpack4.webp',
-    description: {
-      p1: '30 Picture Minimum',
-      p2: '1 Location',
-      p3: '2 Hours Maximum',
-    }
-  },
-]
+  } catch (error) {
+    console.error('Error fetching video packages:', error);
+  }
+}
+
+getPersonalPackages();
 
 const service = ref('');
 const pack = ref('');
@@ -81,7 +66,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
         requests a reality and create the perfect package just for you!
       </p>
       <div class="package-cards">
-        <div v-for="(pack, index) in photoPackages" :key="index" class="package-card">
+        <div v-for="(pack, index) in personalPackages" :key="index" class="package-card">
           <div class="card-content">
             <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>

@@ -1,9 +1,7 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-// import function to register Swiper custom elements
-import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
-register();
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 
 onBeforeMount(() => {
   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -85,22 +83,14 @@ const loadVideo = (item) => {
 
 <template>
     <div class="content-container">
-        <h1 class="weddings-title">Commercial Media Gallery</h1>
+        <h1 class="commercial-title">Commercial Media Gallery</h1>
 
-        <swiper-container navigation="true" effect="coverflow" loop="true" autoplay-delay="2000" initialSlide="2"
-            :slidesPerView="'auto'" :centeredSlides="true" :spaceBetween="-50" :pagination="{
-                clickable: true,
-            }" :coverflowEffect="{
-    depth: 0,
-    rotate: 5,
-    scale: .95,
-}">
-            <swiper-slide v-for="slide in slides" :key="slide.id">
-                <div class="slide-wrapper">
-                    <img loading="lazy" :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
-                </div>
-            </swiper-slide>
-        </swiper-container>
+        <Swiper class="swiper-container" :loop="true" :slides-per-view="'auto'"
+            :autoplay="{ delay: 2000, disableOnInteraction: false }">
+            <SwiperSlide class="swiper-slide" v-for="slide in slides" :key="slide.id">
+                <img :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
+            </SwiperSlide>
+        </Swiper>
 
         <section class="favorites-section">
             <h2>Our Favorites</h2>
@@ -138,22 +128,21 @@ const loadVideo = (item) => {
     color: #1d3051;
 }
 
-.weddings-title {
-    font-size: 3rem;
-    font-weight: 400;
-    margin-bottom: 20px;
+.commercial-title {
+    color: #fff;
+    text-shadow: #00000068 0px 0px 10px;
+    font-size: 5rem;
+    font-weight: bolder;
+    position: absolute;
+    margin-top: 100px;
+    text-transform: uppercase;
+    z-index: 1;
 }
 
-swiper-container {
-    height: 600px;
-}
-
-swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: 100%;
+.swiper-container {
+    z-index: 0;
+    width: 100%;
+    height: 400px;
     overflow: hidden;
 }
 
@@ -165,11 +154,18 @@ swiper-slide {
     height: 100%;
 }
 
-.slide-image {
-    max-width: 100%;
-    max-height: 100%;
+.swiper-wrapper {
+    width: 50%;
+}
+
+.swiper-slide {
+    text-align: center;
     width: auto;
-    height: auto;
+}
+
+.slide-image {
+    height: 400px;
+    width: auto;
 }
 
 .favorites-section {
@@ -264,6 +260,10 @@ swiper-slide {
 
 @media (min-width: 480px) and (max-width: 768px) {
 
+    .commercial-title {
+        font-size: 4rem;
+    }
+
     /* 2 items per row for smaller screens */
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
@@ -272,6 +272,10 @@ swiper-slide {
 }
 
 @media (max-width: 480px) {
+
+    .commercial-title {
+        font-size: 3rem;
+    }
 
     /* 1 item per row for narrowest screens */
     .grid-container {

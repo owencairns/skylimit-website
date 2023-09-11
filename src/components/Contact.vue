@@ -248,9 +248,9 @@ const submitForm = async () => {
             <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
               <option disabled value=""></option>
               <option>Professional Headshots</option>
-              <option>Senior Photography</option>
+              <option>Senior Photos</option>
               <option>Personal Photo Shoot</option>
-              <option>Family Photography</option>
+              <option>Family Photos</option>
               <option>Not Sure</option>
             </select>
           </div>

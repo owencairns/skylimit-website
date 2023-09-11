@@ -1,101 +1,59 @@
-<script setup lang="ts">
+<script setup lang="js">
 import { ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
+import { getFirestore, doc, getDoc } from 'firebase/firestore'
 
 onBeforeMount(() => {
   window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
-const vidPackages = [
-  {
-    name: 'Ceremony',
-    price: '$1400',
-    image: '/img/weddings/vid-ceremony.webp',
-    description: {
-      p1: 'Entire ceremony video',
-      p2: '2 camera angles',
-    }
-  },
-  {
-    name: 'Silver',
-    price: '$2000',
-    image: '/img/weddings/vid-silver.webp',
-    description: {
-      p1: '4-6 min highlight video',
-      p2: 'Drone Footage',
-      p3: '6 hrs coverage',
-    }
-  },
-  {
-    name: 'Gold',
-    price: '$2600',
-    image: '/img/weddings/vid-gold.webp',
-    description: {
-      p1: '4-6 min highlight video',
-      p2: 'Drone Footage',
-      p3: '9 hrs coverage',
-      p4: 'Vows included',
-      p5: '5 min raw footage'
-    }
-  },
-  {
-    name: 'Diamond',
-    price: '$3400',
-    image: '/img/weddings/vid-diamond.webp',
-    description: {
-      p1: '5-8 min highlight video',
-      p2: 'Drone Footage',
-      p3: '9 hrs coverage',
-      p4: 'Full Ceremony Video',
-      p5: 'Vows included',
-      p6: '5 min raw footage',
-      p7: 'Speeches as separate video',
-    }
-  },
-]
+let vidPackages = ref([]);
+let photoPackages = ref([]);
 
-const photoPackages = [
-  {
-    name: 'Engagement',
-    price: '$250',
-    image: '/img/weddings/photo-engagement.webp',
-    description: {
-      p1: '30 Engagement Pictures',
-      p2: '1 hr coverage',
-    }
-  },
-  {
-    name: 'Silver',
-    price: '$1700',
-    image: '/img/weddings/photo-silver.webp',
-    description: {
-      p1: '500 picture minimum',
-      p2: '6 hrs coverage',
-    }
-  },
-  {
-    name: 'Gold',
-    price: '$2000',
-    image: '/img/weddings/photo-gold.webp',
-    description: {
-      p1: '600 picture minimum',
-      p2: '8 hrs coverage',
-    }
-  },
-  {
-    name: 'Diamond',
-    price: '$2400',
-    image: '/img/weddings/photo-diamond.webp',
-    description: {
-      p1: '800 picture minimum',
-      p2: 'Engagement shoot included',
-      p3: '9 hrs coverage',
-    }
-  },
-]
+const getVidPackages = async () => {
+  try {
+    const db = getFirestore();
+    const vidPackagesCol = doc(db, 'PackageDescriptions', 'WeddingVideography');
+    const vidPackagesDoc = await getDoc(vidPackagesCol);
 
-const service = ref('');
-const pack = ref('');
+    // Check if the document exists before trying to access its data
+    if (vidPackagesDoc.exists()) {
+      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
+      vidPackages.value.push(vidPackagesDoc.data().Ceremony);
+      vidPackages.value.push(vidPackagesDoc.data().Silver);
+      vidPackages.value.push(vidPackagesDoc.data().Gold);
+      vidPackages.value.push(vidPackagesDoc.data().Diamond);
+    } else {
+      console.error('WeddingVideography document does not exist');
+    }
+  } catch (error) {
+    console.error('Error fetching video packages:', error);
+  }
+}
+
+const getPhotoPackages = async () => {
+  try {
+    const db = getFirestore();
+    const photoPackagesCol = doc(db, 'PackageDescriptions', 'WeddingPhotography');
+    const photoPackagesDoc = await getDoc(photoPackagesCol);
+
+    // Check if the document exists before trying to access its data
+    if (photoPackagesDoc.exists()) {
+      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
+      photoPackages.value.push(photoPackagesDoc.data().Engagement);
+      photoPackages.value.push(photoPackagesDoc.data().Silver);
+      photoPackages.value.push(photoPackagesDoc.data().Gold);
+      photoPackages.value.push(photoPackagesDoc.data().Diamond);
+    } else {
+      console.error('WeddingPhotography document does not exist');
+    }
+  } catch (error) {
+    console.error('Error fetching photo packages:', error);
+  }
+}
+
+getVidPackages();
+getPhotoPackages();
 
 const router = useRouter();
 
@@ -177,7 +135,6 @@ const redirectToContact = (serviceSelected, packSelected) => {
 <style scoped>
 .page-container {
   padding-top: 50px;
-  position: absolute;
   background-color: #1d30514b
 }
 
@@ -339,4 +296,5 @@ const redirectToContact = (serviceSelected, packSelected) => {
   .gap {
     height: 0;
   }
-}</style>
+}
+</style>

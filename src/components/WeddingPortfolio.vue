@@ -1,12 +1,10 @@
 <script setup>
 import { ref, onBeforeMount } from 'vue';
-// import function to register Swiper custom elements
-import { register } from 'swiper/element/bundle';
-// register Swiper custom elements
-register();
+import { Swiper, SwiperSlide } from 'swiper/vue';
+import 'swiper/css';
 
 onBeforeMount(() => {
-  window.scrollTo(0, 0); // Scrolls to the top of the page
+    window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
 const slides = [
@@ -143,28 +141,21 @@ const loadVideo = (item) => {
 
 <template>
     <div class="content-container">
+        <!-- Overlay the title on the Swiper component -->
         <h1 class="weddings-title">Wedding Gallery</h1>
-
-        <swiper-container navigation="true" effect="coverflow" loop="true" autoplay-delay="2000" initialSlide="1"
-            :slidesPerView="'auto'" :centeredSlides="true" :spaceBetween="-50" :pagination="{
-                clickable: true,
-            }" :coverflowEffect="{
-    depth: 0,
-    rotate: 5,
-    scale: .90,
-}">
-            <swiper-slide v-for="slide in slides" :key="slide.id">
-                <div class="slide-wrapper">
-                    <img loading="lazy" :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
-                </div>
-            </swiper-slide>
-        </swiper-container>
+        <Swiper class="swiper-container" :loop="true" :slides-per-view="'auto'"
+            :autoplay="{ delay: 2000, disableOnInteraction: false }">
+            <SwiperSlide class="swiper-slide" v-for="slide in slides" :key="slide.id">
+                <img :src="slide.thumbnail" :alt="'slide' + slide.id" class="slide-image" />
+            </SwiperSlide>
+        </Swiper>
 
         <section class="favorites-section video">
             <h2>Wedding Videography</h2>
             <div class="grid-container video">
                 <div class="grid-item" v-for="item in videoGallery" :key="item.id" @click="loadVideo(item)">
-                    <img loading="lazy" class="grid-image grid-image16x9" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <img loading="lazy" class="grid-image grid-image16x9" v-if="activeVideo !== item.id"
+                        :src="item.thumbnail" />
                     <div v-if="activeVideo === item.id">
                         <vue-plyr :options="{
                             controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'],
@@ -210,22 +201,22 @@ const loadVideo = (item) => {
 }
 
 .weddings-title {
-    font-size: 3rem;
-    font-weight: 400;
-    margin-bottom: 20px;
+    color: #fff;
+    text-shadow: #00000068 0px 0px 10px;
+    font-size: 7rem;
+    font-weight: bolder;
+    position: absolute;
+    margin-top: 100px;
+    text-transform: uppercase;
+    /* Capitalize the title */
+    z-index: 1;
+    /* Place the title above other elements */
 }
 
-swiper-container {
+.swiper-container {
+    z-index: 0;
     width: 100%;
-    height: 600px;
-}
-
-swiper-slide {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: auto;
-    height: 100%;
+    height: 400px;
     overflow: hidden;
 }
 
@@ -237,11 +228,18 @@ swiper-slide {
     height: 100%;
 }
 
-.slide-image {
-    max-width: 100%;
-    max-height: 100%;
+.swiper-wrapper {
+    width: 50%;
+}
+
+.swiper-slide {
+    text-align: center;
     width: auto;
-    height: auto;
+}
+
+.slide-image {
+    height: 400px;
+    width: auto;
 }
 
 .favorites-section {
@@ -326,10 +324,16 @@ swiper-slide {
     text-align: center;
 }
 
+@media (min-width: 480px) and (max-width: 1200px) {
+    .weddings-title {
+        font-size: 5rem;
+    }
+}
+
 @media (max-width: 480px) {
 
-    swiper-container {
-        height: 60vh;
+    .weddings-title {
+        font-size: 3rem;
     }
 
     .grid-container {

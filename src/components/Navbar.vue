@@ -1,8 +1,29 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 let scroll = ref(false)
 let mobileNavActive = ref(false)
+
+// Stuff used to find out if a user is logged in or not
+const isLoggedIn = ref(false);
+
+let auth;
+const userEmail = ref("");
+const userName = ref("");
+onMounted(() => {
+    auth = getAuth();
+    onAuthStateChanged(auth, (user) => {
+        if (user) {
+            isLoggedIn.value = true;
+            userEmail.value = auth.currentUser.email;
+            userName.value = userEmail.value.split("@")[0];
+        }
+        else {
+            isLoggedIn.value = false;
+        }
+    });
+});
 
 window.addEventListener('scroll', function () {
     if (this.window.scrollY > 0) {
@@ -37,7 +58,8 @@ const hideMobileNav = () => {
             <ul :class="{ 'mobile-nav-active': mobileNavActive }" class="navigation">
                 <li><router-link to="/" class="link" @click="hideMobileNav">Home</router-link></li>
                 <li class="dropdown link">
-                    <router-link to="/packages" class="link" :class="{'dropbtn' : !mobileNavActive}" @click="hideMobileNav">Services</router-link>
+                    <router-link to="/packages" class="link" :class="{ 'dropbtn': !mobileNavActive }"
+                        @click="hideMobileNav">Services</router-link>
                     <div v-if="!mobileNavActive" class="dropdown-content">
                         <router-link to="/packages/weddings" class="dropdown-link">Weddings</router-link>
                         <router-link to="/packages/personal" class="dropdown-link">Personal</router-link>
@@ -45,8 +67,10 @@ const hideMobileNav = () => {
                     </div>
                 </li>
                 <li><router-link to="/portfolio" class="link" @click="hideMobileNav">Portfolio</router-link></li>
-                <li class="contact-button"><router-link to="/contact" class="link contact-link"
+                <li v-if="!isLoggedIn" class="contact-button"><router-link to="/contact" class="link contact-link"
                         @click="hideMobileNav">Contact</router-link></li>
+                <li v-if="isLoggedIn" class="contact-button"><router-link to="/admin" class="link contact-link"
+                        @click="hideMobileNav">{{ userName }}</router-link></li>
             </ul>
         </nav>
     </header>

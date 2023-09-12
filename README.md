@@ -1,27 +1,62 @@
-# Launch Local Server
+# Skylimit Visuals Website
 
-```bash
-npm run dev
-```
+Welcome to the Skylimit Visuals website repository! This website is designed for Skylimit Visuals, a professional videography and photography company. This README.md file provides essential information for developers and contributors to get started with the project.
 
-Then open `localhost:XXXX` from your browser. The default port XXXX is 5173, but it may be different on your system.
+## Table of Contents
 
+- [Project Overview](#project-overview)
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
 
-# Vue 3 + TypeScript + Vite
+## Project Overview
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+The Skylimit Visuals website is built using the Vue.js framework with Vite as the build tool. It is designed to showcase the company's portfolio, services, and contact information in an engaging and visually appealing manner. This website aims to provide an immersive experience for potential clients and visitors interested in Skylimit Visuals' videography and photography services. 
 
-## Recommended IDE Setup
+## Features
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+- Home page with an introduction to Skylimit Visuals.
+- Portfolio section showcasing the company's best work.
+- Services page detailing the range of videography and photography services offered.
+- Contact page with a contact form for inquiries and a map for location information.
+- Firebase Firestore database to handle contact form and package information
+- Firebase Authentication allowing for admin access to view and change package information
+- Firebase Hosting and analytics to ensure performance and user retention
+- Responsive design to ensure a seamless experience on various devices.
+- Smooth animations and transitions to enhance the user experience.
 
-## Type Support For `.vue` Imports in TS
+## Getting Started
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+Follow the instructions below to set up the project on your local development environment.
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+### Prerequisites
 
-1. Disable the built-in TypeScript Extension
-   1. Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-   2. Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+Make sure you have the following tools installed:
+
+- Node.js: Download and install Node.js from [nodejs.org](https://nodejs.org/).
+
+### Installation
+
+1. Clone this repository to your local machine:
+
+   ```bash
+   git clone https://github.com/yourusername/skylimit-visuals-website.git
+
+2. Navigate to the project directory:
+
+   ```bash
+   cd skylimit-visuals-website
+
+3. Install the project dependencies:
+
+   ```bash
+   npm install
+
+## Usage
+
+To start the development server and view the website locally, run the following command:
+
+   ```bash
+   npm run dev

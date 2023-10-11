@@ -43,9 +43,9 @@ const slides = [
 const videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/weddings/AlyssaBailey.webp',
-        title: 'Alyssa and Bailey',
-        path: 'Ti5LsNt5j5s?si=B0xzC9MKIUqsa786',
+        thumbnail: '/img/weddings/RyanHailey.webp',
+        title: 'Ryan and Hailey',
+        path: '8rGu1kEfBdU?si=QTgUPUxi7og_qOty',
     },
     {
         id: 1,

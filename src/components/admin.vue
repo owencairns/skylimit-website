@@ -135,6 +135,7 @@ getPersonalPackages();
       <div class="user-info">
         <img :src="userImage" alt="User Image" class="user-img">
         <div class="heading-text">
+        
           <h1 class="admin-title">Admin Dashboard</h1>
           <h2 class="user-name">Welcome, {{ userName }}</h2>
           <button class="logout" @click="signOutUser">Sign Out</button>
@@ -163,52 +164,6 @@ getPersonalPackages();
             <div class="editable-buttons">
               <button class="save" @click="saveChanges(pack)">Save</button>
               <button @click="updateFirebase(pack, 'WeddingVideography', index)">Update Firebase</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="wedding-photo-packages">
-        <h2>Wedding Photography Packages</h2>
-        <div class="package" v-for="(pack, index) in photoPackages">
-          <div v-if="!pack.editable">
-            <h3>{{ pack.name }}</h3>
-            <p>{{ pack.price }}</p>
-            <p>{{ pack.description }}</p>
-            <button @click="enableEdit(pack)">Edit</button>
-          </div>
-          <div v-else>
-            <div class="editable-fields">
-              <input v-model="pack.name" placeholder="Package Name" />
-              <input v-model="pack.price" placeholder="Package Price" />
-              <input v-model="pack.description" placeholder="Package Description" />
-            </div>
-            <div class="editable-buttons">
-              <button class="save" @click="saveChanges(pack)">Save</button>
-              <button @click="updateFirebase(pack, 'WeddingPhotography', index)">Update Firebase</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="personal-packages">
-        <h2>Personal Packages</h2>
-        <div class="package" v-for="(pack, index) in personalPackages">
-          <div v-if="!pack.editable">
-            <h3>{{ pack.name }}</h3>
-            <p>{{ pack.price }}</p>
-            <p>{{ pack.description }}</p>
-            <button @click="enableEdit(pack)">Edit</button>
-          </div>
-          <div v-else>
-            <div class="editable-fields">
-              <input v-model="pack.name" placeholder="Package Name" />
-              <input v-model="pack.price" placeholder="Package Price" />
-              <input v-model="pack.description" placeholder="Package Description" />
-            </div>
-            <div class="editable-buttons">
-              <button class="save" @click="saveChanges(pack)">Save</button>
-              <button @click="updateFirebase(pack, 'Personal', index)">Update Firebase</button>
             </div>
           </div>
         </div>

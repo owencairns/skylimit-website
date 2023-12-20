@@ -17,20 +17,30 @@ const router = useRouter();
 
 onMounted(() => {
   auth = getAuth();
+
+  if (!auth.currentUser) {
+    router.push({ name: 'login' });
+  }
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
+      router.push({ name: 'admin' });
       userEmail.value = auth.currentUser.email;
       userName.value = userEmail.value.split('@')[0];
-      if (userName.value === 'Reagan') {
+      if (userName.value === 'Reagan' || userName.value === 'reagan') {
+        userName.value = 'Reagan';
         userImage.value = '/img/logo-home/Reagan.webp';
-      } else if (userName.value === 'Noah') {
+      } else if (userName.value === 'Noah' || userName.value === 'noah') {
+        userName.value = 'Noah';
         userImage.value = '/img/logo-home/Noah.webp';
       } else {
+        userName.value = 'Owen';
         userImage.value = '/img/logo-home/Owen.jpeg';
       }
     }
   });
 });
+
 
 const signOutUser = () => {
   signOut(auth)
@@ -43,88 +53,91 @@ const signOutUser = () => {
     });
 };
 
+const packageCategories = ['Wedding Videography', 'Wedding Photography', 'Personal'];
+
 let vidPackages = ref([]);
 let photoPackages = ref([]);
 let personalPackages = ref([]);
 
-const getVidPackages = async () => {
+const getPackageData = async (category) => {
   try {
     const db = getFirestore();
-    const vidPackagesCol = doc(db, 'PackageDescriptions', 'WeddingVideography');
-    const vidPackagesDoc = await getDoc(vidPackagesCol);
+    const packagesCol = doc(db, 'PackageDescriptions', category);
+    const packagesDoc = await getDoc(packagesCol);
 
     // Check if the document exists before trying to access its data
-    if (vidPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      vidPackages.value.push(vidPackagesDoc.data().Ceremony);
-      vidPackages.value.push(vidPackagesDoc.data().Silver);
-      vidPackages.value.push(vidPackagesDoc.data().Gold);
-      vidPackages.value.push(vidPackagesDoc.data().Diamond);
+    if (packagesDoc.exists()) {
+      if (category === 'WeddingVideography') {
+        vidPackages.value.push(...Object.values(packagesDoc.data()));
+      } else if (category === 'WeddingPhotography') {
+        photoPackages.value.push(...Object.values(packagesDoc.data()));
+      } else {
+        personalPackages.value.push(...Object.values(packagesDoc.data()));
+      }
     } else {
-      console.error('WeddingVideography document does not exist');
+      console.error('Document does not exist');
     }
   } catch (error) {
-    console.error('Error fetching video packages:', error);
-  }
-};
-
-const getPhotoPackages = async () => {
-  try {
-    const db = getFirestore();
-    const photoPackagesCol = doc(db, 'PackageDescriptions', 'WeddingPhotography');
-    const photoPackagesDoc = await getDoc(photoPackagesCol);
-
-    // Check if the document exists before trying to access its data
-    if (photoPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      photoPackages.value.push(photoPackagesDoc.data().Engagement);
-      photoPackages.value.push(photoPackagesDoc.data().Silver);
-      photoPackages.value.push(photoPackagesDoc.data().Gold);
-      photoPackages.value.push(photoPackagesDoc.data().Diamond);
-    } else {
-      console.error('WeddingPhotography document does not exist');
-    }
-  } catch (error) {
-    console.error('Error fetching photo packages:', error);
-  }
-};
-
-const getPersonalPackages = async () => {
-  try {
-    const db = getFirestore();
-    const personalPackagesCol = doc(db, 'PackageDescriptions', 'Personal');
-    const personalPackagesDoc = await getDoc(personalPackagesCol);
-
-    // Check if the document exists before trying to access its data
-    if (personalPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      personalPackages.value.push(personalPackagesDoc.data().ProfessionalHeadshots);
-      personalPackages.value.push(personalPackagesDoc.data().SeniorPhotos);
-      personalPackages.value.push(personalPackagesDoc.data().PersonalPhotoShoot);
-      personalPackages.value.push(personalPackagesDoc.data().FamilyPhotography);
-    } else {
-      console.error('WeddingVideography document does not exist');
-    }
-  } catch (error) {
-    console.error('Error fetching video packages:', error);
+    console.error('Error fetching packages:', error);
   }
 };
 
 const enableEdit = (packageItem) => {
+  // Store the original values before editing
+  packageItem.originalName = packageItem.name;
+  packageItem.originalPrice = packageItem.price;
+  packageItem.originalDescription = [...packageItem.description]; // Clone the array
   packageItem.editable = true;
 };
 
-const saveChanges = (packageItem) => {
+const discardChanges = (packageItem) => {
+  // Revert the changes made by restoring the original values
+  packageItem.name = packageItem.originalName;
+  packageItem.price = packageItem.originalPrice;
+  packageItem.description = [...packageItem.originalDescription]; // Clone the array
   packageItem.editable = false;
 };
 
+
 const updateFirebase = async (packageItem, category, index) => {
-  console.log("Not implemented")
+  try {
+    const db = getFirestore();
+    const packageDoc = doc(db, 'PackageDescriptions', category);
+
+    // Update the document with new values from packageItem
+    await updateDoc(packageDoc, {
+      [packageItem.name]: {
+        name: packageItem.name,
+        price: packageItem.price,
+        description: packageItem.description,
+        image: packageItem.image,
+      },
+    });
+
+    // Log a success message
+    console.log('Document successfully updated!');
+
+    // Update the local vidPackages array with the new values
+    vidPackages.value[index] = packageItem;
+  } catch (error) {
+    console.error('Error updating document: ', error);
+  }
+  packageItem.editable = false;
 };
 
-getVidPackages();
-getPhotoPackages();
-getPersonalPackages();
+const addBullet = (packageItem) => {
+  // add a new bullet point to the description array at the end
+  packageItem.description.push('');
+};
+
+const removeBullet = (packageItem, index) => {
+  // remove the bullet point at the given index
+  packageItem.description.splice(index, 1);
+};
+
+getPackageData('WeddingVideography');
+getPackageData('WeddingPhotography');
+getPackageData('Personal');
 </script>
 
 
@@ -135,7 +148,6 @@ getPersonalPackages();
       <div class="user-info">
         <img :src="userImage" alt="User Image" class="user-img">
         <div class="heading-text">
-        
           <h1 class="admin-title">Admin Dashboard</h1>
           <h2 class="user-name">Welcome, {{ userName }}</h2>
           <button class="logout" @click="signOutUser">Sign Out</button>
@@ -144,39 +156,124 @@ getPersonalPackages();
     </header>
 
     <!-- Content Management Section -->
-    <section class="manage-content">
-
+    <section class="manage-content 1">
+      <h2 class="section-title">Wedding Videography</h2>
       <div class="wedding-vid-packages">
-        <h2>Wedding Videography Packages</h2>
-        <div class="package" v-for="(pack, index) in vidPackages">
-          <div v-if="!pack.editable">
+        <div class="package" v-for="(pack, index) in vidPackages" :key="index">
+          <div v-if="!pack.editable" class="package-info">
+            <div class="label">Package Name:</div>
             <h3>{{ pack.name }}</h3>
+            <div class="label">Package Price:</div>
             <p>{{ pack.price }}</p>
-            <p>{{ pack.description }}</p>
-            <button @click="enableEdit(pack)">Edit</button>
+            <div class="label">Package Image Path:</div>
+            <p>{{ pack.image }}</p>
+            <div class="label">Package Description:</div>
+            <p class="bullet" v-for="(desc, descIndex) in pack.description" :key="descIndex">{{ desc }}</p>
           </div>
-          <div v-else>
-            <div class="editable-fields">
-              <input v-model="pack.name" placeholder="Package Name" />
-              <input v-model="pack.price" placeholder="Package Price" />
-              <input v-model="pack.description" placeholder="Package Description" />
+          <div v-else class="editable-fields">
+            <label for="packageName">Package Name:</label>
+            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <label for="packagePrice">Package Price:</label>
+            <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
+            <label for="packageImage">Package Image Path:</label>
+            <input id="packageImage" v-model="pack.image" placeholder="Package Path" />
+            <label for="packageDescription">Package Description:</label>
+            <div v-for="(desc, descIndex) in pack.description" :key="descIndex" class="bullet-input">
+              <input v-model="pack.description[descIndex]" placeholder="Bullet Point" />
+              <button class="remove-bullet" @click="removeBullet(pack, descIndex)">-</button>
             </div>
+            <button class="add-bullet" @click="addBullet(pack)">Add New Bullet</button>
             <div class="editable-buttons">
-              <button class="save" @click="saveChanges(pack)">Save</button>
+              <button class="discard" @click="discardChanges(pack)">Discard</button>
               <button @click="updateFirebase(pack, 'WeddingVideography', index)">Update Firebase</button>
             </div>
           </div>
+          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
         </div>
       </div>
     </section>
+
+    <section class="manage-content 2">
+      <h2 class="section-title">Wedding Photography</h2>
+      <div class="wedding-vid-packages">
+        <div class="package" v-for="(pack, index) in photoPackages" :key="index">
+          <div v-if="!pack.editable" class="package-info">
+            <div class="label">Package Name:</div>
+            <h3>{{ pack.name }}</h3>
+            <div class="label">Package Price:</div>
+            <p>{{ pack.price }}</p>
+            <div class="label">Package Image Path:</div>
+            <p>{{ pack.image }}</p>
+            <div class="label">Package Description:</div>
+            <p class="bullet" v-for="(desc, descIndex) in pack.description" :key="descIndex">{{ desc }}</p>
+          </div>
+          <div v-else class="editable-fields">
+            <label for="packageName">Package Name:</label>
+            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <label for="packagePrice">Package Price:</label>
+            <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
+            <label for="packageImage">Package Image Path:</label>
+            <input id="packageImage" v-model="pack.image" placeholder="Package Path" />
+            <label for="packageDescription">Package Description:</label>
+            <div v-for="(desc, descIndex) in pack.description" :key="descIndex" class="bullet-input">
+              <input v-model="pack.description[descIndex]" placeholder="Bullet Point" />
+              <button class="remove-bullet" @click="removeBullet(pack, descIndex)">-</button>
+            </div>
+            <button class="add-bullet" @click="addBullet(pack)">Add New Bullet</button>
+            <div class="editable-buttons">
+              <button class="discard" @click="discardChanges(pack)">Discard</button>
+              <button @click="updateFirebase(pack, 'WeddingPhotography', index)">Update Firebase</button>
+            </div>
+          </div>
+          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="manage-content 3">
+      <h2 class="section-title">Personal Packages</h2>
+      <div class="wedding-vid-packages">
+        <div class="package" v-for="(pack, index) in personalPackages" :key="index">
+          <div v-if="!pack.editable" class="package-info">
+            <div class="label">Package Name:</div>
+            <h3>{{ pack.name }}</h3>
+            <div class="label">Package Price:</div>
+            <p>{{ pack.price }}</p>
+            <div class="label">Package Image Path:</div>
+            <p>{{ pack.image }}</p>
+            <div class="label">Package Description:</div>
+            <p class="bullet" v-for="(desc, descIndex) in pack.description" :key="descIndex">{{ desc }}</p>
+          </div>
+          <div v-else class="editable-fields">
+            <label for="packageName">Package Name:</label>
+            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <label for="packagePrice">Package Price:</label>
+            <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
+            <label for="packageImage">Package Image Path:</label>
+            <input id="packageImage" v-model="pack.image" placeholder="Package Path" />
+            <label for="packageDescription">Package Description:</label>
+            <div v-for="(desc, descIndex) in pack.description" :key="descIndex" class="bullet-input">
+              <input v-model="pack.description[descIndex]" placeholder="Bullet Point" />
+              <button class="remove-bullet" @click="removeBullet(pack, descIndex)">-</button>
+            </div>
+            <button class="add-bullet" @click="addBullet(pack)">Add New Bullet</button>
+            <div class="editable-buttons">
+              <button class="discard" @click="discardChanges(pack)">Discard</button>
+              <button @click="updateFirebase(pack, 'Personal', index)">Update Firebase</button>
+            </div>
+          </div>
+          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+        </div>
+      </div>
+    </section>
+
   </div>
 </template>
-  
-  
+
 <style scoped>
 .admin-dashboard {
   font-family: 'Arial', sans-serif;
-  background-color: #f5f5f5;
+  background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -184,7 +281,7 @@ getPersonalPackages();
 }
 
 header {
-  background-color: #1d3051;
+  background-color: #2c3e50;
   color: white;
   width: 100%;
   padding: 20px;
@@ -200,28 +297,28 @@ header {
 }
 
 .user-img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 50%;
   margin-bottom: 20px;
 }
 
 .admin-title {
-  font-size: 2rem;
-  margin: 0;
-}
-
-.user-name {
   font-size: 1.5rem;
   margin: 0;
 }
 
+.user-name {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
 .logout {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 5px;
   border: none;
-  background-color: #5773a2;
+  background-color: #3498db;
   color: white;
   font-size: 1rem;
   cursor: pointer;
@@ -230,7 +327,22 @@ header {
 }
 
 .logout:hover {
-  background-color: #405c8e;
+  background-color: #2980b9;
+}
+
+button {
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 15px;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #219d53;
 }
 
 .manage-content {
@@ -244,41 +356,127 @@ header {
 }
 
 h2 {
-  font-size: 1.5rem;
-  margin-bottom: 15px;
-  color: #333;
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+  color: #9a9a9a;
 }
 
-.package {
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
+.section-title {
+  font-size: 1.8rem;
+  color: #333;
   margin-bottom: 20px;
 }
 
+.package {
+  position: relative;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 20px;
+  width: 100%;
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.package:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  transform: scale(1.02);
+}
+
+.package-info {
+  display: flex;
+  flex-direction: column;
+}
+
 .package h3 {
-  font-size: 1.2rem;
-  margin: 0 0 10px;
+  font-size: 1rem;
+  margin: 0 0 5px;
   color: #333;
 }
 
 .package p {
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #666;
-  margin: 0 0 10px;
+  margin: 0 0 5px;
 }
 
-button {
-  background-color: #0095f9;
+.label {
+  font-size: 0.9rem;
+  color: #9f9f9f;
+  margin-bottom: 3px;
+}
+
+label {
+  font-size: 0.9rem;
+  color: #9f9f9f;
+  margin-bottom: 3px;
+}
+
+.edit-button {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 95%;
+  /* Adjusted width */
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  cursor: pointer;
+  padding: 8px 0;
+  /* Updated padding */
+  border-radius: 5px;
+  font-size: 0.9rem;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #219d53;
 }
 
 .editable-fields input {
   width: 100%;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 8px;
+  margin-bottom: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
-  font-size: 1rem;
+  font-size: 0.9rem;
+}
+
+.bullet-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.bullet:last-child {
+  margin-bottom: 40px;
+  /* Adjusted margin for the last bullet point */
+}
+
+.remove-bullet {
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 5px;
+  transition: background-color 0.3s;
+}
+
+.remove-bullet:hover {
+  background-color: #c0392b;
+}
+
+.add-bullet {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.add-bullet:hover {
+  background-color: #2980b9;
 }
 
 .editable-buttons {
@@ -289,30 +487,35 @@ button {
 }
 
 .editable-buttons button {
-  padding: 10px 20px;
+  padding: 8px 15px;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 10px;
-  font-size: 1rem;
+  margin-left: 8px;
+  font-size: 0.9rem;
 }
 
-.editable-buttons button.save {
-  background-color: #4caf50;
+.editable-buttons button.discard {
+  background-color: #e74c3c;
   color: white;
 }
 
-.editable-buttons button.save:hover {
-  background-color: #45a045;
+.editable-buttons button.discard:hover {
+  background-color: #c0392b;
 }
 
-.editable-buttons button.cancel {
-  background-color: #e53935;
-  color: white;
-}
+@media (min-width: 1000px) {
+  .wedding-vid-packages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
 
-.editable-buttons button.cancel:hover {
-  background-color: #d83731;
+  .package {
+    width: 48%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
 }
 </style>

@@ -44,10 +44,13 @@ const routes = [
     },
     {
         path: '/admin',
-        component: Admin
+        name: 'admin',
+        component: Admin,
+        meta: { requiresAuth: true }
     },
     {
         path: '/login',
+        name: 'login',
         component: Login
     },
     {

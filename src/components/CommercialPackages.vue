@@ -6,7 +6,7 @@
       <div class="message">
         <h1 class="title">Customized Commercial Media</h1>
         <p class="description">
-          At Skylimit Visuals, we understand that each commercial project is unique. That's why we don't offer preset packages for commercial media. Instead, we tailor our services to your specific needs. Whether it's a promotional video, corporate event coverage, or product showcase, we're here to bring your vision to life. Get in touch with us to discuss your project requirements.
+          At Sky Limit Visuals, we understand that each commercial project is unique. That's why we don't offer preset packages for commercial media. Instead, we tailor our services to your specific needs. Whether it's a promotional video, corporate event coverage, or product showcase, we're here to bring your vision to life. Get in touch with us to discuss your project requirements.
         </p>
         <p class="contact-link">
           Interested in working together? <router-link to="/contact">Contact us</router-link> to discuss your project.

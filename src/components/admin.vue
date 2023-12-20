@@ -188,8 +188,13 @@ getPackageData('Personal');
               <button @click="updateFirebase(pack, 'WeddingVideography', index)">Update Firebase</button>
             </div>
           </div>
-          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+          <div class="edit-options">
+            <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+            <button v-if="!pack.editable" class="edit-button remove"
+              @click="removePackage(pack, 'WeddingVideography', index)">Remove</button>
+          </div>
         </div>
+        <button class="add-package" @click="addPackage('WeddingVideography')">Add New Package</button>
       </div>
     </section>
 
@@ -225,7 +230,11 @@ getPackageData('Personal');
               <button @click="updateFirebase(pack, 'WeddingPhotography', index)">Update Firebase</button>
             </div>
           </div>
-          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+          <div class="edit-options">
+            <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+            <button v-if="!pack.editable" class="edit-button remove"
+              @click="removePackage(pack, 'WeddingPhotography', index)">Remove</button>
+          </div>
         </div>
       </div>
     </section>
@@ -262,7 +271,11 @@ getPackageData('Personal');
               <button @click="updateFirebase(pack, 'Personal', index)">Update Firebase</button>
             </div>
           </div>
-          <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+          <div class="edit-options">
+            <button v-if="!pack.editable" class="edit-button" @click="enableEdit(pack)">Edit</button>
+            <button v-if="!pack.editable" class="edit-button remove"
+              @click="removePackage(pack, 'Personal', index)">Remove</button>
+          </div>
         </div>
       </div>
     </section>
@@ -414,25 +427,33 @@ label {
   margin-bottom: 3px;
 }
 
-.edit-button {
+.edit-options {
   position: absolute;
   bottom: 10px;
-  right: 10px;
-  width: 95%;
-  /* Adjusted width */
+  left: 0px;
+  width: 100%;
+  display: flex;
+  place-content: center;
+}
+
+.edit-button {
   background-color: #27ae60;
   color: white;
-  border: none;
-  cursor: pointer;
-  padding: 8px 0;
-  /* Updated padding */
-  border-radius: 5px;
-  font-size: 0.9rem;
-  transition: background-color 0.3s;
+  width: 70%;
 }
 
 .edit-button:hover {
   background-color: #219d53;
+}
+
+.edit-button.remove {
+  width: 19%;
+  margin-left: 1%;
+  background-color: #e74c3c;
+}
+
+.edit-button.remove:hover {
+  background-color: #c0392b;
 }
 
 .editable-fields input {

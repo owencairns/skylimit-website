@@ -271,17 +271,20 @@ getPackageData('Personal');
 </template>
 
 <style scoped>
+* {
+  box-sizing: border-box;
+}
+
 .admin-dashboard {
   font-family: 'Arial', sans-serif;
   background-color: #f9f9f9;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
 }
 
 header {
-  background-color: #2c3e50;
+  background-color: #1d3051;
   color: white;
   width: 100%;
   padding: 20px;
@@ -435,7 +438,6 @@ label {
 .editable-fields input {
   width: 100%;
   padding: 8px;
-  margin-bottom: 8px;
   border: 1px solid #ddd;
   border-radius: 5px;
   font-size: 0.9rem;

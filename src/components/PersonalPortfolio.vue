@@ -1,115 +1,145 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+    const storageReference = storageRef(storage, path);
+    const url = await getDownloadURL(storageReference);
+    return url;
+};
 
 onBeforeMount(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
-const slides = [
+let slides = [
     {
         id: 1,
-        thumbnail: '/img/personal/personalport8.webp',
+        thumbnail: '/img/personalport8.webp',
         title: 'Personal 1'
     },
     {
         id: 2,
-        thumbnail: '/img/personal/personalport15.webp',
+        thumbnail: '/img/personalport15.webp',
         title: 'Personal 2'
     },
     {
         id: 3,
-        thumbnail: '/img/personal/personalport2.webp',
+        thumbnail: '/img/personalport2.webp',
         title: 'Personal 3'
     },
     {
         id: 4,
-        thumbnail: '/img/personal/personalport5.webp',
+        thumbnail: '/img/personalport5.webp',
         title: 'Personal 4'
     },
     {
         id: 5,
-        thumbnail: '/img/personal/personalport7.webp',
+        thumbnail: '/img/personalport7.webp',
         title: 'Personal 5'
     },
     {
         id: 6,
-        thumbnail: '/img/personal/personalport13.webp',
+        thumbnail: '/img/personalport13.webp',
         title: 'Personal 6'
     },
 ];
 
 //photo gallery for 15 photos
-const photoGallery = [
+let photoGallery = [
     {
         id: 1,
-        thumbnail: '/img/personal/personalport1.webp',
+        thumbnail: '/img/personalport1.webp',
     },
     {
         id: 2,
-        thumbnail: '/img/personal/personalport2.webp',
+        thumbnail: '/img/personalport2.webp',
     },
     {
         id: 3,
-        thumbnail: '/img/personal/personalport3.webp',
+        thumbnail: '/img/personalport3.webp',
     },
     {
         id: 4,
-        thumbnail: '/img/personal/personalport4.webp',
+        thumbnail: '/img/personalport4.webp',
     },
     {
         id: 5,
-        thumbnail: '/img/personal/personalport5.webp',
+        thumbnail: '/img/personalport5.webp',
     },
     {
         id: 6,
-        thumbnail: '/img/personal/personalport6.webp',
+        thumbnail: '/img/personalport6.webp',
     },
     {
         id: 7,
-        thumbnail: '/img/personal/personalport7.webp',
+        thumbnail: '/img/personalport7.webp',
     },
     {
         id: 8,
-        thumbnail: '/img/personal/personalport8.webp',
+        thumbnail: '/img/personalport8.webp',
     },
     {
         id: 9,
-        thumbnail: '/img/personal/personalport9.webp',
+        thumbnail: '/img/personalport9.webp',
     },
     {
         id: 10,
-        thumbnail: '/img/personal/personalport10.webp',
+        thumbnail: '/img/personalport10.webp',
     },
     {
         id: 11,
-        thumbnail: '/img/personal/personalport11.webp',
+        thumbnail: '/img/personalport11.webp',
     },
     {
         id: 12,
-        thumbnail: '/img/personal/personalport12.webp',
+        thumbnail: '/img/personalport12.webp',
     },
     {
         id: 13,
-        thumbnail: '/img/personal/personalport13.webp',
+        thumbnail: '/img/personalport13.webp',
     },
     {
         id: 14,
-        thumbnail: '/img/personal/personalport14.webp',
+        thumbnail: '/img/personalport14.webp',
     },
     {
         id: 15,
-        thumbnail: '/img/personal/personalport15.webp',
+        thumbnail: '/img/personalport15.webp',
     },
 ];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+    try {
+        const slidePromises = slides.map(async (slide) => {
+            slide.thumbnail = await getStorageUrl(slide.thumbnail);
+        });
+
+        const galleryPromises = photoGallery.map(async (item) => {
+            item.thumbnail = await getStorageUrl(item.thumbnail);
+        });
+
+        await Promise.all([...slidePromises, ...galleryPromises]);
+
+        loading.value = false; // Set loading to false after thumbnails are loaded
+    } catch (error) {
+        console.error('Error fetching storage URLs:', error);
+    }
+});
 
 </script>
 
 
 <template>
-    <link rel="preload" as="image" href="/img/personal/personalport7">
-    <div class="content-container">
+    <div v-if="!loading" class="content-container">
         <h1 class="personal-title">Personal Photography Gallery</h1>
 
         <Swiper class="swiper-container" :loop="true" :slides-per-view="'auto'"
@@ -129,9 +159,13 @@ const photoGallery = [
             </div>
         </section>
     </div>
+    <div v-else>
+        <!-- Loading indicator or message -->
+        Loading...
+    </div>
 
     <div class="bottom-logo">
-        <img loading="lazy" src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
+        <img loading="lazy" src="/img/Blue-letters-logo.svg" alt="SLV Logo" class="slv-white-logo" />
     </div>
 </template>
   
@@ -286,6 +320,7 @@ const photoGallery = [
     .personal-title {
         font-size: 3.75rem;
     }
+
     .grid-container {
         grid-template-columns: repeat(auto-fill, minmax(33.33%, 1fr));
     }

@@ -2,7 +2,9 @@
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, setDoc } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage';
 
+const storage = getStorage();
 const db = getFirestore();
 
 const name = ref('');
@@ -152,7 +154,7 @@ const submitForm = async () => {
 <template>
   <div class="background-container">
     <div class="gradient-overlay"></div>
-    <img loading="lazy" src="/img/logo-home/contactBG.webp" alt="background image" class="background">
+    <img loading="lazy" src="/img/contactBG.webp" alt="background image" class="background">
   </div>
   <div class="page-container" :class="{ 'popup-active': showPopup }">
     <div class="heading">

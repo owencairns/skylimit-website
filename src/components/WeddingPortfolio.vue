@@ -1,134 +1,169 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+    const storageReference = storageRef(storage, path);
+    const url = await getDownloadURL(storageReference);
+    return url;
+};
 
 onBeforeMount(() => {
     window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
-const slides = [
+let slides = [
     {
         id: 1,
-        thumbnail: '/img/weddings/wedport1.webp',
+        thumbnail: '/img/wedport1.webp',
         title: 'Wedding 1'
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/wedport2.webp',
+        thumbnail: '/img/wedport2.webp',
         title: 'Wedding 2'
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/wedport3.webp',
+        thumbnail: '/img/wedport3.webp',
         title: 'Wedding 3'
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/wedport4.webp',
+        thumbnail: '/img/wedport4.webp',
         title: 'Wedding 4'
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/wedport5.webp',
+        thumbnail: '/img/wedport5.webp',
         title: 'Wedding 5'
     },
     {
         id: 6,
-        thumbnail: '/img/weddings/wedport6.webp',
+        thumbnail: '/img/wedport6.webp',
         title: 'Wedding 6'
     },
 ];
 
-const videoGallery = [
+let videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/weddings/RyanHailey.webp',
+        thumbnail: '/img/RyanHailey.webp',
         title: 'Ryan and Hailey',
         path: '8rGu1kEfBdU?si=QTgUPUxi7og_qOty',
     },
     {
         id: 1,
-        thumbnail: '/img/weddings/MeganRiley.webp',
+        thumbnail: '/img/MeganRiley.webp',
         title: 'Megan and Riley',
         path: 'IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw'
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/NikEmily.webp',
+        thumbnail: '/img/NikEmily.webp',
         title: 'Nik and Emily',
         path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/MarissaBrandon.webp',
+        thumbnail: '/img/MarissaBrandon.webp',
         title: 'Marissa and Brandon',
         path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/EmilyBrandon.webp',
+        thumbnail: '/img/EmilyBrandon.webp',
         title: 'Emily and Brandon',
         path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/ErinBrad.webp',
+        thumbnail: '/img/ErinBrad.webp',
         title: 'Erin and Brad',
         path: 'uZFoiCfyPWs?si=fU5fo5SAORnAHreQ'
     },
 ];
 
-const photoGallery = [
+let photoGallery = [
     {
         id: 1,
-        thumbnail: '/img/weddings/wedphoto1.webp',
+        thumbnail: '/img/wedphoto1.webp',
     },
     {
         id: 2,
-        thumbnail: '/img/weddings/wedphoto2.webp',
+        thumbnail: '/img/wedphoto2.webp',
     },
     {
         id: 3,
-        thumbnail: '/img/weddings/wedphoto3.webp',
+        thumbnail: '/img/wedphoto3.webp',
     },
     {
         id: 4,
-        thumbnail: '/img/weddings/wedphoto4.webp',
+        thumbnail: '/img/wedphoto4.webp',
     },
     {
         id: 5,
-        thumbnail: '/img/weddings/wedphoto5.webp',
+        thumbnail: '/img/wedphoto5.webp',
     },
     {
         id: 6,
-        thumbnail: '/img/weddings/wedphoto6.webp',
+        thumbnail: '/img/wedphoto6.webp',
     },
     {
         id: 7,
-        thumbnail: '/img/weddings/wedphoto7.webp',
+        thumbnail: '/img/wedphoto7.webp',
     },
     {
         id: 8,
-        thumbnail: '/img/weddings/wedphoto8.webp',
+        thumbnail: '/img/wedphoto8.webp',
     },
     {
         id: 9,
-        thumbnail: '/img/weddings/wedphoto9.webp',
+        thumbnail: '/img/wedphoto9.webp',
     },
     {
         id: 10,
-        thumbnail: '/img/weddings/wedphoto10.webp',
+        thumbnail: '/img/wedphoto10.webp',
     },
     {
         id: 11,
-        thumbnail: '/img/weddings/wedphoto11.webp',
+        thumbnail: '/img/wedphoto11.webp',
     },
     {
         id: 12,
-        thumbnail: '/img/weddings/wedphoto12.webp',
+        thumbnail: '/img/wedphoto12.webp',
     }
 ];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+    try {
+        const slidePromises = slides.map(async (slide) => {
+            slide.thumbnail = await getStorageUrl(slide.thumbnail);
+        });
+
+        const galleryPromises = photoGallery.map(async (item) => {
+            item.thumbnail = await getStorageUrl(item.thumbnail);
+        });
+
+        const vidGalleryPromises = videoGallery.map(async (item) => {
+            item.thumbnail = await getStorageUrl(item.thumbnail);
+        });
+
+        await Promise.all([...slidePromises, ...galleryPromises, ...vidGalleryPromises]);
+
+        loading.value = false; // Set loading to false after thumbnails are loaded
+    } catch (error) {
+        console.error('Error fetching storage URLs:', error);
+    }
+});
 
 const activeVideo = ref(null);
 
@@ -140,7 +175,7 @@ const loadVideo = (item) => {
 
 
 <template>
-    <div class="content-container">
+    <div v-if="!loading" class="content-container">
         <!-- Overlay the title on the Swiper component -->
         <h1 class="weddings-title">Wedding Gallery</h1>
         <Swiper class="swiper-container" :loop="true" :slides-per-view="'auto'"
@@ -183,9 +218,13 @@ const loadVideo = (item) => {
             </div>
         </section>
     </div>
+    <div v-else>
+        <!-- Loading indicator or message -->
+        Loading...
+    </div>
 
     <div class="bottom-logo">
-        <img loading="lazy" src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
+        <img loading="lazy" src="/img/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
   

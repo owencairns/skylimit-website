@@ -1,7 +1,17 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+  const storageReference = storageRef(storage, path);
+  const url = await getDownloadURL(storageReference);
+  return url;
+};
 
 onBeforeMount(() => {
   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -30,11 +40,6 @@ const getPersonalPackages = async () => {
   }
 }
 
-getPersonalPackages();
-
-const service = ref('');
-const pack = ref('');
-
 const router = useRouter();
 
 const redirectToContact = (serviceSelected, packSelected) => {
@@ -46,6 +51,49 @@ const redirectToContact = (serviceSelected, packSelected) => {
     },
   });
 };
+
+let packImages = [
+  {
+    id: 1,
+    thumbnail: '/img/personalpack1.webp',
+    title: 'Personal 1',
+  },
+  {
+    id: 2,
+    thumbnail: '/img/personalpack2.webp',
+    title: 'Personal 2',
+  },
+  {
+    id: 3,
+    thumbnail: '/img/personalpack3.webp',
+    title: 'Personal 3',
+  },
+  {
+    id: 4,
+    thumbnail: '/img/personalpack4.webp',
+    title: 'Personal 4',
+  },
+];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+  getPersonalPackages();
+
+  try {
+    const imagePromises = packImages.map(async (image) => {
+      image.thumbnail = await getStorageUrl(image.thumbnail);
+    });
+
+    await Promise.all([...imagePromises]);
+
+    loading.value = false; // Set loading to false after thumbnails are loaded
+  } catch (error) {
+    console.error('Error fetching storage URLs:', error);
+  }
+});
+
 </script>
 
 <template>
@@ -58,7 +106,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
         moments, ensuring they become lasting memories.</p>
     </div>
 
-    <div class="package-section video-packages">
+    <div v-if="!loading" class="package-section video-packages">
       <h2 class="section-title">Photography Packages</h2>
       <p class="section-description">
         Discover a range of thoughtfully curated packages that resonate with your desires. Should you find any package not
@@ -68,7 +116,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
       <div class="package-cards">
         <div v-for="(pack, index) in personalPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="packImages[index].thumbnail" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
@@ -81,6 +129,10 @@ const redirectToContact = (serviceSelected, packSelected) => {
           </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <!-- Loading indicator or message -->
+      Loading...
     </div>
     <div class="gap"></div>
   </div>
@@ -251,4 +303,5 @@ const redirectToContact = (serviceSelected, packSelected) => {
   .gap {
     height: 0;
   }
-}</style>
+}
+</style>

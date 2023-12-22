@@ -1,60 +1,96 @@
 <script setup lang="ts">
+import { ref, onMounted } from 'vue';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
 
-const weddingVideos = [
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+  const storageReference = storageRef(storage, path);
+  const url = await getDownloadURL(storageReference);
+  return url;
+};
+
+let weddingVideos = [
   {
     id: 1,
-    thumbnail: '/img/weddings/homevidthumb2.webp',
+    thumbnail: '/img/homevidthumb2.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/weddings/homevidthumb3.webp',
+    thumbnail: '/img/homevidthumb3.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/weddings/homevidthumb4.webp',
+    thumbnail: '/img/homevidthumb4.webp',
   }
 ]
 
-const commercialVideos = [
+let commercialVideos = [
   {
     id: 1,
-    thumbnail: '/img/commercial/commercialThumb1.webp',
+    thumbnail: '/img/commercialThumb1.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/commercial/commercialThumb2.webp',
+    thumbnail: '/img/commercialThumb2.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/commercial/commercialThumb3.webp',
+    thumbnail: '/img/commercialThumb3.webp',
   }
 ];
 
-const personalPhotos = [
+let personalPhotos = [
   {
     id: 1,
-    thumbnail: '/img/personal/personalthumbnail1.webp',
+    thumbnail: '/img/personalthumbnail1.webp',
   },
   {
     id: 2,
-    thumbnail: '/img/personal/personalthumbnail2.webp',
+    thumbnail: '/img/personalthumbnail2.webp',
   },
   {
     id: 3,
-    thumbnail: '/img/personal/personalthumbnail3.webp',
+    thumbnail: '/img/personalthumbnail3.webp',
   }
 ];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+  try {
+    const slidePromises = weddingVideos.map(async (slide) => {
+      slide.thumbnail = await getStorageUrl(slide.thumbnail);
+    });
+
+    const galleryPromises = commercialVideos.map(async (item) => {
+      item.thumbnail = await getStorageUrl(item.thumbnail);
+    });
+
+    const personalPromises = personalPhotos.map(async (logoItem) => {
+      logoItem.thumbnail = await getStorageUrl(logoItem.thumbnail);
+    });
+
+    await Promise.all([...slidePromises, ...galleryPromises, ...personalPromises]);
+
+    loading.value = false; // Set loading to false after thumbnails are loaded
+  } catch (error) {
+    console.error('Error fetching storage URLs:', error);
+  }
+});
 
 </script>
 
 <template>
-  <div class="page-container">
+  <div v-if="!loading" class="page-container">
     <div class="hero">
       <video autoplay loop muted playsinline class="back-vid">
-        <source src="/img/logo-home/HomeVid.mp4" type="video/mp4" />
+        <source src="/img/HomeVid.mp4" type="video/mp4" />
       </video>
       <div class="content">
-        <img loading="lazy" src="/img/logo-home/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
+        <img loading="lazy" src="/img/skylimit-fixed.svg" alt="Skylimit Logo" class="skylimit-logo" />
         <router-link to="/contact" class="book-btn">Book Now</router-link>
       </div>
     </div>
@@ -104,6 +140,7 @@ const personalPhotos = [
       </div>
     </section>
 
+
     <section class="work personal-section">
       <div class="work-content">
         <div class="work-description" v-scrollanimation>
@@ -139,7 +176,7 @@ const personalPhotos = [
       <div class="personal-about">
         <h3 class="personal-heading">Meet The Team</h3>
         <div class="about-person noah" v-scrollanimation>
-          <img loading="lazy" class="pic-person" src="/img/logo-home/Noah.webp" alt="Picture of Noah Ike" />
+          <img loading="lazy" class="pic-person" src="/img/Noah.webp" alt="Picture of Noah Ike" />
           <div class="description-person noah">
             <h4 class="name">Noah Ike</h4>
             <h5 class="role">Co-Owner</h5>
@@ -160,7 +197,7 @@ const personalPhotos = [
               significant moments to life. My goal is to tell stories, capture those important
               moments, and make the process effortless for our clients.</p>
           </div>
-          <img loading="lazy" class="pic-person" src="/img/logo-home/Reagan.webp" alt="Picture of Reagan Berce" />
+          <img loading="lazy" class="pic-person" src="/img/Reagan.webp" alt="Picture of Reagan Berce" />
         </div>
       </div>
     </section>
@@ -174,6 +211,10 @@ const personalPhotos = [
             icon="fa-brands fa-instagram" /></a>
       </div>
     </footer>
+  </div>
+  <div v-else>
+    <!-- Loading indicator or message -->
+    Loading...
   </div>
 </template>
 
@@ -355,7 +396,7 @@ const personalPhotos = [
   /* Center vertically */
   justify-content: center;
   /* Center horizontally */
-  background-image: url(/img/logo-home/aboutBanner.png);
+  background-image: url(/img/aboutBanner.png);
   background-position: center top;
   background-repeat: no-repeat;
   background-size: cover;

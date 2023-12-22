@@ -1,88 +1,117 @@
 <script setup>
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+    const storageReference = storageRef(storage, path);
+    const url = await getDownloadURL(storageReference);
+    return url;
+};
 
 onBeforeMount(() => {
-  window.scrollTo(0, 0); // Scrolls to the top of the page
+    window.scrollTo(0, 0); // Scrolls to the top of the page
 });
 
-const slides = [
+let slides = [
     {
         id: 1,
-        thumbnail: '/img/commercial/comport1.webp',
+        thumbnail: '/img/comport1.webp',
         title: 'Commercial Image 1'
     },
     {
         id: 2,
-        thumbnail: '/img/commercial/comport2.webp',
+        thumbnail: '/img/comport2.webp',
         title: 'Commercial Image 2'
     },
     {
         id: 3,
-        thumbnail: '/img/commercial/comport3.webp',
+        thumbnail: '/img/comport3.webp',
         title: 'Commercial Image 3'
     },
     {
         id: 4,
-        thumbnail: '/img/commercial/comport4.webp',
+        thumbnail: '/img/comport4.webp',
         title: 'Commercial Image 4'
     },
     {
         id: 5,
-        thumbnail: '/img/commercial/comport5.webp',
+        thumbnail: '/img/comport5.webp',
         title: 'Commercial Image 5'
     },
     {
         id: 6,
-        thumbnail: '/img/commercial/comport6.webp',
+        thumbnail: '/img/comport6.webp',
         title: 'Commercial Image 6'
     },
     {
         id: 7,
-        thumbnail: '/img/commercial/comport7.webp',
+        thumbnail: '/img/comport7.webp',
         title: 'Commercial Image 7'
     },
 ];
 
-const gallery = [
+let gallery = [
     {
         id: 1,
-        thumbnail: '/img/commercial/comvid4.webp',
+        thumbnail: '/img/comvid4.webp',
         title: 'Quickwater Coffee',
-        path: '/img/commercial/QuickwaterCoffee.mp4'
+        path: '/img/QuickwaterCoffee.mp4'
     },
     {
         id: 2,
-        thumbnail: '/img/commercial/comvid3.webp',
+        thumbnail: '/img/comvid3.webp',
         title: 'Pop Daddy Pretzels',
-        path: '/img/commercial/PopDaddy.mp4'
+        path: '/img/PopDaddy.mp4'
     },
     {
         id: 3,
-        thumbnail: '/img/commercial/comvid1.webp',
+        thumbnail: '/img/comvid1.webp',
         title: 'Praire Bells Barn Event',
-        path: '/img/commercial/PraireBellsEvent.mp4'
+        path: '/img/PraireBellsEvent.mp4'
     },
     {
         id: 4,
-        thumbnail: '/img/commercial/comvid2.webp',
+        thumbnail: '/img/comvid2.webp',
         title: 'Jory Strong Event',
-        path: '/img/commercial/JoryStrongEvent.mp4'
+        path: '/img/JoryStrongEvent.mp4'
     },
 ];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+    try {
+        const slidePromises = slides.map(async (slide) => {
+            slide.thumbnail = await getStorageUrl(slide.thumbnail);
+        });
+
+        const galleryPromises = gallery.map(async (item) => {
+            item.thumbnail = await getStorageUrl(item.thumbnail);
+        });
+        await Promise.all([...slidePromises, ...galleryPromises]);
+
+        loading.value = false; // Set loading to false after thumbnails are loaded
+    } catch (error) {
+        console.error('Error fetching storage URLs:', error);
+    }
+});
 
 const activeVideo = ref(null);
 
 const loadVideo = (item) => {
     activeVideo.value = item.id;
 };
-
 </script>
 
 
 <template>
-    <div class="content-container">
+    <div v-if="!loading" class="content-container">
         <h1 class="commercial-title">Commercial Media Gallery</h1>
 
         <Swiper class="swiper-container" :loop="true" :slides-per-view="'auto'"
@@ -96,7 +125,7 @@ const loadVideo = (item) => {
             <h2>Our Favorites</h2>
             <div class="grid-container">
                 <div class="grid-item" v-for="item in gallery" :key="item.id" @click="loadVideo(item)">
-                    <img loading="lazy" class="grid-image" v-if="activeVideo !== item.id" :src="item.thumbnail" />
+                    <img v-if="!activeVideo || activeVideo !== item.id" :src="item.thumbnail" class="grid-image" />
                     <div v-if="activeVideo === item.id">
                         <vue-plyr class="grid-image"
                             :options="{ controls: ['play', 'progress', 'current-time', 'mute', 'fullscreen'] }">
@@ -111,11 +140,16 @@ const loadVideo = (item) => {
             </div>
         </section>
     </div>
+    <div v-else>
+        <!-- Loading indicator or message -->
+        Loading...
+    </div>
 
     <div class="bottom-logo">
-        <img loading="lazy" src="/img/logo-home/Blue-letters-logo.svg" alt="" class="slv-white-logo">
+        <img loading="lazy" src="/img/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
+
   
 <style scoped>
 .content-container {

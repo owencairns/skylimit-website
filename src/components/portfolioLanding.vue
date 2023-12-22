@@ -1,27 +1,55 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
 
-const images = [
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+  const storageReference = storageRef(storage, path);
+  const url = await getDownloadURL(storageReference);
+  return url;
+};
+
+let images = [
   {
     category: 'Commercial Media',
-    source: '/img/commercial/perrin.webp',
+    source: '/img/perrin.webp',
     link: '/portfolio/commercial'
   },
   {
     category: 'Weddings',
-    source: '/img/weddings/wedport5.webp',
+    source: '/img/wedport5.webp',
     link: '/portfolio/weddings'
   },
   {
     category: 'Personal',
-    source: '/img/personal/personalport1.webp',
+    source: '/img/personalport1.webp',
     link: '/portfolio/personal'
   }
 ];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+  try {
+    const slidePromises = images.map(async (slide) => {
+      slide.source = await getStorageUrl(slide.source);
+    });
+
+    await Promise.all([...slidePromises]);
+
+    loading.value = false; // Set loading to false after thumbnails are loaded
+  } catch (error) {
+    console.error('Error fetching storage URLs:', error);
+  }
+});
+
 </script>
 
 <template>
-  <div class="container">
+  <div v-if="!loading" class="container">
     <h1 class="title">Portfolio</h1>
     <div class="landing-page">
       <div v-for="(image, index) in images" :key="index" class="card">
@@ -33,6 +61,10 @@ const images = [
         </router-link>
       </div>
     </div>
+  </div>
+  <div v-else>
+    <!-- Loading indicator or message -->
+    Loading...
   </div>
 </template>
 

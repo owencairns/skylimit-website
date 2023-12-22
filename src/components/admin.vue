@@ -29,13 +29,13 @@ onMounted(() => {
       userName.value = userEmail.value.split('@')[0];
       if (userName.value === 'Reagan' || userName.value === 'reagan') {
         userName.value = 'Reagan';
-        userImage.value = '/img/logo-home/Reagan.webp';
+        userImage.value = '/img/Reagan.webp';
       } else if (userName.value === 'Noah' || userName.value === 'noah') {
         userName.value = 'Noah';
-        userImage.value = '/img/logo-home/Noah.webp';
+        userImage.value = '/img/Noah.webp';
       } else {
         userName.value = 'Owen';
-        userImage.value = '/img/logo-home/Owen.jpeg';
+        userImage.value = '/img/Owen.jpeg';
       }
     }
   });

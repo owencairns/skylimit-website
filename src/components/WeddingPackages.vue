@@ -1,7 +1,17 @@
 <script setup lang="js">
-import { ref, onBeforeMount } from 'vue';
+import { ref, onBeforeMount, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+  const storageReference = storageRef(storage, path);
+  const url = await getDownloadURL(storageReference);
+  return url;
+};
 
 onBeforeMount(() => {
   window.scrollTo(0, 0); // Scrolls to the top of the page
@@ -52,9 +62,6 @@ const getPhotoPackages = async () => {
   }
 }
 
-getVidPackages();
-getPhotoPackages();
-
 const router = useRouter();
 
 const redirectToContact = (serviceSelected, packSelected) => {
@@ -66,6 +73,77 @@ const redirectToContact = (serviceSelected, packSelected) => {
     },
   });
 };
+
+let vidImages = [
+  {
+    id: 1,
+    thumbnail: '/img/vid-ceremony.webp',
+    title: 'Ceremony',
+  },
+  {
+    id: 2,
+    thumbnail: '/img/vid-silver.webp',
+    title: 'Silver',
+  },
+  {
+    id: 3,
+    thumbnail: '/img/vid-gold.webp',
+    title: 'Gold',
+  },
+  {
+    id: 4,
+    thumbnail: '/img/vid-diamond.webp',
+    title: 'Diamond',
+  },
+];
+
+let photoImages = [
+  {
+    id: 1,
+    thumbnail: '/img/photo-engagement.webp',
+    title: 'Engagement',
+  },
+  {
+    id: 2,
+    thumbnail: '/img/photo-silver.webp',
+    title: 'Silver',
+  },
+  {
+    id: 3,
+    thumbnail: '/img/photo-gold.webp',
+    title: 'Gold',
+  },
+  {
+    id: 4,
+    thumbnail: '/img/photo-diamond.webp',
+    title: 'Diamond',
+  },
+];
+
+const loading = ref(true);
+
+// Fetch Firebase Storage URLs for slides
+onMounted(async () => {
+  getVidPackages();
+  getPhotoPackages();
+
+  try {
+    const vidPromises = vidImages.map(async (image) => {
+      image.thumbnail = await getStorageUrl(image.thumbnail);
+    });
+
+    const photoPromises = photoImages.map(async (image) => {
+      image.thumbnail = await getStorageUrl(image.thumbnail);
+    });
+
+    await Promise.all([...vidPromises, ...photoPromises]);
+
+    loading.value = false; // Set loading to false after thumbnails are loaded
+  } catch (error) {
+    console.error('Error fetching storage URLs:', error);
+  }
+});
+
 </script>
 
 <template>
@@ -77,7 +155,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
         creativity with professionalism, ensuring every moment is beautifully preserved for you to relive.</p>
     </div>
 
-    <div class="package-section video-packages">
+    <div v-if="!loading" class="package-section video-packages">
       <h2 class="section-title">Videography Packages</h2>
       <p class="section-description">
         Discover a range of thoughtfully curated packages that resonate with your desires. Should you find any package not
@@ -87,7 +165,8 @@ const redirectToContact = (serviceSelected, packSelected) => {
       <div class="package-cards">
         <div v-for="(pack, index) in vidPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
+            <img v-if="vidImages[index]" loading="lazy" :src="vidImages[index].thumbnail" alt="Package Image"
+              class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
@@ -101,10 +180,14 @@ const redirectToContact = (serviceSelected, packSelected) => {
         </div>
       </div>
     </div>
+    <div v-else>
+      <!-- Loading indicator or message -->
+      Loading...
+    </div>
 
     <div class="gap"></div>
 
-    <div class="package-section photo-packages">
+    <div v-if="!loading" class="package-section photo-packages">
       <h2 class="section-title">Photography Packages</h2>
       <p class="section-description">
         Capture the beauty of your special day with our exceptional photography packages. Our skilled photographers will
@@ -115,7 +198,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
       <div class="package-cards">
         <div v-for="(pack, index) in photoPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="pack.image" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="photoImages[index].thumbnail" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
@@ -128,6 +211,10 @@ const redirectToContact = (serviceSelected, packSelected) => {
           </div>
         </div>
       </div>
+    </div>
+    <div v-else>
+      <!-- Loading indicator or message -->
+      Loading...
     </div>
   </div>
 </template>

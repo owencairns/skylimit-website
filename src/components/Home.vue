@@ -56,6 +56,11 @@ let personalPhotos = [
   }
 ];
 
+//combine all images and videos into one array, just grab thumbnail
+const homeImages = weddingVideos.concat(commercialVideos).concat(personalPhotos).map((item) => {
+    return item.thumbnail;
+});
+
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides

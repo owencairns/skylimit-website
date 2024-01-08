@@ -120,6 +120,11 @@ let photoImages = [
   },
 ];
 
+//combine all images and videos into one array, just grab thumbnail
+const wedPackImages = vidImages.concat(photoImages).map((item) => {
+  return item.thumbnail;
+});
+
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides

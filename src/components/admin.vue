@@ -7,6 +7,166 @@ import {
   signOut,
 } from 'firebase/auth';
 import { getFirestore, doc, getDoc, updateDoc } from 'firebase/firestore';
+import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+import ImageEditor from './ImageEditor.vue'; // Import the ImageEditor component
+
+const showImageEditor = ref(false);
+const selectedImage = ref(null);
+
+const openImageEditor = (url, path, imageData) => {
+  selectedImage.value = { url, path, ...imageData };
+  showImageEditor.value = true;
+};
+
+// Event handler for the "close" event emitted by the child component
+const closeImageEditor = () => {
+  showImageEditor.value = false;
+  // Additional logic you want to perform when the popup is closed
+};
+
+const storage = getStorage(); // Initialize Firebase Storage
+
+// Function to get Firebase Storage URL
+const getStorageUrl = async (path) => {
+  const storageReference = storageRef(storage, path);
+  const url = await getDownloadURL(storageReference);
+  return url;
+};
+
+const imageMap = {
+  'Home': [
+    '/img/homevidthumb2.webp',
+    '/img/homevidthumb3.webp',
+    '/img/homevidthumb4.webp',
+    '/img/commercialThumb1.webp',
+    '/img/commercialThumb2.webp',
+    '/img/commercialThumb3.webp',
+    '/img/personalthumbnail1.webp',
+    '/img/personalthumbnail2.webp',
+    '/img/personalthumbnail3.webp'
+  ],
+  'Packages Landing': [
+    '/img/packCommercial.webp',
+    '/img/packWed.webp',
+    '/img/packPersonal.webp',
+  ],
+  'Portfolio Landing': [
+    '/img/portCommercial.webp',
+    '/img/portWed.webp',
+    '/img/portPersonal.webp',
+  ],
+  'Commercial Portfolio': [
+    '/img/comport1.webp',
+    '/img/comport2.webp',
+    '/img/comport3.webp',
+    '/img/comport4.webp',
+    '/img/comport5.webp',
+    '/img/comport6.webp',
+    '/img/comport7.webp',
+    '/img/comvid4.webp',
+    '/img/comvid3.webp',
+    '/img/comvid1.webp',
+    '/img/comvid2.webp',
+  ],
+  'Wedding Portfolio': [
+    '/img/wedport1.webp',
+    '/img/wedport2.webp',
+    '/img/wedport3.webp',
+    '/img/wedport4.webp',
+    '/img/wedport5.webp',
+    '/img/wedport6.webp',
+    '/img/wedphoto1.webp',
+    '/img/wedphoto2.webp',
+    '/img/wedphoto3.webp',
+    '/img/wedphoto4.webp',
+    '/img/wedphoto5.webp',
+    '/img/wedphoto6.webp',
+    '/img/wedphoto7.webp',
+    '/img/wedphoto8.webp',
+    '/img/wedphoto9.webp',
+    '/img/wedphoto10.webp',
+    '/img/wedphoto11.webp',
+    '/img/wedphoto12.webp',
+  ],
+  'Personal Portfolio': [
+    '/img/personalport1.webp',
+    '/img/personalport2.webp',
+    '/img/personalport3.webp',
+    '/img/personalport4.webp',
+    '/img/personalport5.webp',
+    '/img/personalport6.webp',
+    '/img/personalport7.webp',
+    '/img/personalport8.webp',
+    '/img/personalport9.webp',
+    '/img/personalport10.webp',
+    '/img/personalport11.webp',
+    '/img/personalport12.webp',
+    '/img/personalport13.webp',
+    '/img/personalport14.webp',
+    '/img/personalport15.webp',
+  ],
+  'Wedding Packages': [
+    '/img/vid-ceremony.webp',
+    '/img/vid-silver.webp',
+    '/img/vid-gold.webp',
+    '/img/vid-diamond.webp',
+    '/img/photo-engagement.webp',
+    '/img/photo-silver.webp',
+    '/img/photo-gold.webp',
+    '/img/photo-diamond.webp'
+  ],
+  'Personal Packages': [
+    '/img/personalpack1.webp',
+    '/img/personalpack2.webp',
+    '/img/personalpack3.webp',
+    '/img/personalpack4.webp',
+  ]
+}
+
+let urlMap = {}
+
+const loadingImages = ref(false);
+
+const loadImages = async () => {
+  // check if the urlMap is already populated
+  if (Object.keys(urlMap).length > 0)  {
+    console.log('homePage is populated');
+    return;
+  }
+
+  console.log('Loading images...');
+  loadingImages.value = true;
+
+  try {
+    const promises = [];
+    for (const category in imageMap) {
+      for (const imgPath of imageMap[category]) {
+        const promise = getStorageUrl(imgPath)
+          .then((url) => {
+            if (!urlMap[category]) {
+              urlMap[category] = {
+                storageUrls: [],
+                originalPaths: [],
+              };
+            }
+            urlMap[category].storageUrls.push(url);
+            urlMap[category].originalPaths.push(imgPath);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+        promises.push(promise);
+      }
+    }
+    // Wait for all promises to resolve
+    await Promise.all(promises);
+  } catch (error) {
+    console.log(error);
+  } finally {
+    loadingImages.value = false;
+  }
+};
+
 
 let auth;
 const userEmail = ref('');
@@ -52,8 +212,6 @@ const signOutUser = () => {
       console.log(error);
     });
 };
-
-const packageCategories = ['Wedding Videography', 'Wedding Photography', 'Personal'];
 
 let vidPackages = ref([]);
 let photoPackages = ref([]);
@@ -135,6 +293,23 @@ const removeBullet = (packageItem, index) => {
   packageItem.description.splice(index, 1);
 };
 
+let showWeddingVideography = ref(false);
+let showWeddingPhotography = ref(false);
+let showPersonalPackages = ref(false);
+let showImageGallery = ref(false);
+
+const toggleDropdown = (category) => {
+  if (category === 'weddingVideography') {
+    showWeddingVideography.value = !showWeddingVideography.value;
+  } else if (category === 'weddingPhotography') {
+    showWeddingPhotography.value = !showWeddingPhotography.value;
+  } else if (category === 'personalPackages') {
+    showPersonalPackages.value = !showPersonalPackages.value;
+  } else if (category === 'imageGallery') {
+    showImageGallery.value = !showImageGallery.value;
+  }
+};
+
 getPackageData('WeddingVideography');
 getPackageData('WeddingPhotography');
 getPackageData('Personal');
@@ -155,10 +330,19 @@ getPackageData('Personal');
       </div>
     </header>
 
-    <!-- Content Management Section -->
+    <!-- ----------Content Management Section---------- -->
+
+    <!-- Package Description Editing Section -->
+
     <section class="manage-content 1">
-      <h2 class="section-title">Wedding Videography</h2>
-      <div class="wedding-vid-packages">
+      <div class="dropdown-toggle" @click="toggleDropdown('weddingVideography')"
+        :class="{ active: showWeddingVideography }">
+        <h2 class="section-title">
+          Wedding Videography
+          <div class="arrow" :class="{ inverse: showWeddingVideography }"> &#9662;</div>
+        </h2>
+      </div>
+      <div class="wedding-vid-packages" :class="{ animate: showWeddingVideography }">
         <div class="package" v-for="(pack, index) in vidPackages" :key="index">
           <div v-if="!pack.editable" class="package-info">
             <div class="label">Package Name:</div>
@@ -199,8 +383,14 @@ getPackageData('Personal');
     </section>
 
     <section class="manage-content 2">
-      <h2 class="section-title">Wedding Photography</h2>
-      <div class="wedding-vid-packages">
+      <div class="dropdown-toggle" @click="toggleDropdown('weddingPhotography')"
+        :class="{ active: showWeddingPhotography }">
+        <h2 class="section-title">
+          Wedding Photography
+          <div class="arrow" :class="{ inverse: showWeddingPhotography }"> &#9662;</div>
+        </h2>
+      </div>
+      <div class="wedding-vid-packages" :class="{ animate: showWeddingPhotography }">
         <div class="package" v-for="(pack, index) in photoPackages" :key="index">
           <div v-if="!pack.editable" class="package-info">
             <div class="label">Package Name:</div>
@@ -240,8 +430,13 @@ getPackageData('Personal');
     </section>
 
     <section class="manage-content 3">
-      <h2 class="section-title">Personal Packages</h2>
-      <div class="wedding-vid-packages">
+      <div class="dropdown-toggle" @click="toggleDropdown('personalPackages')" :class="{ active: showPersonalPackages }">
+        <h2 class="section-title">
+          Personal Packages
+          <div class="arrow" :class="{ inverse: showPersonalPackages }"> &#9662;</div>
+        </h2>
+      </div>
+      <div class="wedding-vid-packages" :class="{ animate: showPersonalPackages }">
         <div class="package" v-for="(pack, index) in personalPackages" :key="index">
           <div v-if="!pack.editable" class="package-info">
             <div class="label">Package Name:</div>
@@ -280,7 +475,45 @@ getPackageData('Personal');
       </div>
     </section>
 
+    <!-- End Package Description Editing Section -->
+
+    <!-- Image Editing Section -->
+    <section class="manage-content 4">
+      <div class="dropdown-toggle" @click="() => { toggleDropdown('imageGallery'); loadImages(); }"
+        :class="{ active: showImageGallery }">
+        <h2 class="section-title">
+          Image Gallery
+          <div class="arrow" :class="{ inverse: showImageGallery }"> &#9662;</div>
+        </h2>
+      </div>
+      <div class="wedding-vid-packages" :class="{ animate: showImageGallery }">
+        <div v-if="loadingImages" class="loading-indicator">
+          Loading...
+        </div>
+        <!-- Display images based on pages -->
+        <div v-else v-for="(imageData, category) in urlMap" :key="category">
+          <h3 class="image-category">{{ category }}</h3>
+          <!-- place each image in a grid, sorted by category -->
+          <div class="image-grid">
+            <div v-for="(url, index) in imageData.storageUrls" :key="index" class="grid-item"
+              @click="() => openImageEditor(url, imageData.originalPaths[index], { url, originalPath: imageData.originalPaths[index], ...imageData })">
+              <div class="image-container">
+                <img :src="url" :alt="`${category}-${index}`" class="grid-image" />
+                <div class="overlay">
+                  <p class="overlay-text">Edit</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Image Editing Section -->
+
+    <!-- ----------End Content Management Section---------- -->
+
   </div>
+  <ImageEditor v-if="showImageEditor" :selectedImage="selectedImage" @close="closeImageEditor"/>
 </template>
 
 <style scoped>
@@ -371,10 +604,47 @@ button:hover {
   padding: 20px;
 }
 
+/* manage content last child */
+.manage-content:last-child {
+  margin-bottom: 50px;
+}
+
+.wedding-vid-packages {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 0.7s ease-in-out;
+}
+
+.wedding-vid-packages.animate {
+  max-height: 5000px;
+  transition: max-height 0.7s ease-in-out;
+}
+
+.wedding-vid-packages.active {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.arrow {
+  padding-left: 10px;
+  padding-right: 10px;
+  transition: transform 0.3s;
+}
+
+.arrow.inverse {
+  transform: rotate(180deg);
+}
+
 h2 {
   font-size: 1.2rem;
   margin-bottom: 10px;
   color: #9a9a9a;
+  display: flex;
 }
 
 .section-title {
@@ -528,6 +798,59 @@ label {
   background-color: #c0392b;
 }
 
+.image-category {
+  color: #1d3051;
+}
+
+.image-grid {
+  color: black;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.grid-item {
+  position: relative;
+  height: 150px;
+  /* Set a fixed height for grid items */
+  overflow: hidden;
+  /* Hide overflow */
+  border-radius: 8px;
+  /* Round edges */
+}
+
+.grid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 255, 0, 0.8);
+  /* Half-clear green overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
 @media (min-width: 1000px) {
   .wedding-vid-packages {
     display: flex;
@@ -539,6 +862,31 @@ label {
     width: 48%;
     box-sizing: border-box;
     margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .wedding-vid-packages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .package {
+    width: 100%;
+    /* Full width on smaller screens */
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+
+  .manage-content {
+    padding: 10px;
+    /* Adjust padding for smaller screens */
+  }
+
+  .editable-fields input {
+    width: 100%;
+    /* Full width for input fields on smaller screens */
   }
 }
 </style>

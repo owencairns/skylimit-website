@@ -11,12 +11,14 @@ const name = ref('');
 const email = ref('');
 const message = ref('');
 const service = ref('');
+const date = ref('');
 const pack = ref('');
 
 const nameFocus = ref(false);
 const emailFocus = ref(false);
 const msgFocus = ref(false);
 const serviceFocus = ref(false);
+const dateFocus = ref(false);
 const packageFocus = ref(false);
 
 const showPopup = ref(false);
@@ -36,6 +38,13 @@ const handleServiceFocus = () => {
 const handlePackageFocus = () => {
   packageFocus.value = true;
 }
+const handleDateFocus = () => {
+  dateFocus.value = true;
+};
+
+const handleDateBlur = () => {
+  dateFocus.value = false;
+};
 const handleNameBlur = () => {
   nameFocus.value = false;
 }
@@ -130,6 +139,7 @@ const submitForm = async () => {
         <p><span class="info-label">Customer Name:</span> ${name.value}</p>
         <p><span class="info-label">Email:</span> ${email.value}</p>
         <p><span class="info-label">Package & Service of Interest:</span> ${service.value} - ${pack.value}</p>
+        <p><span class="info-label">Date of Event:</span> ${date.value}</p>
         <p><span class="info-label">Message:</span> ${message.value}</p>
     </div>
 </body>
@@ -144,6 +154,7 @@ const submitForm = async () => {
   message.value = '';
   service.value = '';
   pack.value = '';
+  date.value = '';
 
   showPopup.value = true;
 };
@@ -203,10 +214,7 @@ const submitForm = async () => {
             <input v-model="email" type="email" id="email" @focus="handleEmailFocus" @blur="handleEmailBlur" required />
           </div>
           <div class="form-group">
-            <label for="service" class="dropdown-label" :class="{ 'active': service || serviceFocus }">
-              Service That Interests You
-              <span class="dropdown-arrow"></span>
-            </label>
+            <label for="service" :class="{ 'active': service || serviceFocus }">Service</label>
             <select v-model="service" class="package-select" @focus="handleServiceFocus" @blur="handleServiceBlur">
               <option disabled value=""></option>
               <option>Wedding Videography</option>
@@ -215,6 +223,11 @@ const submitForm = async () => {
               <option>Personal</option>
               <option>Other</option>
             </select>
+          </div>
+          <!-- add a date section to the form -->
+          <div class="form-group">
+            <label for="date" class="active" >Date of Event</label>
+            <input v-model="date" type="date" id="date" @focus="handleDateFocus" @blur="handleDateBlur" required />
           </div>
           <div v-if="service === 'Wedding Videography'" class="form-group">
             <label for="package" class="dropdown-label" :class="{ 'active': pack || packageFocus }">Package
@@ -231,10 +244,10 @@ const submitForm = async () => {
             </select>
           </div>
           <div v-if="service === 'Wedding Photography'" class="form-group">
-            <label for="package" class="dropdown-label" :class="{ 'active': pack || packageFocus }">Package
+            <label for="package" class="dropdown-label active">Package
               <span class="dropdown-arrow"></span>
             </label>
-            <select v-model="pack" class="package-select" @focus="handlePackageFocus" @blur="handlePackageBlur">
+            <select v-model="pack" class="package-select">
               <option disabled value=""></option>
               <option>Engagement</option>
               <option>Silver</option>
@@ -542,5 +555,4 @@ button {
     justify-content: center;
   }
 }
-
 </style>

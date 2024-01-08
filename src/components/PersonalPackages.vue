@@ -41,8 +41,6 @@ const getPersonalPackages = async () => {
         return a.price.slice(1) - b.price.slice(1);
       });
 
-      // Log the array of packages
-      console.log('Personal Photography packages:', personalPackages.value);
     } else {
       console.error('WeddingVideography document does not exist');
     }
@@ -63,28 +61,19 @@ const redirectToContact = (serviceSelected, packSelected) => {
   });
 };
 
-let packImages = [];
-
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides
 onMounted(async () => {
-  getPersonalPackages();
+  await getPersonalPackages();
 
-  try {
-    // populate packImages with the URLs for each package using the path found in the personalPackages ref array for the image
-    const imagePromises = personalPackages.value.map(async (pack) => {
-      const url = await getStorageUrl(pack.imagePath);
-      packImages.push(url);
-    });
-    console.log('packImages:', packImages)
-
-    await Promise.all([...imagePromises]);
-
-    loading.value = false; // Set loading to false after thumbnails are loaded
-  } catch (error) {
-    console.error('Error fetching storage URLs:', error);
+  // Get the Firebase Storage URL for each package
+  for (const pack of personalPackages.value) {
+    pack.url = await getStorageUrl(pack.image);
+    // create a new key: value pair for the image url in each package object, it should be called 'url'
   }
+
+  loading.value = false; // Set loading to false after thumbnails are loaded
 });
 
 </script>
@@ -109,8 +98,9 @@ onMounted(async () => {
       <div class="package-cards">
         <div v-for="(pack, index) in personalPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="packImages[index]" alt="Package Image" class="package-image">
-            <h3 class="package-name">{{ pack.name }}</h3>
+            <!-- Check if pack.image is available before displaying the image -->
+            <img loading="lazy" :src="pack.url" alt="Package Image" class="package-image">
+            <h3 class="package-name">{{ pack.name }}</h3>>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
               <li v-for="(point, idx) in pack.description" :key="idx">{{ point }}</li>

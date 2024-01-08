@@ -82,6 +82,14 @@ let gallery = [
     },
 ];
 
+//combine all images and videos into one array, just grab thumbnail
+const comportImages = slides.concat(gallery).map((item) => {
+    return item.thumbnail;
+});
+const comportVidLinks = gallery.map((item) => {
+    return item.path;
+});
+
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides

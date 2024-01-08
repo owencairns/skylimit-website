@@ -27,11 +27,22 @@ const getPersonalPackages = async () => {
 
     // Check if the document exists before trying to access its data
     if (personalPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      personalPackages.value.push(personalPackagesDoc.data().ProfessionalHeadshots);
-      personalPackages.value.push(personalPackagesDoc.data().SeniorPhotos);
-      personalPackages.value.push(personalPackagesDoc.data().PersonalPhotoShoot);
-      personalPackages.value.push(personalPackagesDoc.data().FamilyPhotography);
+      // get each document in the collection and push to the personalpackages array
+      const personalPackagesData = personalPackagesDoc.data();
+
+      // Convert the Proxy object to a plain JavaScript object
+      const personalPackagesObject = JSON.parse(JSON.stringify(personalPackagesData));
+
+      // Extract values (packages) as an array
+      personalPackages.value = Object.values(personalPackagesObject);
+
+      // sort personalPackages by price, price is a string with a $ in front
+      personalPackages.value.sort((a, b) => {
+        return a.price.slice(1) - b.price.slice(1);
+      });
+
+      // Log the array of packages
+      console.log('Personal Photography packages:', personalPackages.value);
     } else {
       console.error('WeddingVideography document does not exist');
     }
@@ -52,28 +63,7 @@ const redirectToContact = (serviceSelected, packSelected) => {
   });
 };
 
-let packImages = [
-  {
-    id: 1,
-    thumbnail: '/img/personalpack1.webp',
-    title: 'Personal 1',
-  },
-  {
-    id: 2,
-    thumbnail: '/img/personalpack2.webp',
-    title: 'Personal 2',
-  },
-  {
-    id: 3,
-    thumbnail: '/img/personalpack3.webp',
-    title: 'Personal 3',
-  },
-  {
-    id: 4,
-    thumbnail: '/img/personalpack4.webp',
-    title: 'Personal 4',
-  },
-];
+let packImages = [];
 
 const loading = ref(true);
 
@@ -82,9 +72,12 @@ onMounted(async () => {
   getPersonalPackages();
 
   try {
-    const imagePromises = packImages.map(async (image) => {
-      image.thumbnail = await getStorageUrl(image.thumbnail);
+    // populate packImages with the URLs for each package using the path found in the personalPackages ref array for the image
+    const imagePromises = personalPackages.value.map(async (pack) => {
+      const url = await getStorageUrl(pack.imagePath);
+      packImages.push(url);
     });
+    console.log('packImages:', packImages)
 
     await Promise.all([...imagePromises]);
 
@@ -116,7 +109,7 @@ onMounted(async () => {
       <div class="package-cards">
         <div v-for="(pack, index) in personalPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="packImages[index].thumbnail" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="packImages[index]" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">

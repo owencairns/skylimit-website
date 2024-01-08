@@ -14,20 +14,25 @@ const getStorageUrl = async (path) => {
 let images = [
   {
     category: 'Commercial Media',
-    source: '/img/perrin.webp',
+    source: '/img/portCommercial.webp',
     link: '/portfolio/commercial'
   },
   {
     category: 'Weddings',
-    source: '/img/wedport5.webp',
+    source: '/img/portWed.webp',
     link: '/portfolio/weddings'
   },
   {
     category: 'Personal',
-    source: '/img/personalport1.webp',
+    source: '/img/portPersonal.webp',
     link: '/portfolio/personal'
   }
 ];
+
+//combine all images and videos into one array, just grab thumbnail
+const portLandingImages = images.map((item) => {
+    return item.source;
+});
 
 const loading = ref(true);
 

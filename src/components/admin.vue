@@ -129,7 +129,7 @@ const loadingImages = ref(false);
 
 const loadImages = async () => {
   // check if the urlMap is already populated
-  if (Object.keys(urlMap).length > 0)  {
+  if (Object.keys(urlMap).length > 0) {
     console.log('homePage is populated');
     return;
   }
@@ -256,7 +256,6 @@ const discardChanges = (packageItem) => {
   packageItem.editable = false;
 };
 
-
 const updateFirebase = async (packageItem, category, index) => {
   try {
     const db = getFirestore();
@@ -356,7 +355,7 @@ getPackageData('Personal');
           </div>
           <div v-else class="editable-fields">
             <label for="packageName">Package Name:</label>
-            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <div id="packageName" class="label">{{ pack.name }}</div>
             <label for="packagePrice">Package Price:</label>
             <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
             <label for="packageImage">Package Image Path:</label>
@@ -404,7 +403,7 @@ getPackageData('Personal');
           </div>
           <div v-else class="editable-fields">
             <label for="packageName">Package Name:</label>
-            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <div id="packageName" class="label">{{ pack.name }}</div>
             <label for="packagePrice">Package Price:</label>
             <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
             <label for="packageImage">Package Image Path:</label>
@@ -450,7 +449,7 @@ getPackageData('Personal');
           </div>
           <div v-else class="editable-fields">
             <label for="packageName">Package Name:</label>
-            <input id="packageName" v-model="pack.name" placeholder="Package Name" />
+            <div id="packageName" class="label">{{ pack.name }}</div>
             <label for="packagePrice">Package Price:</label>
             <input id="packagePrice" v-model="pack.price" placeholder="Package Price" />
             <label for="packageImage">Package Image Path:</label>
@@ -513,7 +512,7 @@ getPackageData('Personal');
     <!-- ----------End Content Management Section---------- -->
 
   </div>
-  <ImageEditor v-if="showImageEditor" :selectedImage="selectedImage" @close="closeImageEditor"/>
+  <ImageEditor v-if="showImageEditor" :selectedImage="selectedImage" @close="closeImageEditor" />
 </template>
 
 <style scoped>
@@ -687,7 +686,7 @@ h2 {
 
 .label {
   font-size: 0.9rem;
-  color: #9f9f9f;
+  color: #000;
   margin-bottom: 3px;
 }
 

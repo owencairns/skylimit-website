@@ -20,45 +20,41 @@ onBeforeMount(() => {
 let vidPackages = ref([]);
 let photoPackages = ref([]);
 
-const getVidPackages = async () => {
+const getPackages = async () => {
   try {
     const db = getFirestore();
     const vidPackagesCol = doc(db, 'PackageDescriptions', 'WeddingVideography');
     const vidPackagesDoc = await getDoc(vidPackagesCol);
-
-    // Check if the document exists before trying to access its data
-    if (vidPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      vidPackages.value.push(vidPackagesDoc.data().Ceremony);
-      vidPackages.value.push(vidPackagesDoc.data().Silver);
-      vidPackages.value.push(vidPackagesDoc.data().Gold);
-      vidPackages.value.push(vidPackagesDoc.data().Diamond);
-    } else {
-      console.error('WeddingVideography document does not exist');
-    }
-  } catch (error) {
-    console.error('Error fetching video packages:', error);
-  }
-}
-
-const getPhotoPackages = async () => {
-  try {
-    const db = getFirestore();
     const photoPackagesCol = doc(db, 'PackageDescriptions', 'WeddingPhotography');
     const photoPackagesDoc = await getDoc(photoPackagesCol);
 
     // Check if the document exists before trying to access its data
-    if (photoPackagesDoc.exists()) {
-      // add each document to the vidPackages array in the order Ceremony, Silver, Gold, Diamond
-      photoPackages.value.push(photoPackagesDoc.data().Engagement);
-      photoPackages.value.push(photoPackagesDoc.data().Silver);
-      photoPackages.value.push(photoPackagesDoc.data().Gold);
-      photoPackages.value.push(photoPackagesDoc.data().Diamond);
+    if (vidPackagesDoc.exists() && photoPackagesDoc.exists()) {
+      // get each document in the collection and push to the personalpackages array
+      const vidPackagesData = vidPackagesDoc.data();
+      const photoPackagesData = photoPackagesDoc.data();
+
+      // Convert the Proxy object to a plain JavaScript object
+      const vidPackagesObject = JSON.parse(JSON.stringify(vidPackagesData));
+      const photoPackagesObject = JSON.parse(JSON.stringify(photoPackagesData));
+
+      // Extract values (packages) as an array
+      vidPackages.value = Object.values(vidPackagesObject);
+      photoPackages.value = Object.values(photoPackagesObject);
+
+      // sort personalPackages by price, price is a string with a $ in front
+      vidPackages.value.sort((a, b) => {
+        return a.price.slice(1) - b.price.slice(1);
+      });
+      photoPackages.value.sort((a, b) => {
+        return a.price.slice(1) - b.price.slice(1);
+      });
+
     } else {
-      console.error('WeddingPhotography document does not exist');
+      console.error('Document does not exist');
     }
   } catch (error) {
-    console.error('Error fetching photo packages:', error);
+    console.error('Error fetching packages:', error);
   }
 }
 
@@ -74,74 +70,25 @@ const redirectToContact = (serviceSelected, packSelected) => {
   });
 };
 
-let vidImages = [
-  {
-    id: 1,
-    thumbnail: '/img/vid-ceremony.webp',
-    title: 'Ceremony',
-  },
-  {
-    id: 2,
-    thumbnail: '/img/vid-silver.webp',
-    title: 'Silver',
-  },
-  {
-    id: 3,
-    thumbnail: '/img/vid-gold.webp',
-    title: 'Gold',
-  },
-  {
-    id: 4,
-    thumbnail: '/img/vid-diamond.webp',
-    title: 'Diamond',
-  },
-];
-
-let photoImages = [
-  {
-    id: 1,
-    thumbnail: '/img/photo-engagement.webp',
-    title: 'Engagement',
-  },
-  {
-    id: 2,
-    thumbnail: '/img/photo-silver.webp',
-    title: 'Silver',
-  },
-  {
-    id: 3,
-    thumbnail: '/img/photo-gold.webp',
-    title: 'Gold',
-  },
-  {
-    id: 4,
-    thumbnail: '/img/photo-diamond.webp',
-    title: 'Diamond',
-  },
-];
-
-//combine all images and videos into one array, just grab thumbnail
-const wedPackImages = vidImages.concat(photoImages).map((item) => {
-  return item.thumbnail;
-});
 
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides
 onMounted(async () => {
-  getVidPackages();
-  getPhotoPackages();
+  await getPackages();
 
   try {
-    const vidPromises = vidImages.map(async (image) => {
-      image.thumbnail = await getStorageUrl(image.thumbnail);
-    });
+    // Get the Firebase Storage URL for each package
+    for (const pack of vidPackages.value) {
+      pack.url = await getStorageUrl(pack.image);
+      // create a new key: value pair for the image url in each package object, it should be called 'url'
+    }
 
-    const photoPromises = photoImages.map(async (image) => {
-      image.thumbnail = await getStorageUrl(image.thumbnail);
-    });
+    for (const pack of photoPackages.value) {
+      pack.url = await getStorageUrl(pack.image);
+      // create a new key: value pair for the image url in each package object, it should be called 'url'
+    }
 
-    await Promise.all([...vidPromises, ...photoPromises]);
 
     loading.value = false; // Set loading to false after thumbnails are loaded
   } catch (error) {
@@ -170,8 +117,7 @@ onMounted(async () => {
       <div class="package-cards">
         <div v-for="(pack, index) in vidPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img v-if="vidImages[index]" loading="lazy" :src="vidImages[index].thumbnail" alt="Package Image"
-              class="package-image">
+            <img loading="lazy" :src="pack.url" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">
@@ -203,7 +149,7 @@ onMounted(async () => {
       <div class="package-cards">
         <div v-for="(pack, index) in photoPackages" :key="index" class="package-card">
           <div class="card-content">
-            <img loading="lazy" :src="photoImages[index].thumbnail" alt="Package Image" class="package-image">
+            <img loading="lazy" :src="pack.url" alt="Package Image" class="package-image">
             <h3 class="package-name">{{ pack.name }}</h3>
             <div class="price">{{ pack.price }}</div>
             <ul class="description">

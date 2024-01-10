@@ -82,14 +82,6 @@ let gallery = [
     },
 ];
 
-//combine all images and videos into one array, just grab thumbnail
-const comportImages = slides.concat(gallery).map((item) => {
-    return item.thumbnail;
-});
-const comportVidLinks = gallery.map((item) => {
-    return item.path;
-});
-
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides
@@ -102,7 +94,12 @@ onMounted(async () => {
         const galleryPromises = gallery.map(async (item) => {
             item.thumbnail = await getStorageUrl(item.thumbnail);
         });
-        await Promise.all([...slidePromises, ...galleryPromises]);
+
+        const vidPromises = gallery.map(async (item) => {
+            item.path = await getStorageUrl(item.path);
+        });
+        await Promise.all([...slidePromises, ...galleryPromises, ...vidPromises]);
+        console.log(vidPromises);
 
         loading.value = false; // Set loading to false after thumbnails are loaded
     } catch (error) {

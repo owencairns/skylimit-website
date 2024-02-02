@@ -6,10 +6,6 @@ Welcome to the Skylimit Visuals website repository! This website is designed for
 
 - [Project Overview](#project-overview)
 - [Features](#features)
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-- [Usage](#usage)
 
 ## Project Overview
 
@@ -26,37 +22,3 @@ The Skylimit Visuals website is built using the Vue.js framework with Vite as th
 - Firebase Hosting and analytics to ensure performance and user retention
 - Responsive design to ensure a seamless experience on various devices.
 - Smooth animations and transitions to enhance the user experience.
-
-## Getting Started
-
-Follow the instructions below to set up the project on your local development environment.
-
-### Prerequisites
-
-Make sure you have the following tools installed:
-
-- Node.js: Download and install Node.js from [nodejs.org](https://nodejs.org/).
-
-### Installation
-
-1. Clone this repository to your local machine:
-
-   ```bash
-   git clone https://github.com/yourusername/skylimit-visuals-website.git
-
-2. Navigate to the project directory:
-
-   ```bash
-   cd skylimit-visuals-website
-
-3. Install the project dependencies:
-
-   ```bash
-   npm install
-
-## Usage
-
-To start the development server and view the website locally, run the following command:
-
-   ```bash
-   npm run dev

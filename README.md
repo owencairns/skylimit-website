@@ -1,4 +1,4 @@
-# [Skylimitvisuals.co](https://skylimitvisuals.com)
+# [Skylimitvisuals.com](https://skylimitvisuals.com)
 
 Welcome to the Skylimit Visuals website repository! This website is designed for Skylimit Visuals, a professional videography and photography company. This README.md file provides essential information for developers and contributors to get started with the project.
 

@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, defineProps } from "vue";
+import { ref } from "vue";
 import { getStorage, uploadBytes, ref as storageRef } from "firebase/storage";
 
 const storage = getStorage();

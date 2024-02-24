@@ -26,7 +26,7 @@ import PortfolioLanding from './components/portfolioLanding.vue'
 import WeddingPortfolio from './components/WeddingPortfolio.vue'
 import PersonalPortfolio from './components/PersonalPortfolio.vue'
 import CommercialPortfolio from './components/CommercialPortfolio.vue'
-import Admin from './components/Admin.vue'
+import Admin from './components/admin.vue'
 import Login from './components/Login.vue'
 
 import scrollanimation from "./directives/scrollanimation";

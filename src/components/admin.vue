@@ -120,6 +120,14 @@ const imageMap = {
     '/img/personalpack2.webp',
     '/img/personalpack3.webp',
     '/img/personalpack4.webp',
+  ],
+  'Video Thumbnails': [
+    '/img/WedThumb1.webp',
+    '/img/WedThumb2.webp',
+    '/img/WedThumb3.webp',
+    '/img/WedThumb4.webp',
+    '/img/WedThumb5.webp',
+    '/img/WedThumb6.webp',
   ]
 }
 
@@ -216,6 +224,7 @@ const signOutUser = () => {
 let vidPackages = ref([]);
 let photoPackages = ref([]);
 let personalPackages = ref([]);
+let WeddingVidData = ref([]);
 
 const getPackageData = async (category) => {
   try {
@@ -240,6 +249,22 @@ const getPackageData = async (category) => {
   }
 };
 
+const getVideoData = async (category) => {
+  try {
+    const db = getFirestore();
+    const vidInfo = doc(db, 'Videos', category);
+    const vidInfoDoc = await getDoc(vidInfo);
+
+    if (vidInfoDoc.exists()) {
+      const vidData = vidInfoDoc.data();
+      const vidDataObject = JSON.parse(JSON.stringify(vidData));
+      WeddingVidData.value = Object.values(vidDataObject);
+    }
+  } catch (error) {
+    console.error('Error fetching video data:', error);
+  }
+};
+
 const enableEdit = (packageItem) => {
   // Store the original values before editing
   packageItem.originalName = packageItem.name;
@@ -248,12 +273,28 @@ const enableEdit = (packageItem) => {
   packageItem.editable = true;
 };
 
+const enableVidEdit = (videoItem) => {
+  // Store the original values before editing
+  videoItem.originalTitle = videoItem.title;
+  videoItem.originalThumbnail = videoItem.thumbnail;
+  videoItem.originalPath = videoItem.path;
+  videoItem.editable = true;
+};
+
 const discardChanges = (packageItem) => {
   // Revert the changes made by restoring the original values
   packageItem.name = packageItem.originalName;
   packageItem.price = packageItem.originalPrice;
   packageItem.description = [...packageItem.originalDescription]; // Clone the array
   packageItem.editable = false;
+};
+
+const discardVidChanges = (videoItem) => {
+  // Revert the changes made by restoring the original values
+  videoItem.title = videoItem.originalTitle;
+  videoItem.thumbnail = videoItem.originalThumbnail;
+  videoItem.path = videoItem.originalPath;
+  videoItem.editable = false;
 };
 
 const updateFirebase = async (packageItem, category, index) => {
@@ -282,6 +323,31 @@ const updateFirebase = async (packageItem, category, index) => {
   packageItem.editable = false;
 };
 
+const updateFirebaseVid = async (videoItem, category, index) => {
+  try {
+    const db = getFirestore();
+    const videoDoc = doc(db, 'Videos', category);
+
+    // Update the document with new values from videoItem
+    await updateDoc(videoDoc, {
+      [videoItem.id]: {
+        title: videoItem.title,
+        thumbnail: videoItem.thumbnail,
+        path: videoItem.path,
+      },
+    });
+
+    // Log a success message
+    console.log('Document successfully updated!');
+
+    // Update the local WeddingVidData array with the new values
+    WeddingVidData.value[index] = videoItem;
+  } catch (error) {
+    console.error('Error updating document: ', error);
+  }
+  videoItem.editable = false;
+};
+
 const addBullet = (packageItem) => {
   // add a new bullet point to the description array at the end
   packageItem.description.push('');
@@ -296,6 +362,7 @@ let showWeddingVideography = ref(false);
 let showWeddingPhotography = ref(false);
 let showPersonalPackages = ref(false);
 let showImageGallery = ref(false);
+let showWeddingVidData = ref(false);
 
 const toggleDropdown = (category) => {
   if (category === 'weddingVideography') {
@@ -306,12 +373,15 @@ const toggleDropdown = (category) => {
     showPersonalPackages.value = !showPersonalPackages.value;
   } else if (category === 'imageGallery') {
     showImageGallery.value = !showImageGallery.value;
+  } else if (category === 'WeddingVidData') {
+    showWeddingVidData.value = !showWeddingVidData.value;
   }
 };
 
 getPackageData('WeddingVideography');
 getPackageData('WeddingPhotography');
 getPackageData('Personal');
+getVideoData('Weddings');
 </script>
 
 
@@ -476,8 +546,48 @@ getPackageData('Personal');
 
     <!-- End Package Description Editing Section -->
 
-    <!-- Image Editing Section -->
+    <!-- Video Editing Section -->
+
     <section class="manage-content 4">
+      <div class="dropdown-toggle" @click="toggleDropdown('WeddingVidData')" :class="{ active: showWeddingVidData }">
+        <h2 class="section-title">
+          Wedding Videography Data
+          <div class="arrow" :class="{ inverse: showWeddingVidData }"> &#9662;</div>
+        </h2>
+      </div>
+      <div class="wedding-vid-packages" :class="{ animate: showWeddingVidData }">
+        <div class="package" v-for="(vid, index) in WeddingVidData" :key="index" style="padding-bottom: 50px;">
+          <div v-if="!vid.editable" class="package-info">
+            <div class="label">Video Title:</div>
+            <h3>{{ vid.title }}</h3>
+            <div class="label">Video Thumbnail:</div>
+            <p>{{ vid.thumbnail }}</p>
+            <div class="label">Video Youtube Link:</div>
+            <p>{{ vid.path }}</p>
+          </div>
+          <div v-else class="editable-fields">
+            <label for="videoTitle">Video Title:</label>
+            <input id="videoTitle" v-model="vid.title" placeholder="Video Title" />
+            <label for="videoThumbnail">Video Thumbnail:</label>
+            <input id="videoThumbnail" v-model="vid.thumbnail" placeholder="Thumbnail URL" />
+            <label for="videoPath">Video Youtube Link:</label>
+            <input id="videoPath" v-model="vid.path" placeholder="Youtube Link" />
+            <div class="editable-buttons">
+              <button class="discard" @click="discardVidChanges(vid)">Discard</button>
+              <button @click="updateFirebaseVid(vid, 'Weddings', index)">Update Firebase</button>
+            </div>
+          </div>
+          <div class="edit-options">
+            <button v-if="!vid.editable" class="edit-button" @click="enableVidEdit(vid)">Edit</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- End Video Editing Section -->
+
+    <!-- Image Editing Section -->
+    <section class="manage-content 5">
       <div class="dropdown-toggle" @click="() => { toggleDropdown('imageGallery'); loadImages(); }"
         :class="{ active: showImageGallery }">
         <h2 class="section-title">
@@ -773,7 +883,7 @@ label {
 
 .editable-buttons {
   display: flex;
-  justify-content: flex-end;
+  justify-content: flex-end; /* Align buttons to the right */
   align-items: center;
   margin-top: 10px;
 }
@@ -784,7 +894,7 @@ label {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
-  margin-left: 8px;
+  margin-left: 8px; /* Add margin between buttons */
   font-size: 0.9rem;
 }
 
@@ -795,6 +905,15 @@ label {
 
 .editable-buttons button.discard:hover {
   background-color: #c0392b;
+}
+
+.editable-buttons button.update {
+  background-color: #27ae60;
+  color: white;
+}
+
+.editable-buttons button.update:hover {
+  background-color: #219d53;
 }
 
 .image-category {

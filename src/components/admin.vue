@@ -120,6 +120,7 @@ const imageMap = {
     '/img/personalpack2.webp',
     '/img/personalpack3.webp',
     '/img/personalpack4.webp',
+<<<<<<< HEAD
   ],
   'Video Thumbnails': [
     '/img/WedThumb1.webp',
@@ -128,6 +129,8 @@ const imageMap = {
     '/img/WedThumb4.webp',
     '/img/WedThumb5.webp',
     '/img/WedThumb6.webp',
+=======
+>>>>>>> refs/remotes/origin/master
   ]
 }
 
@@ -246,6 +249,7 @@ const getPackageData = async (category) => {
     }
   } catch (error) {
     console.error('Error fetching packages:', error);
+<<<<<<< HEAD
   }
 };
 
@@ -262,6 +266,8 @@ const getVideoData = async (category) => {
     }
   } catch (error) {
     console.error('Error fetching video data:', error);
+=======
+>>>>>>> refs/remotes/origin/master
   }
 };
 
@@ -273,6 +279,7 @@ const enableEdit = (packageItem) => {
   packageItem.editable = true;
 };
 
+<<<<<<< HEAD
 const enableVidEdit = (videoItem) => {
   // Store the original values before editing
   videoItem.originalTitle = videoItem.title;
@@ -281,6 +288,8 @@ const enableVidEdit = (videoItem) => {
   videoItem.editable = true;
 };
 
+=======
+>>>>>>> refs/remotes/origin/master
 const discardChanges = (packageItem) => {
   // Revert the changes made by restoring the original values
   packageItem.name = packageItem.originalName;
@@ -289,6 +298,7 @@ const discardChanges = (packageItem) => {
   packageItem.editable = false;
 };
 
+<<<<<<< HEAD
 const discardVidChanges = (videoItem) => {
   // Revert the changes made by restoring the original values
   videoItem.title = videoItem.originalTitle;
@@ -348,6 +358,34 @@ const updateFirebaseVid = async (videoItem, category, index) => {
   videoItem.editable = false;
 };
 
+=======
+const updateFirebase = async (packageItem, category, index) => {
+  try {
+    const db = getFirestore();
+    const packageDoc = doc(db, 'PackageDescriptions', category);
+
+    // Update the document with new values from packageItem
+    await updateDoc(packageDoc, {
+      [packageItem.name]: {
+        name: packageItem.name,
+        price: packageItem.price,
+        description: packageItem.description,
+        image: packageItem.image,
+      },
+    });
+
+    // Log a success message
+    console.log('Document successfully updated!');
+
+    // Update the local vidPackages array with the new values
+    vidPackages.value[index] = packageItem;
+  } catch (error) {
+    console.error('Error updating document: ', error);
+  }
+  packageItem.editable = false;
+};
+
+>>>>>>> refs/remotes/origin/master
 const addBullet = (packageItem) => {
   // add a new bullet point to the description array at the end
   packageItem.description.push('');
@@ -362,7 +400,10 @@ let showWeddingVideography = ref(false);
 let showWeddingPhotography = ref(false);
 let showPersonalPackages = ref(false);
 let showImageGallery = ref(false);
+<<<<<<< HEAD
 let showWeddingVidData = ref(false);
+=======
+>>>>>>> refs/remotes/origin/master
 
 const toggleDropdown = (category) => {
   if (category === 'weddingVideography') {
@@ -373,15 +414,21 @@ const toggleDropdown = (category) => {
     showPersonalPackages.value = !showPersonalPackages.value;
   } else if (category === 'imageGallery') {
     showImageGallery.value = !showImageGallery.value;
+<<<<<<< HEAD
   } else if (category === 'WeddingVidData') {
     showWeddingVidData.value = !showWeddingVidData.value;
+=======
+>>>>>>> refs/remotes/origin/master
   }
 };
 
 getPackageData('WeddingVideography');
 getPackageData('WeddingPhotography');
 getPackageData('Personal');
+<<<<<<< HEAD
 getVideoData('Weddings');
+=======
+>>>>>>> refs/remotes/origin/master
 </script>
 
 
@@ -546,6 +593,7 @@ getVideoData('Weddings');
 
     <!-- End Package Description Editing Section -->
 
+<<<<<<< HEAD
     <!-- Video Editing Section -->
 
     <section class="manage-content 4">
@@ -588,6 +636,10 @@ getVideoData('Weddings');
 
     <!-- Image Editing Section -->
     <section class="manage-content 5">
+=======
+    <!-- Image Editing Section -->
+    <section class="manage-content 4">
+>>>>>>> refs/remotes/origin/master
       <div class="dropdown-toggle" @click="() => { toggleDropdown('imageGallery'); loadImages(); }"
         :class="{ active: showImageGallery }">
         <h2 class="section-title">
@@ -894,7 +946,11 @@ label {
   border: none;
   cursor: pointer;
   transition: background-color 0.3s;
+<<<<<<< HEAD
   margin-left: 8px; /* Add margin between buttons */
+=======
+  margin-left: 8px;
+>>>>>>> refs/remotes/origin/master
   font-size: 0.9rem;
 }
 
@@ -907,11 +963,65 @@ label {
   background-color: #c0392b;
 }
 
+<<<<<<< HEAD
 .editable-buttons button.update {
   background-color: #27ae60;
-  color: white;
+=======
+.image-category {
+  color: #1d3051;
 }
 
+.image-grid {
+  color: black;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.grid-item {
+  position: relative;
+  height: 150px;
+  /* Set a fixed height for grid items */
+  overflow: hidden;
+  /* Hide overflow */
+  border-radius: 8px;
+  /* Round edges */
+}
+
+.grid-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 255, 0, 0.8);
+  /* Half-clear green overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.grid-item:hover .overlay {
+  opacity: 1;
+}
+
+.overlay-text {
+>>>>>>> refs/remotes/origin/master
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+<<<<<<< HEAD
 .editable-buttons button.update:hover {
   background-color: #219d53;
 }
@@ -983,6 +1093,22 @@ label {
   }
 }
 
+=======
+@media (min-width: 1000px) {
+  .wedding-vid-packages {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  .package {
+    width: 48%;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+  }
+}
+
+>>>>>>> refs/remotes/origin/master
 @media (max-width: 1000px) {
   .wedding-vid-packages {
     display: flex;

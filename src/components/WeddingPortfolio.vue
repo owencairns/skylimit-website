@@ -3,7 +3,10 @@ import { ref, onBeforeMount, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
+<<<<<<< HEAD
 import { getFirestore, doc, getDoc } from 'firebase/firestore'
+=======
+>>>>>>> refs/remotes/origin/master
 
 const storage = getStorage(); // Initialize Firebase Storage
 
@@ -51,7 +54,48 @@ let slides = [
     },
 ];
 
+<<<<<<< HEAD
 let videoData = ref([]);
+=======
+let videoGallery = [
+    {
+        id: 0,
+        thumbnail: '/img/RyanHailey.webp',
+        title: 'Ryan and Hailey',
+        path: '8rGu1kEfBdU?si=QTgUPUxi7og_qOty',
+    },
+    {
+        id: 1,
+        thumbnail: '/img/MeganRiley.webp',
+        title: 'Megan and Riley',
+        path: 'IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw'
+    },
+    {
+        id: 2,
+        thumbnail: '/img/NikEmily.webp',
+        title: 'Nik and Emily',
+        path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
+    },
+    {
+        id: 3,
+        thumbnail: '/img/MarissaBrandon.webp',
+        title: 'Marissa and Brandon',
+        path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
+    },
+    {
+        id: 4,
+        thumbnail: '/img/EmilyBrandon.webp',
+        title: 'Emily and Brandon',
+        path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
+    },
+    {
+        id: 5,
+        thumbnail: '/img/ErinBrad.webp',
+        title: 'Erin and Brad',
+        path: 'uZFoiCfyPWs?si=fU5fo5SAORnAHreQ'
+    },
+];
+>>>>>>> refs/remotes/origin/master
 
 let photoGallery = [
     {
@@ -104,11 +148,24 @@ let photoGallery = [
     }
 ];
 
+<<<<<<< HEAD
+=======
+//combine all images and videos into one array, just grab thumbnail
+const wedPortImages = slides.concat(videoGallery).concat(photoGallery).map((item) => {
+    return item.thumbnail;
+});
+
+const wedVidLinks = videoGallery.map((item) => {
+    return item.path;
+});
+
+>>>>>>> refs/remotes/origin/master
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides
 onMounted(async () => {
     try {
+<<<<<<< HEAD
         const db = getFirestore();
         const vidInfo = doc(db, 'Videos', 'Weddings');
         const vidInfoDoc = await getDoc(vidInfo);
@@ -118,6 +175,8 @@ onMounted(async () => {
             const vidDataObject = JSON.parse(JSON.stringify(vidData));
             videoData.value = Object.values(vidDataObject);
         }
+=======
+>>>>>>> refs/remotes/origin/master
         const slidePromises = slides.map(async (slide) => {
             slide.thumbnail = await getStorageUrl(slide.thumbnail);
         });
@@ -126,7 +185,11 @@ onMounted(async () => {
             item.thumbnail = await getStorageUrl(item.thumbnail);
         });
 
+<<<<<<< HEAD
         const vidGalleryPromises = videoData.value.map(async (item) => {
+=======
+        const vidGalleryPromises = videoGallery.map(async (item) => {
+>>>>>>> refs/remotes/origin/master
             item.thumbnail = await getStorageUrl(item.thumbnail);
         });
 

@@ -3,10 +3,6 @@ import { ref, onBeforeMount, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import { getStorage, ref as storageRef, getDownloadURL } from 'firebase/storage';
-<<<<<<< HEAD
-import { getFirestore, doc, getDoc } from 'firebase/firestore'
-=======
->>>>>>> refs/remotes/origin/master
 
 const storage = getStorage(); // Initialize Firebase Storage
 
@@ -54,48 +50,44 @@ let slides = [
     },
 ];
 
-<<<<<<< HEAD
-let videoData = ref([]);
-=======
 let videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/RyanHailey.webp',
+        thumbnail: '/img/WedThumb1.webp',
         title: 'Ryan and Hailey',
         path: '8rGu1kEfBdU?si=QTgUPUxi7og_qOty',
     },
     {
         id: 1,
-        thumbnail: '/img/MeganRiley.webp',
-        title: 'Megan and Riley',
-        path: 'IpeJzK71NIQ?si=x3dGw7Ij7X3WhoAw'
+        thumbnail: '/img/WedThumb2.webp',
+        title: 'Alexis and Donovan',
+        path: 'o3Yw0cOBOEM?si=CE2XBI2xkBnu0Tez'
     },
     {
         id: 2,
-        thumbnail: '/img/NikEmily.webp',
+        thumbnail: '/img/WedThumb3.webp',
         title: 'Nik and Emily',
         path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
     },
     {
         id: 3,
-        thumbnail: '/img/MarissaBrandon.webp',
+        thumbnail: '/img/WedThumb4.webp',
         title: 'Marissa and Brandon',
         path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
     },
     {
         id: 4,
-        thumbnail: '/img/EmilyBrandon.webp',
+        thumbnail: '/img/WedThumb5.webp',
         title: 'Emily and Brandon',
         path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
     },
     {
         id: 5,
-        thumbnail: '/img/ErinBrad.webp',
-        title: 'Erin and Brad',
-        path: 'uZFoiCfyPWs?si=fU5fo5SAORnAHreQ'
+        thumbnail: '/img/WedThumb6.webp',
+        title: 'Austin and Leslie',
+        path: 'DAhmEvKcYMU?si=jRKjUr0jbK2fw7Sz'
     },
 ];
->>>>>>> refs/remotes/origin/master
 
 let photoGallery = [
     {
@@ -148,8 +140,6 @@ let photoGallery = [
     }
 ];
 
-<<<<<<< HEAD
-=======
 //combine all images and videos into one array, just grab thumbnail
 const wedPortImages = slides.concat(videoGallery).concat(photoGallery).map((item) => {
     return item.thumbnail;
@@ -159,24 +149,11 @@ const wedVidLinks = videoGallery.map((item) => {
     return item.path;
 });
 
->>>>>>> refs/remotes/origin/master
 const loading = ref(true);
 
 // Fetch Firebase Storage URLs for slides
 onMounted(async () => {
     try {
-<<<<<<< HEAD
-        const db = getFirestore();
-        const vidInfo = doc(db, 'Videos', 'Weddings');
-        const vidInfoDoc = await getDoc(vidInfo);
-
-        if (vidInfoDoc.exists()) {
-            const vidData = vidInfoDoc.data();
-            const vidDataObject = JSON.parse(JSON.stringify(vidData));
-            videoData.value = Object.values(vidDataObject);
-        }
-=======
->>>>>>> refs/remotes/origin/master
         const slidePromises = slides.map(async (slide) => {
             slide.thumbnail = await getStorageUrl(slide.thumbnail);
         });
@@ -185,11 +162,7 @@ onMounted(async () => {
             item.thumbnail = await getStorageUrl(item.thumbnail);
         });
 
-<<<<<<< HEAD
-        const vidGalleryPromises = videoData.value.map(async (item) => {
-=======
         const vidGalleryPromises = videoGallery.map(async (item) => {
->>>>>>> refs/remotes/origin/master
             item.thumbnail = await getStorageUrl(item.thumbnail);
         });
 
@@ -204,7 +177,7 @@ onMounted(async () => {
 const activeVideo = ref(null);
 
 const loadVideo = (item) => {
-    activeVideo.value = item.id === activeVideo.value ? null : item.id;
+    activeVideo.value = item.id;
 };
 
 </script>
@@ -224,7 +197,7 @@ const loadVideo = (item) => {
         <section class="favorites-section video">
             <h2>Wedding Videography</h2>
             <div class="grid-container video">
-                <div class="grid-item" v-for="(item, index) in videoData" :key="item.id" @click="loadVideo(item)">
+                <div class="grid-item" v-for="item in videoGallery" :key="item.id" @click="loadVideo(item)">
                     <img loading="lazy" class="grid-image grid-image16x9" v-if="activeVideo !== item.id"
                         :src="item.thumbnail" />
                     <div v-if="activeVideo === item.id">
@@ -234,7 +207,7 @@ const loadVideo = (item) => {
                         }">
                             <div class="plyr__video-embed" id="player">
                                 <iframe
-                                    :src="item.path + '?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'"
+                                    :src="'https://www.youtube.com/embed/' + item.path + '?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'"
                                     allowfullscreen allowtransparency allow="autoplay" :poster="item.thumbnail"></iframe>
                             </div>
                         </vue-plyr>

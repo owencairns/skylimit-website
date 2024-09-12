@@ -219,7 +219,6 @@ const submitForm = async () => {
               <option disabled value=""></option>
               <option>Wedding Videography</option>
               <option>Wedding Photography</option>
-              <option>Commercial</option>
               <option>Personal</option>
               <option>Other</option>
             </select>

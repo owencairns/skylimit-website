@@ -13,11 +13,6 @@ const getStorageUrl = async (path) => {
 
 let images = [
   {
-    category: 'Commercial Media',
-    source: '/img/portCommercial.webp',
-    link: '/portfolio/commercial'
-  },
-  {
     category: 'Weddings',
     source: '/img/portWed.webp',
     link: '/portfolio/weddings'

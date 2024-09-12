@@ -66,8 +66,8 @@ let videoGallery = [
     {
         id: 2,
         thumbnail: '/img/WedThumb3.webp',
-        title: 'Nik and Emily',
-        path: 'hZV9X5NaZak?si=vt9-nQZ_bf-0Cwa-'
+        title: 'Paige and Chase',
+        path: 'ic2LcPzceBc?si=J93yWaFpfyDAP-39'
     },
     {
         id: 3,

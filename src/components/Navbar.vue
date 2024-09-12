@@ -63,7 +63,6 @@ const hideMobileNav = () => {
                     <div v-if="!mobileNavActive" class="dropdown-content">
                         <router-link to="/packages/weddings" class="dropdown-link">Weddings</router-link>
                         <router-link to="/packages/personal" class="dropdown-link">Personal</router-link>
-                        <router-link to="/packages/commercial" class="dropdown-link">Commercial</router-link>
                     </div>
                 </li>
                 <li><router-link to="/portfolio" class="link" @click="hideMobileNav">Portfolio</router-link></li>

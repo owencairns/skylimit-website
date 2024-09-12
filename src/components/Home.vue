@@ -122,7 +122,7 @@ onMounted(async () => {
       </div>
     </section>
 
-    <section class="work commercial-section">
+    <!-- <section class="work commercial-section">
       <div class="work-content">
         <div class="video-grid">
           <div v-for="(video, index) in commercialVideos" :key="index" class="video-item inverse"
@@ -143,12 +143,18 @@ onMounted(async () => {
           </p>
         </div>
       </div>
-    </section>
+    </section> -->
 
 
-    <section class="work personal-section">
+    <section class="work commercial-section">
       <div class="work-content">
-        <div class="work-description" v-scrollanimation>
+        <div class="video-grid">
+          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item inverse" :class="'video-item-' + index"
+            v-scrollanimation>
+            <img loading="lazy" :src="video.thumbnail" />
+          </div>
+        </div>
+        <div class="work-description commercial-description" v-scrollanimation>
           <h3 class="section-heading"><b>Personal</b></h3>
           <p class="section-description">Capture your cherished moments with our personal video and photo services.
             Whether it's a special occasion, family gathering, or individual portrait, we bring your stories to life. Our
@@ -158,12 +164,6 @@ onMounted(async () => {
           <p class="section-link">
             <router-link to="/packages/personal" class="link-btn">Explore More</router-link>
           </p>
-        </div>
-        <div class="video-grid">
-          <div v-for="(video, index) in personalPhotos" :key="index" class="video-item" :class="'video-item-' + index"
-            v-scrollanimation>
-            <img loading="lazy" :src="video.thumbnail" />
-          </div>
         </div>
       </div>
     </section>

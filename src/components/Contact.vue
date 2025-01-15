@@ -14,6 +14,8 @@ const service = ref('');
 const date = ref('');
 const pack = ref('');
 
+const TEST = ref('THIS IS JUST A TEST LINE FOR THE PULL REQUEST. LETS SEE IF IT WORKS. IF IT DOES THEN LET ME KNOW');
+
 const nameFocus = ref(false);
 const emailFocus = ref(false);
 const msgFocus = ref(false);
@@ -225,7 +227,7 @@ const submitForm = async () => {
           </div>
           <!-- add a date section to the form -->
           <div class="form-group">
-            <label for="date" class="active" >Date of Event</label>
+            <label for="date" class="active">Date of Event</label>
             <input v-model="date" type="date" id="date" @focus="handleDateFocus" @blur="handleDateBlur" required />
           </div>
           <div v-if="service === 'Wedding Videography'" class="form-group">

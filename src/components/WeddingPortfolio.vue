@@ -35,7 +35,7 @@ let slides = [
     },
     {
         id: 4,
-        thumbnail: '/img/wedport4.webp',
+        thumbnail: '/img/wedport2.webp',
         title: 'Wedding 4'
     },
     {
@@ -53,39 +53,33 @@ let slides = [
 let videoGallery = [
     {
         id: 0,
-        thumbnail: '/img/WedThumb1.webp',
-        title: 'Ryan and Hailey',
-        path: '8rGu1kEfBdU?si=QTgUPUxi7og_qOty',
+        thumbnail: '/img/WedThumb6.webp',
+        path: 'G8Etzk8wRTc?si=b5vxiLXOsRDhu1lq',
     },
     {
         id: 1,
-        thumbnail: '/img/WedThumb2.webp',
-        title: 'Alexis and Donovan',
-        path: 'o3Yw0cOBOEM?si=CE2XBI2xkBnu0Tez'
+        thumbnail: '/img/WedThumb4.webp',
+        path: 'V4YQPr5Js6M?si=oUTbueJG8T0HyLSm'
     },
     {
         id: 2,
         thumbnail: '/img/WedThumb3.webp',
-        title: 'Paige and Chase',
         path: 'ic2LcPzceBc?si=J93yWaFpfyDAP-39'
     },
     {
         id: 3,
-        thumbnail: '/img/WedThumb4.webp',
-        title: 'Marissa and Brandon',
-        path: 'HTW8Tx-oNp8?si=EMiBed-34GUn47Ow'
+        thumbnail: '/img/WedThumb2.webp',
+        path: 'o3Yw0cOBOEM?si=ikvPdc5Le8SU06wX'
     },
     {
         id: 4,
-        thumbnail: '/img/WedThumb5.webp',
-        title: 'Emily and Brandon',
-        path: 'hwgM8605WC4?si=9bezYQ0q4qEaPL83'
+        thumbnail: '/img/WedThumb1.webp',
+        path: '8rGu1kEfBdU?si=UrFvvQu_XTyx-PCS'
     },
     {
         id: 5,
-        thumbnail: '/img/WedThumb6.webp',
-        title: 'Austin and Leslie',
-        path: 'DAhmEvKcYMU?si=jRKjUr0jbK2fw7Sz'
+        thumbnail: '/img/WedThumb5.webp',
+        path: 'hT2h86be1o8?si=n2fH7LXi19j7UC0e'
     },
 ];
 
@@ -208,7 +202,8 @@ const loadVideo = (item) => {
                             <div class="plyr__video-embed" id="player">
                                 <iframe
                                     :src="'https://www.youtube.com/embed/' + item.path + '?origin=https://plyr.io&amp;iv_load_policy=3&amp;modestbranding=1&amp;playsinline=1&amp;showinfo=0&amp;rel=0&amp;enablejsapi=1'"
-                                    allowfullscreen allowtransparency allow="autoplay" :poster="item.thumbnail"></iframe>
+                                    allowfullscreen allowtransparency allow="autoplay"
+                                    :poster="item.thumbnail"></iframe>
                             </div>
                         </vue-plyr>
                         <div class="image-description">{{ item.title }}</div>
@@ -222,7 +217,6 @@ const loadVideo = (item) => {
             <div class="grid-container">
                 <div class="grid-item" v-for="item in photoGallery" :key="item.id">
                     <img loading="lazy" :src="item.thumbnail" :alt="item.title" class="grid-image" />
-                    <div class="image-description">{{ item.title }}</div>
                 </div>
             </div>
         </section>
@@ -236,7 +230,7 @@ const loadVideo = (item) => {
         <img loading="lazy" src="/img/Blue-letters-logo.svg" alt="" class="slv-white-logo">
     </div>
 </template>
-  
+
 <style scoped>
 .content-container {
     display: flex;
